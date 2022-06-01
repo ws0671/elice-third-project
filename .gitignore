@@ -4,4 +4,3 @@ mongobuild.sh
 mysqlbuild.sh
 nestbuild.sh
 node_modules
-back/.env

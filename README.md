@@ -1,69 +1,49 @@
-# auto build 사용법
+## (서비스 명)
 
-두 개의 shell script는 mongoDB와 MySQL을 사용하는 프로젝트를 생성한다.  
-백엔드는 node js를 이용한 3계층 구조로 생성된다.  
-mongoDB 프로젝트는 service에서 쿼리문을 사용하는 형식으로 되어 있다.  
-MySQL 프로젝트는 Sequelize를 사용하는 구조로 되어 있으며 sequelize-cli를 전역으로 설치한 후 sequelize 초기화를 해 준다.
+**형식**: 이 템플릿을 수정하여 업데이트를 합니다.
 
-프론트는 두 경우 모두 react를 사용했으며, public 파일에서 사용하지 않는 파일을 삭제해준다.
+**내용** :
 
-## git clone
+프로젝트 제안서에는 다음과 같은 정보가 포함되어야 합니다. (그 외 기획에 대한 내용도 포함하셔도 됩니다.)
 
-```shell
-git clone https://github.com/nowgnas/project-auto-build.git
-```
+### **`타이틀(서비스 명)`**
 
-git clone으로 repository를 작업 공간에 clone한다.
+1. 프로젝트 주제 
+2. 엔드유저에게 보이는 웹 서비스 타이틀 및 한 줄 소개
+3. 팀 구성원의 전체 이름과 역할
 
-```shell
-sudo rm -r .git
-```
+| 이름 | 역할 |
+| ------ | ------ |
+|     |     |
+|     |     |
+|     |     |
 
-clone한 경로에서 .git 폴더를 삭제해준다.
 
-```shell
-# mongoDB build
-sh mongobuild.sh
-# mysql build
-sh mysqlbuild.sh
-# nest build
-sh nestbuild.sh
-```
+### **`서비스 설명`**
 
-원하는 데이터베이스에 따라 명령어를 선택해 실행해 준다.
+##### 1. 기획 의도
+- 조사할 문제, 조사할 문제가 흥미로운 이유
+- 프로젝트 목적 및 필요성 (어떤 사용자의, 어떤 문제를 해결하는지)
+- 프로젝트가 제공하는 기대 효과와 활용 방안
 
-## 폴더 구조
+##### 2. 사용된 인공지능 알고리즘 및 모델 과 기술스택
+- 어떤 인공지능 알고리즘 및 모델을 어떻게 전처리하고 사용할 것인지
+- 이 프로젝트의 맥락과 배경이 유사한 인공지능 기반 서비스의 활용 사례 및 참고 논문
 
-### mysql build
+##### 3. 웹 서비스의 최종적인 메인 기능과 서브 기능 설명
+- 메인 기능
+   1.
+   2.
+   3. 
+- 서브 기능
+   1. 
+   2.
+   3.
 
-```shell
-.
-└── src
-    ├── controller
-    ├── db
-    │   ├── config
-    │   ├── migrations
-    │   └── models
-    ├── middlewares
-    ├── routes
-    └── services
-```
+##### 4. 프로젝트 구성
+- 와이어프레임 (whimsical, figma 등 링크 삽입)
+- 스토리보스 및 유저 시나리오
 
-### mongoDB build
-
-```shell
-.
-└── src
-    ├── controllers
-    ├── db
-    │   └── schemas
-    ├── middlewares
-    ├── routes
-    └── services
-```
-
-폴더 구조는 다음과 같다.
-
-### nest build
-
-back은 nest 프레임워크로 구성된다. 기본 패키지 관리자는 yarn이다
+##### 5. 프로젝트 평가 기준
+- 자신들의 프로젝트 결과물을 질적으로 어떻게 평가할 것인지
+- 경쟁력을 수치화 또는 유사한 프로젝트들과 비교하기 위해 어떤 메트릭 또는 통계를 사용할것인지

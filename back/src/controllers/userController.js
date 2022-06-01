@@ -1,3 +1,4 @@
+import is from "@sindresorhus/is";
 import { userAuthService } from "../services/userService";
 
 class userController {

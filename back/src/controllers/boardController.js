@@ -3,10 +3,25 @@ import { boardService } from "../services/boardService";
 
 class boardController {
   // 게시판 리스트 조회
-  static getBoardList = async (req, res, next) => {};
+  static getBoardList = async (req, res, next) => {
+    try {
+      const boardList = await boardService.findBoardList();
+      res.status(200).json(boardList);
+    } catch (error) {
+      next(error);
+    }
+  };
 
   // 게시판 상세 내용 조회
-  static getBoardContent = async (req, res, next) => {};
+  static getBoardContent = async (req, res, next) => {
+    try {
+      const itemId = req.params.itemId;
+      const boardList = await boardService.findBoard({ itemId });
+      res.status(200).json(boardList);
+    } catch (error) {
+      next(error);
+    }
+  };
 
   // 게시판 생성
   static createBoard = async (req, res, next) => {

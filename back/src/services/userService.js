@@ -21,7 +21,7 @@ class userAuthService {
     const newUser = { id, name, email, password: hashedPassword };
 
     // db에 저장
-    const createdNewUser = await User.create({ newUser });
+    const createdNewUser = await UserModel.create(newUser);
     createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
     return createdNewUser;

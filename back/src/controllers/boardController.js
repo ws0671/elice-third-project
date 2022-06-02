@@ -69,7 +69,21 @@ class boardController {
   };
 
   // 게시판 삭제
-  static deleteBoard = async (req, res, next) => {};
+  static deleteBoard = async (req, res, next) => {
+    try {
+      const itemId = req.params.itemId;
+
+      const result = await boardService.deleteBoard({ itemId });
+
+      if (result.errorMessage) {
+        throw new Error(result.errorMessage);
+      }
+
+      res.status(204).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export { boardController };

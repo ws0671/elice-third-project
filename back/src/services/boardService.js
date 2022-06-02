@@ -48,6 +48,20 @@ class boardService {
 
     return updatedBoard;
   };
+
+  // board 삭제
+  static deleteBoard = async ({ itemId }) => {
+    const result = await BoardModel.deleteOne({ itemId });
+    const deleteResult = result.deletedCount === 1;
+
+    if (!deleteResult) {
+      const errorMessage =
+        "해당 itemId를 가진 게시글은 없습니다. 다시 한 번 확인해 주세요.";
+      return { errorMessage };
+    }
+
+    return deleteResult;
+  };
 }
 
 export { boardService };

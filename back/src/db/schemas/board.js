@@ -6,7 +6,7 @@ const BoardSchema = new Schema(
       type: String,
       required: true,
     },
-    userId: {
+    authorId: {
       type: String,
       required: true,
     },
@@ -18,9 +18,10 @@ const BoardSchema = new Schema(
       type: String,
       required: true,
     },
-    whenDate: {
+    createdAt: {
       type: Date,
       required: true,
+      default: Date.now,
     },
   },
   {

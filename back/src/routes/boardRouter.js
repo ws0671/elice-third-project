@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
-import { boardController } from "../controllers/userController";
+import { boardController } from "../controllers/boardController";
 
 const boardRouter = Router();
 

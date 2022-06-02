@@ -3,41 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
 import { UserModel } from "../db/"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 
-class User {
-  static async create({ newUser }) {
-    const createdNewUser = await UserModel.create(newUser);
-    return createdNewUser;
-  }
-
-  static async findByEmail({ email }) {
-    const user = await UserModel.findOne({ email });
-    return user;
-  }
-
-  static async findById({ userId }) {
-    const user = await UserModel.findOne({ id: userId });
-    return user;
-  }
-
-  static async findAll() {
-    const users = await UserModel.find({});
-    return users;
-  }
-
-  static async update({ userId, fieldToUpdate, newValue }) {
-    const filter = { id: userId };
-    const update = { [fieldToUpdate]: newValue };
-    const option = { returnOriginal: false };
-
-    const updatedUser = await UserModel.findOneAndUpdate(
-      filter,
-      update,
-      option
-    );
-    return updatedUser;
-  }
-}
-
 class userAuthService {
   static async addUser({ name, email, password }) {
     // 이메일 중복 확인
@@ -56,7 +21,7 @@ class userAuthService {
     const newUser = { id, name, email, password: hashedPassword };
 
     // db에 저장
-    const createdNewUser = await User.create({ newUser });
+    const createdNewUser = await UserModel.create(newUser);
     createdNewUser.errorMessage = null; // 문제 없이 db 저장 완료되었으므로 에러가 없음.
 
     return createdNewUser;

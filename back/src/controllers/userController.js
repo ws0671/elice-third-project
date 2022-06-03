@@ -51,7 +51,7 @@ class userController {
     }
   }
 
-  static async getUserList(req, res, next) {
+  static async getUsers(req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();
@@ -82,7 +82,7 @@ class userController {
   static async setUserInfo(req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
-      const userId = req.params.id;
+      const userId = req.params.userId;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
@@ -106,7 +106,7 @@ class userController {
 
   static async getUserInfo(req, res, next) {
     try {
-      const userId = req.params.id;
+      const userId = req.params.userId;
       const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
       if (currentUserInfo.errorMessage) {

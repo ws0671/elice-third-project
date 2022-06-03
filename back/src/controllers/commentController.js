@@ -26,12 +26,12 @@ class commentController {
   };
 
   // 해당 게시글에 포함되어 있는 댓글 조회
-  static getCommentList = async (req, res, next) => {
+  static getComments = async (req, res, next) => {
     try {
       const boardId = req.params.boardId;
-      const commentList = await commentService.findCommentList({ boardId });
+      const comments = await commentService.findComments({ boardId });
 
-      res.status(200).json(commentList);
+      res.status(200).json(comments);
     } catch (error) {
       next(error);
     }

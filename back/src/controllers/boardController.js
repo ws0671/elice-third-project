@@ -39,8 +39,8 @@ class boardController {
   static getBoardContent = async (req, res, next) => {
     try {
       const boardId = req.params.boardId;
-      const boardList = await boardService.findBoard({ boardId });
-      res.status(200).json(boardList);
+      const board = await boardService.findBoard({ boardId });
+      res.status(200).json(board);
     } catch (error) {
       next(error);
     }

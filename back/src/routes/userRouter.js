@@ -4,21 +4,32 @@ import { userController } from "../controllers/userController";
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/user/register", userController.register);
+// 회원가입
+userAuthRouter.post("/users/register", userController.register);
 
-userAuthRouter.post("/user/login", userController.login);
+// 로그인
+userAuthRouter.post("/users/login", userController.login);
 
-userAuthRouter.get("/userlist", login_required, userController.getUserList);
+// 모든 회원 리스트
+userAuthRouter.get("/users", login_required, userController.getUsers);
 
 userAuthRouter.get(
-  "/user/current",
+  "/users/current",
   login_required,
   userController.getCurrentUserInfo
 );
 
-userAuthRouter.put("/users/:id", login_required, userController.setUserInfo);
+userAuthRouter.put(
+  "/users/:userId",
+  login_required,
+  userController.setUserInfo
+);
 
-userAuthRouter.get("/users/:id", login_required, userController.getUserInfo);
+userAuthRouter.get(
+  "/users/:userId",
+  login_required,
+  userController.getUserInfo
+);
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, userController.afterLogin);

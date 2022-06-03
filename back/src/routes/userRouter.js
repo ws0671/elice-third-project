@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login_required } from "../middlewares/login_required";
+import { loginRequired } from "../middlewares/loginRequired";
 import { userController } from "../controllers/userController";
 
 const userAuthRouter = Router();
@@ -11,27 +11,19 @@ userAuthRouter.post("/users/register", userController.register);
 userAuthRouter.post("/users/login", userController.login);
 
 // 모든 회원 리스트
-userAuthRouter.get("/users", login_required, userController.getUsers);
+userAuthRouter.get("/users", loginRequired, userController.getUsers);
 
 userAuthRouter.get(
   "/users/current",
-  login_required,
+  loginRequired,
   userController.getCurrentUserInfo
 );
 
-userAuthRouter.put(
-  "/users/:userId",
-  login_required,
-  userController.setUserInfo
-);
+userAuthRouter.put("/users/:userId", loginRequired, userController.setUserInfo);
 
-userAuthRouter.get(
-  "/users/:userId",
-  login_required,
-  userController.getUserInfo
-);
+userAuthRouter.get("/users/:userId", loginRequired, userController.getUserInfo);
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, userController.afterLogin);
+userAuthRouter.get("/afterlogin", loginRequired, userController.afterLogin);
 
 export { userAuthRouter };

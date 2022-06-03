@@ -3,9 +3,9 @@ import { CommentModel } from "../db";
 
 class commentService {
   // comment 생성
-  static addComment = async ({ authorId, content }) => {
+  static addComment = async ({ boardId, authorId, content }) => {
     const itemId = uuidv4();
-    const newComment = { itemId, authorId, content };
+    const newComment = { itemId, boardId, authorId, content };
 
     const createdNewComment = await CommentModel.create(newComment);
 

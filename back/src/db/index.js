@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { UserModel } from "./schemas/user";
 import { BoardModel } from "./schemas/board";
+import { CommentModel } from "./schemas/comment";
 
 dotenv.config();
 const DB_URL =
@@ -18,4 +19,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
-export { UserModel, BoardModel };
+export { UserModel, BoardModel, CommentModel };

@@ -13,7 +13,7 @@ class commentController {
 
       const { authorId, content } = req.body;
 
-      const newComment = await boardService.addComment({
+      const newComment = await commentService.addComment({
         authorId,
         content,
       });

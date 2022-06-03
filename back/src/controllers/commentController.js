@@ -25,13 +25,54 @@ class commentController {
   };
 
   // 해당 게시글에 포함되어 있는 댓글 조회
-  static getCommentList = async (req, res, next) => {};
+  static getCommentList = async (req, res, next) => {
+    try {
+      const boardId = req.params.boardId;
+      const commentList = await commentService.findCommentList({ boardId });
+
+      res.status(200).json(commentList);
+    } catch (error) {
+      next(error);
+    }
+  };
 
   // 댓글 수정
-  static editComment = async (req, res, next) => {};
+  static editComment = async (req, res, next) => {
+    try {
+      const itemId = req.params.itemId;
+      const { content } = req.body ?? null;
+      const toUpdate = { content };
+
+      const updatedComment = await commentService.updateComment({
+        itemId,
+        toUpdate,
+      });
+
+      if (updatedComment.errorMessage) {
+        throw new Error(updatedComment.errorMessage);
+      }
+
+      res.status(200).json(updatedComment);
+    } catch (error) {
+      next(error);
+    }
+  };
 
   // 댓글 삭제
-  static deleteComment = async (req, res, next) => {};
+  static deleteComment = async (req, res, next) => {
+    try {
+      const itemId = req.params.itemId;
+      const result = await commentService.deleteComment({ itemId });
+
+      if (result.errorMessage) {
+        throw new Error(result.errorMessage);
+      }
+
+      res.status(204).json(result);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
-export { commentService };
+export { commentController };

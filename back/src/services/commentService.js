@@ -4,8 +4,8 @@ import { CommentModel } from "../db";
 class commentService {
   // comment 생성
   static addComment = async ({ boardId, authorId, content }) => {
-    const itemId = uuidv4();
-    const newComment = { itemId, boardId, authorId, content };
+    const commentId = uuidv4();
+    const newComment = { commentId, boardId, authorId, content };
 
     const createdNewComment = await CommentModel.create(newComment);
 
@@ -13,14 +13,14 @@ class commentService {
   };
 
   // boardId에 해당하는 모든 comment 찾기
-  static findCommentList = async ({ boardId }) => {
-    const commentList = await CommentModel.find({ boardId });
-    return commentList;
+  static findComments = async ({ boardId }) => {
+    const comments = await CommentModel.find({ boardId });
+    return comments;
   };
 
   // comment 수정
-  static updateComment = async ({ itemId, toUpdate }) => {
-    const comment = await CommentModel.findOne({ itemId });
+  static updateComment = async ({ commentId, toUpdate }) => {
+    const comment = await CommentModel.findOne({ commentId });
 
     if (!comment) {
       const errorMessage =
@@ -35,7 +35,7 @@ class commentService {
     });
 
     const updatedComment = await CommentModel.findOneAndUpdate(
-      { itemId },
+      { commentId },
       { $set: toUpdate },
       { returnOriginal: false }
     );
@@ -44,13 +44,13 @@ class commentService {
   };
 
   // comment 삭제
-  static deleteComment = async ({ itemId }) => {
-    const result = await CommentModel.deleteOne({ itemId });
+  static deleteComment = async ({ commentId }) => {
+    const result = await CommentModel.deleteOne({ commentId });
     const deleteResult = result.deletedCount === 1;
 
     if (!deleteResult) {
       const errorMessage =
-        "해당 itemId를 가진 댓글은 없습니다. 다시 한 번 확인해 주세요.";
+        "해당 commentId를 가진 댓글은 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 

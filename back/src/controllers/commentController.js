@@ -40,12 +40,12 @@ class commentController {
   // 댓글 수정
   static editComment = async (req, res, next) => {
     try {
-      const itemId = req.params.itemId;
+      const commentId = req.params.commentId;
       const { content } = req.body ?? null;
       const toUpdate = { content };
 
       const updatedComment = await commentService.updateComment({
-        itemId,
+        commentId,
         toUpdate,
       });
 
@@ -62,8 +62,8 @@ class commentController {
   // 댓글 삭제
   static deleteComment = async (req, res, next) => {
     try {
-      const itemId = req.params.itemId;
-      const result = await commentService.deleteComment({ itemId });
+      const commentId = req.params.commentId;
+      const result = await commentService.deleteComment({ commentId });
 
       if (result.errorMessage) {
         throw new Error(result.errorMessage);

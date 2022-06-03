@@ -5,20 +5,20 @@ import { boardController } from "../controllers/boardController";
 const boardRouter = Router();
 
 // 게시판 생성
-boardRouter.post("/board/create", login_required, boardController.createBoard);
+boardRouter.post("/boards", login_required, boardController.createBoard);
 
 // 게시판 리스트 조회
-boardRouter.get("/boardlist", boardController.getBoardList);
+boardRouter.get("/boards", boardController.getBoards);
 
 // 게시판 상세 내용 조회
-boardRouter.get("/board/:itemId", boardController.getBoardContent);
+boardRouter.get("/boards/:boardId", boardController.getBoardContent);
 
 // 게시판 수정
-boardRouter.put("/board/:itemId", login_required, boardController.editBoard);
+boardRouter.put("/boards/:boardId", login_required, boardController.editBoard);
 
 // 게시판 삭제
 boardRouter.delete(
-  "/board/:itemId",
+  "/boards/:boardId",
   login_required,
   boardController.deleteBoard
 );

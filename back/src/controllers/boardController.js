@@ -26,10 +26,10 @@ class boardController {
   };
 
   // 게시판 리스트 조회
-  static getBoardList = async (req, res, next) => {
+  static getBoards = async (req, res, next) => {
     try {
-      const boardList = await boardService.findBoardList();
-      res.status(200).json(boardList);
+      const boards = await boardService.findBoards();
+      res.status(200).json(boards);
     } catch (error) {
       next(error);
     }
@@ -38,8 +38,8 @@ class boardController {
   // 게시판 상세 내용 조회
   static getBoardContent = async (req, res, next) => {
     try {
-      const itemId = req.params.itemId;
-      const boardList = await boardService.findBoard({ itemId });
+      const boardId = req.params.boardId;
+      const boardList = await boardService.findBoard({ boardId });
       res.status(200).json(boardList);
     } catch (error) {
       next(error);
@@ -49,12 +49,12 @@ class boardController {
   // 게시판 수정
   static editBoard = async (req, res, next) => {
     try {
-      const itemId = req.params.itemId;
+      const boardId = req.params.boardId;
       const { title, content } = req.body ?? null;
       const toUpdate = { title, content };
 
       const updatedBoard = await boardService.updateBoard({
-        itemId,
+        boardId,
         toUpdate,
       });
 
@@ -71,9 +71,9 @@ class boardController {
   // 게시판 삭제
   static deleteBoard = async (req, res, next) => {
     try {
-      const itemId = req.params.itemId;
+      const boardId = req.params.boardId;
 
-      const result = await boardService.deleteBoard({ itemId });
+      const result = await boardService.deleteBoard({ boardId });
 
       if (result.errorMessage) {
         throw new Error(result.errorMessage);

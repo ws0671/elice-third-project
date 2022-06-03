@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const CommentSchema = new Schema(
   {
-    itemId: {
+    commentId: {
       type: String,
       required: true,
     },

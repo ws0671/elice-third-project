@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const BoardSchema = new Schema(
   {
-    itemId: {
+    boardId: {
       type: String,
       required: true,
     },

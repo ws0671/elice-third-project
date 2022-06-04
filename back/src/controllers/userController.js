@@ -1,6 +1,5 @@
 import is from "@sindresorhus/is";
 import { userAuthService } from "../services/userService";
-import is from "@sindresorhus/is";
 class userController {
   static async register(req, res, next) {
     try {

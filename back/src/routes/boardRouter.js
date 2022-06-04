@@ -11,7 +11,11 @@ boardRouter.post("/boards", loginRequired, boardController.createBoard);
 boardRouter.get("/boards", boardController.getBoards);
 
 // 게시판 상세 내용 조회
-boardRouter.get("/boards/:boardId", boardController.getBoardContent);
+boardRouter.get(
+  "/boards/:boardId",
+  loginRequired,
+  boardController.getBoardContent
+);
 
 // 게시판 수정
 boardRouter.put("/boards/:boardId", loginRequired, boardController.editBoard);

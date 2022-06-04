@@ -19,8 +19,18 @@ class boardService {
   };
 
   // board 상세 조회
-  static findBoard = async ({ boardId }) => {
+  static findBoard = async ({ userId, boardId }) => {
     const board = await BoardModel.findOne({ boardId });
+
+    // 현재 상세 조회를 진행하는 사용자가 작성한 글이 아닐 경우에만 조회수 증가
+    if (userId !== board.authorId) {
+      await BoardModel.findOneAndUpdate(
+        { boardId },
+        { $inc: { viewCount: 1 } },
+        { returnOriginal: false }
+      );
+    }
+
     return board;
   };
 

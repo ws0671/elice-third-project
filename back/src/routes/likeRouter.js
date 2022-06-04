@@ -1,4 +1,4 @@
-import { Router } from "express-router";
+import { Router } from "express";
 import { loginRequired } from "../middlewares/loginRequired";
 import { likeController } from "../controllers/likeController";
 

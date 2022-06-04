@@ -18,10 +18,10 @@ const BoardSchema = new Schema(
       type: String,
       required: true,
     },
-    createdAt: {
-      type: Date,
+    likeCount: {
+      type: Number,
       required: true,
-      default: Date.now,
+      default: 0,
     },
   },
   {

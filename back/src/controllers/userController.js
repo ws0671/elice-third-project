@@ -1,5 +1,6 @@
 import is from "@sindresorhus/is";
 import { userAuthService } from "../services/userService";
+import { likeService } from "../services/likeService";
 
 class userController {
   static async register(req, res, next) {
@@ -24,6 +25,15 @@ class userController {
 
       if (newUser.errorMessage) {
         throw new Error(newUser.errorMessage);
+      }
+
+      const userId = newUser.userId;
+      const newLike = await likeService.addLikeInfo({
+        userId,
+      });
+
+      if (newLike.errorMessage) {
+        throw new Error(newLike.errorMessage);
       }
 
       res.status(201).json(newUser);

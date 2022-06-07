@@ -1,6 +1,7 @@
 import is from "@sindresorhus/is";
 import { userAuthService } from "../services/userService";
 import { likeService } from "../services/likeService";
+import multer from "multer";
 
 class userController {
   static async register(req, res, next) {

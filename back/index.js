@@ -15,7 +15,8 @@ const storage = new Storage();
 
 const app = express();
 // app.set("view engine", "pug");
-
+var cors = require("cors");
+app.use(cors());
 // This middleware is available in Express v4.16.0 onwards
 app.use(express.json());
 

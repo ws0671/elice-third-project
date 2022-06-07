@@ -15,7 +15,7 @@ const storage = new Storage();
 
 const app = express();
 // app.set("view engine", "pug");
-var cors = require("cors");
+const cors = require("cors");
 app.use(cors());
 // This middleware is available in Express v4.16.0 onwards
 app.use(express.json());
@@ -46,7 +46,7 @@ app.post("/upload", multer.single("file"), (req, res, next) => {
   }
 
   // Create a new blob in the bucket and upload the file data.
-  const blob = bucket.file(req.file.originalname);
+  const blob = bucket.file(`${Date.now()}_` + req.file.originalname);
   const blobStream = blob.createWriteStream({
     resumable: false,
   });

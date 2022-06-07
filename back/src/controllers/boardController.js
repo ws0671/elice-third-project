@@ -11,8 +11,8 @@ class boardController {
         );
       }
 
-      const { authorId, title, content } = req.body;
-
+      const authorId = req.currentUserId;
+      const { title, content } = req.body;
       const newBoard = await boardService.addBoard({
         authorId,
         title,
@@ -38,8 +38,9 @@ class boardController {
   // 게시판 상세 내용 조회
   static getBoardContent = async (req, res, next) => {
     try {
+      const userId = req.currentUserId;
       const boardId = req.params.boardId;
-      const board = await boardService.findBoard({ boardId });
+      const board = await boardService.findBoard({ userId, boardId });
       res.status(200).json(board);
     } catch (error) {
       next(error);

@@ -1,12 +1,12 @@
+import Newposts from "../components/common/board/NewPosts";
 import Header from "../components/common/Header";
 
 const BoardPage = () => {
-  return (
-    <>
-      <h1>소통 공간</h1>
-      <Header />
-    </>
-  );
+    return (
+        <>
+            <Newposts />
+        </>
+    );
 };
 
 export default BoardPage;

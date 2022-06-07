@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import { UserModel } from "../db/"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
+import { UserModel } from "../db"; // from을 폴더(db) 로 설정 시, 디폴트로 index.js 로부터 import함.
 
 class userAuthService {
   static async addUser({ name, email, password }) {
@@ -16,9 +16,9 @@ class userAuthService {
     // 비밀번호 해쉬화
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // id 는 유니크 값 부여
-    const id = uuidv4();
-    const newUser = { id, name, email, password: hashedPassword };
+    // userId 는 유니크 값 부여
+    const userId = uuidv4();
+    const newUser = { userId, name, email, password: hashedPassword };
 
     // db에 저장
     const createdNewUser = await UserModel.create(newUser);
@@ -50,19 +50,14 @@ class userAuthService {
 
     // 로그인 성공 -> JWT 웹 토큰 생성
     const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
-    const token = jwt.sign({ userId: user.id }, secretKey);
-
-    // 반환할 loginuser 객체를 위한 변수 설정
-    const id = user.id;
-    const name = user.name;
-    const description = user.description;
+    const token = jwt.sign({ userId: user.userId }, secretKey);
 
     const loginUser = {
       token,
-      id,
+      userId: user.userId,
       email,
-      name,
-      description,
+      name: user.name,
+      description: user.description,
       errorMessage: null,
     };
 
@@ -75,8 +70,8 @@ class userAuthService {
   }
 
   static async setUser({ userId, toUpdate }) {
-    // 우선 해당 id 의 유저가 db에 존재하는지 여부 확인
-    let user = await UserModel.findOne({ id: userId });
+    // 우선 해당 userId 의 유저가 db에 존재하는지 여부 확인
+    let user = await UserModel.findOne({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
@@ -91,7 +86,7 @@ class userAuthService {
     });
 
     user = await UserModel.findOneAndUpdate(
-      { id: userId },
+      { userId },
       { $set: toUpdate },
       { returnOriginal: false }
     );
@@ -100,7 +95,7 @@ class userAuthService {
   }
 
   static async getUserInfo({ userId }) {
-    const user = await UserModel.findOne({ id: userId });
+    const user = await UserModel.findOne({ userId });
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {

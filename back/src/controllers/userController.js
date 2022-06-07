@@ -1,5 +1,7 @@
 import is from "@sindresorhus/is";
 import { userAuthService } from "../services/userService";
+import { likeService } from "../services/likeService";
+
 class userController {
   static async register(req, res, next) {
     try {
@@ -23,6 +25,15 @@ class userController {
 
       if (newUser.errorMessage) {
         throw new Error(newUser.errorMessage);
+      }
+
+      const userId = newUser.userId;
+      const newLike = await likeService.addLikeInfo({
+        userId,
+      });
+
+      if (newLike.errorMessage) {
+        throw new Error(newLike.errorMessage);
       }
 
       res.status(201).json(newUser);
@@ -50,7 +61,7 @@ class userController {
     }
   }
 
-  static async getUserList(req, res, next) {
+  static async getUsers(req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();
@@ -81,7 +92,7 @@ class userController {
   static async setUserInfo(req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
-      const userId = req.params.id;
+      const userId = req.params.userId;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
@@ -105,7 +116,7 @@ class userController {
 
   static async getUserInfo(req, res, next) {
     try {
-      const userId = req.params.id;
+      const userId = req.params.userId;
       const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
       if (currentUserInfo.errorMessage) {

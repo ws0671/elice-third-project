@@ -1,27 +1,27 @@
 import { Schema, model } from "mongoose";
 
-const UserSchema = new Schema(
+const BoardSchema = new Schema(
   {
-    userId: {
+    boardId: {
       type: String,
       required: true,
     },
-    email: {
+    authorId: {
       type: String,
       required: true,
     },
-    name: {
+    title: {
       type: String,
       required: true,
     },
-    password: {
+    content: {
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: false,
-      default: "설명이 아직 없습니다. 추가해 주세요.",
+    likeCount: {
+      type: Number,
+      required: true,
+      default: 0,
     },
   },
   {
@@ -29,6 +29,6 @@ const UserSchema = new Schema(
   }
 );
 
-const UserModel = model("User", UserSchema);
+const BoardModel = model("Board", BoardSchema);
 
-export { UserModel };
+export { BoardModel };

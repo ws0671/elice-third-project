@@ -1,3 +1,5 @@
+# dependencies
+.env
 mongobuild.sh
 mysqlbuild.sh
 nestbuild.sh
@@ -6,3 +8,4 @@ nestbuild.sh
 !common/.keep
 !pages/.keep
 !utils/.keep
+node_modules

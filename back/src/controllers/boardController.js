@@ -85,6 +85,10 @@ class boardController {
       next(error);
     }
   };
+  static boardSearch = async (req, res, next) => {
+    const a = req.query;
+    console.log(a);
+  };
 }
 
 export { boardController };

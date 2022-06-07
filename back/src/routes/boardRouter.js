@@ -27,4 +27,6 @@ boardRouter.delete(
   boardController.deleteBoard
 );
 
+boardRouter.get("/boards/search", boardController.boardSearch);
+
 export { boardRouter };

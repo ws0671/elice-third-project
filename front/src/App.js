@@ -8,7 +8,7 @@ import HospitalPage from "./pages/HospitalPage";
 import BoardPage from "./pages/BoardPage";
 import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/Register";
+import RegisterPage from "./pages/RegisterPage";
 
 function App() {
   return (

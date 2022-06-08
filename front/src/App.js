@@ -9,21 +9,25 @@ import BoardPage from "./pages/BoardPage";
 import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/Register";
+import PostingPage from "./pages/Register";
+import Post from "./components/common/board/Post";
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" exact element={<HomePage />} />
-        <Route path="/walk" exact element={<WalkPage />} />
-        <Route path="/hospital" exact element={<HospitalPage />} />
-        <Route path="/board" exact element={<BoardPage />} />
-        <Route path="/ai" exact element={<AiPage />} />
-        <Route path="/login" exact element={<LoginPage />} />
-        <Route path="/register" exact element={<RegisterPage />} />
-      </Routes>
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" exact element={<HomePage />} />
+                <Route path="/walk" exact element={<WalkPage />} />
+                <Route path="/hospital" exact element={<HospitalPage />} />
+                <Route path="/board" exact element={<BoardPage />} />
+                <Route path="/ai" exact element={<AiPage />} />
+                <Route path="/login" exact element={<LoginPage />} />
+                <Route path="/register" exact element={<RegisterPage />} />
+                <Route path="/posting" exact element={<PostingPage />} />
+                <Route path="/post" exact element={<Post />} />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;

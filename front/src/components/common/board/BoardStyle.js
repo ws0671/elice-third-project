@@ -12,6 +12,9 @@ const SelectMenu = styled(Button)`
     margin: 10px;
     color: #386150;
     font-weight: bold;
+    &:hover {
+        color: black;
+    }
 `;
 
 const UnSelectMenu = styled(Button)`
@@ -22,6 +25,18 @@ const UnSelectMenu = styled(Button)`
 
     &:hover {
         color: black;
+    }
+`;
+const TagButton = styled(Button)`
+    color: #818479;
+    font-size: 0.5rem;
+    border-radius: 100px;
+    background-color: #ffffff;
+    margin: 10px 5px 0 0;
+    padding: 3px 5px;
+    border: solid 1px;
+    &:hover {
+        background-color: #ffffff;
     }
 `;
 
@@ -45,26 +60,25 @@ const PostUserImg = styled(Grid)`
 
 const PostUserInfo = styled(Grid)`
     width: 25%;
-    max-width: 150px;
+    max-width: 140px;
     height: 70px;
     margin: 20px 0;
     padding: 8px 3px;
 `;
 
 const PostInfo = styled(Grid)`
-    width: 58%;
+    width: 53%;
     max-width: 600px;
     height: 70px;
     margin: 20px;
 `;
 
 const PostSubInfo = styled(Grid)`
-    width: 20%;
-    max-width: 250px;
+    width: 15%;
+    max-width: 200px;
     height: 70px;
-    margin: 20px 0;
+    margin: 35px 0;
     display: flex;
-    border: solid 1px;
 `;
 
 const ListName = styled(Grid)`
@@ -93,6 +107,12 @@ const WritePost = styled(Button)`
         font-weight: bold;
     }
 `;
+
+const Count = styled(Grid)`
+    font-size: 15px;
+    font-color: gray;
+    margin: 0 30px 0 15px;
+`;
 export {
     PostList,
     PostUserImg,
@@ -106,4 +126,6 @@ export {
     PostMenu,
     SelectMenu,
     UnSelectMenu,
+    TagButton,
+    Count,
 };

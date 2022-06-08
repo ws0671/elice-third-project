@@ -1,4 +1,7 @@
-import { Container, Grid, Box } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useNavigate } from "react-router-dom";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Container, Grid } from "@mui/material";
 import {
     PostList,
     PostUserImg,
@@ -12,20 +15,25 @@ import {
     PostMenu,
     SelectMenu,
     UnSelectMenu,
+    TagButton,
+    Count,
 } from "./BoardStyle";
+
 import { StylesProvider } from "@material-ui/core";
 
 const Newposts = () => {
+    const navigate = useNavigate();
+
     return (
         <>
             <Container maxWidth="lg" style={{ padding: "0" }}>
                 <PostMenu>
                     <StylesProvider injectFirst>
-                        <SelectMenu style={{ fontSize: "24px" }}>
+                        <SelectMenu style={{ fontSize: "22px" }}>
                             New Post
                         </SelectMenu>
                         <span style={{ color: "#D9D9D9" }}>|</span>
-                        <UnSelectMenu style={{ fontSize: "24px" }}>
+                        <UnSelectMenu style={{ fontSize: "22px" }}>
                             Best Post
                         </UnSelectMenu>
                     </StylesProvider>
@@ -38,21 +46,31 @@ const Newposts = () => {
                             backgroundColor: "#386150",
                             justifyContent: "space-between",
                             padding: "0px 10px",
+                            width: "100%",
+                            height: "45px",
+                            overflow: "hidden",
                         }}
                     >
                         <Grid
-                            item
                             style={{
-                                fontSize: "20px",
+                                fontSize: "17px",
                                 color: "white",
                                 margin: "10px",
+                                minWidth: "500px",
                             }}
                         >
                             질문을 통해 궁금한 점을 해결하고 다양한 정보를
                             얻어가세요!
                         </Grid>
                         <StylesProvider injectFirst>
-                            <WritePost style={{ fontSize: "18px" }}>
+                            <WritePost
+                                style={{
+                                    fontSize: "18px",
+                                }}
+                                onClick={() => {
+                                    navigate("/posting");
+                                }}
+                            >
                                 글쓰기
                             </WritePost>
                         </StylesProvider>
@@ -65,10 +83,17 @@ const Newposts = () => {
                         </PostUserInfo>
                         <PostInfo>
                             <ListTitle>초보집사! 궁금한게 있어요!</ListTitle>
+                            <TagButton>#해시태그</TagButton>
                         </PostInfo>
                         <PostSubInfo>
-                            <Grid> 조회수</Grid>
-                            <Grid> 추천수</Grid>
+                            <VisibilityIcon
+                                style={{
+                                    margin: "0 5px",
+                                }}
+                            />
+                            <Count> 3 </Count>
+                            <FavoriteIcon />
+                            <Count> 10</Count>
                         </PostSubInfo>
                     </PostList>
                 </Grid>

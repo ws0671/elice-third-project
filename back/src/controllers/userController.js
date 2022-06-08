@@ -1,7 +1,6 @@
 import is from "@sindresorhus/is";
 import { userAuthService } from "../services/userService";
 import { likeService } from "../services/likeService";
-import multer from "multer";
 
 class userController {
   static async register(req, res, next) {
@@ -95,12 +94,11 @@ class userController {
       // URI로부터 사용자 id를 추출함.
       const userId = req.params.userId;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
-      const name = req.body.name ?? null;
-      const email = req.body.email ?? null;
-      const password = req.body.password ?? null;
-      const description = req.body.description ?? null;
-
-      const toUpdate = { name, email, password, description };
+      const { name, email, password, description } = req.body ?? null;
+      const imageUrl = req.imageUrl;
+      console.log(imageUrl);
+      console.log(req);
+      const toUpdate = { name, email, password, description, imageUrl };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ userId, toUpdate });

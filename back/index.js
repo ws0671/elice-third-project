@@ -1,73 +1,68 @@
 import "dotenv/config";
-const { format } = require("util");
-const express = require("express");
-const Multer = require("multer");
+import { app } from "./src/app";
 
-// By default, the client will authenticate using the service account file
-// specified by the GOOGLE_APPLICATION_CREDENTIALS environment variable and use
-// the project specified by the GOOGLE_CLOUD_PROJECT environment variable. See
-// https://github.com/GoogleCloudPlatform/google-cloud-node/blob/master/docs/authentication.md
-// These environment variables are set automatically on Google App Engine
-const { Storage } = require("@google-cloud/storage");
+const PORT = process.env.SERVER_PORT || 5000;
 
-// Instantiate a storage client
-const storage = new Storage();
-
-const app = express();
-// app.set("view engine", "pug");
-const cors = require("cors");
-app.use(cors());
-// This middleware is available in Express v4.16.0 onwards
-app.use(express.json());
-
-// Multer is required to process file uploads and make them available via
-// req.files.
-const multer = Multer({
-  storage: Multer.memoryStorage(),
-  limits: {
-    fileSize: 5 * 1024 * 1024, // no larger than 5mb, you can change as needed.
-  },
-});
-
-// A bucket is a container for objects (files).
-const bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
-
-// Display a form for uploading files.
-app.get("/", (req, res) => {
-  console.log(`정상적으로 서버를 시작하였습니다.  http://localhost:${PORT}`);
-  res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
-});
-
-// Process the file upload and upload to Google Cloud Storage.
-app.post("/upload", multer.single("file"), (req, res, next) => {
-  if (!req.file) {
-    res.status(400).send("No file uploaded.");
-    return;
-  }
-
-  // Create a new blob in the bucket and upload the file data.
-  const blob = bucket.file(`${Date.now()}_` + req.file.originalname);
-  const blobStream = blob.createWriteStream({
-    resumable: false,
-  });
-
-  blobStream.on("error", (err) => {
-    next(err);
-  });
-
-  blobStream.on("finish", () => {
-    // The public URL can be used to directly access the file via HTTP.
-    const publicUrl = format(
-      `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-    );
-    res.status(200).send(publicUrl);
-  });
-
-  blobStream.end(req.file.buffer);
-});
-
-const PORT = parseInt(process.env.PORT) || 5000;
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-  console.log("Press Ctrl+C to quit.");
+  console.log(`정상적으로 서버를 시작하였습니다.  http://localhost:${PORT}`);
 });
+
+// import "dotenv/config";
+// const { format } = require("util");
+// const express = require("express");
+// const Multer = require("multer");
+// const { Storage } = require("@google-cloud/storage");
+
+// const storage = new Storage();
+
+// const app = express();
+// const cors = require("cors");
+// app.use(cors());
+// // This middleware is available in Express v4.16.0 onwards
+// app.use(express.json());
+
+// // Multer is required to process file uploads and make them available via
+// // req.files.
+// const multer = Multer({
+//   storage: Multer.memoryStorage(),
+//   limits: {
+//     fileSize: 5 * 1024 * 1024, // no larger than 5mb, you can change as needed.
+//   },
+// });
+
+// // A bucket is a container for objects (files).
+// const bucket = storage.bucket(process.env.GCLOUD_STORAGE_BUCKET);
+
+// // Display a form for uploading files.
+// app.get("/", (req, res) => {
+//   console.log(`정상적으로 서버를 시작하였습니다.  http://localhost:${PORT}`);
+//   res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
+// });
+
+// // Process the file upload and upload to Google Cloud Storage.
+// app.post("/upload", multer.single("file"), (req, res, next) => {
+//   if (!req.file) {
+//     res.status(400).send("No file uploaded.");
+//     return;
+//   }
+
+//   // Create a new blob in the bucket and upload the file data.
+//   const blob = bucket.file(`${Date.now()}_` + req.file.originalname);
+//   const blobStream = blob.createWriteStream({
+//     resumable: false,
+//   });
+
+//   blobStream.on("error", (err) => {
+//     next(err);
+//   });
+
+//   blobStream.on("finish", () => {
+//     // The public URL can be used to directly access the file via HTTP.
+//     const publicUrl = format(
+//       `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+//     );
+//     res.status(200).send(publicUrl);
+//   });
+
+//   blobStream.end(req.file.buffer);
+// });

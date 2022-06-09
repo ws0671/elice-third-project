@@ -49,6 +49,7 @@ const PostList = styled(Grid)`
     width: 100%;
     overflow: hidden;
     padding: 0 15px;
+    cursor: pointer;
 `;
 const PostUserImg = styled(Grid)`
     background-color: #d9d9d9;

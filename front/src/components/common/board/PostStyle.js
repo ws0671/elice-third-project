@@ -48,22 +48,21 @@ const UserDate = styled(Grid)`
 const Title = styled(Grid)`
     font-size: 18px;
     color: #464646;
-    margin: 3% 3% 0 3%;
+    margin: 3% 5%;
 `;
 const PostImg = styled(Grid)`
     background-color: gray;
-    margin: 2% 3%;
+    margin: 2% 5%;
 `;
 
 const Content = styled(Grid)`
     font-size: 15px;
     color: #464646;
-    margin: 2% 0;
-    margin: 2% 3%;
+    margin: 3% 5%;
 `;
 
 const PostTag = styled(Grid)`
-    padding: 2% 0;
+    padding: 2% 5%;
     top: 90%;
     position: absolute;
 `;
@@ -96,15 +95,6 @@ const CommentWrite = styled(Grid)`
     display: flex;
 `;
 
-const CommentInput = styled(Input)`
-    width: 100%;
-    border: none;
-
-    &:hover {
-        border-bottom: none;
-    }
-`;
-
 export {
     Left,
     Right,
@@ -120,5 +110,4 @@ export {
     Comment,
     CommentName,
     CommentWrite,
-    CommentInput,
 };

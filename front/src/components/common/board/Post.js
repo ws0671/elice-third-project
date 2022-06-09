@@ -16,8 +16,6 @@ import {
     PostInfo,
     Comment,
     CommentName,
-    CommentEditor,
-    CommentInput,
     CommentWrite,
 } from "./PostStyle";
 

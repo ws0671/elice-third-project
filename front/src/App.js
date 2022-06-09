@@ -9,7 +9,7 @@ import BoardPage from "./pages/BoardPage";
 import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/Register";
-import PostingPage from "./pages/Register";
+import PostingPage from "./pages/PostingPage";
 import Post from "./components/common/board/Post";
 
 function App() {

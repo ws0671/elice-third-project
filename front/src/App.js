@@ -10,7 +10,7 @@ import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/Register";
 import PostEditorPage from "./pages/PostEditorPage";
-import Post from "./components/common/board/Post";
+import PostPage from "./pages/PostPage";
 
 function App() {
     return (
@@ -24,7 +24,7 @@ function App() {
                 <Route path="/login" exact element={<LoginPage />} />
                 <Route path="/register" exact element={<RegisterPage />} />
                 <Route path="/postEditor" exact element={<PostEditorPage />} />
-                <Route path="/post" exact element={<Post />} />
+                <Route path="/post" exact element={<PostPage />} />
             </Routes>
         </Router>
     );

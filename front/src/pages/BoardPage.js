@@ -38,6 +38,7 @@ const BoardPage = () => {
 
     return (
         <>
+            <Header />
             <Container maxWidth="lg" style={{ padding: "0" }}>
                 <PostMenu>
                     <StylesProvider injectFirst>

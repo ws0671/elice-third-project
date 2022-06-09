@@ -27,7 +27,7 @@ const Post = () => {
                 max-width="lg"
                 style={{
                     display: "flex",
-                    padding: "0",
+                    padding: "20px 0",
                     justifyContent: "space-between",
                 }}
             >

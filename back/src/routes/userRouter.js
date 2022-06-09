@@ -24,24 +24,16 @@ userAuthRouter.get(
 // 사진 업로드
 userAuthRouter.post(
   "/users/images",
-  // loginRequired,
+  loginRequired,
   uploadImageMulter.single("image"),
   uploadImage
 );
 
 // 회원 정보 수정
-userAuthRouter.put(
-  "/users/:userId",
-  // loginRequired,
-  userController.setUserInfo
-);
+userAuthRouter.put("/users/:userId", loginRequired, userController.setUserInfo);
 
 // 특정 회원 정보 조회
-userAuthRouter.get(
-  "/users/:userId",
-  //loginRequired,
-  userController.getUserInfo
-);
+userAuthRouter.get("/users/:userId", loginRequired, userController.getUserInfo);
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", loginRequired, userController.afterLogin);

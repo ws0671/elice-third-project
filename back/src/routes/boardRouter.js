@@ -5,14 +5,16 @@ import { uploadImageMulter, uploadImage } from "../middlewares/uploadImage";
 
 const boardRouter = Router();
 
-// 게시판 생성
+// 사진 업로드
 boardRouter.post(
-  "/boards",
-  // loginRequired,
+  "/boards/images",
+  loginRequired,
   uploadImageMulter.single("image"),
-  uploadImage,
-  boardController.createBoard
+  uploadImage
 );
+
+// 게시판 생성
+boardRouter.post("/boards", loginRequired, boardController.createBoard);
 
 // 게시판 리스트 조회
 boardRouter.get("/boards", boardController.getBoards);
@@ -25,13 +27,7 @@ boardRouter.get(
 );
 
 // 게시판 수정
-boardRouter.put(
-  "/boards/:boardId",
-  // loginRequired,
-  uploadImageMulter.single("image"),
-  uploadImage,
-  boardController.editBoard
-);
+boardRouter.put("/boards/:boardId", loginRequired, boardController.editBoard);
 
 // 게시판 삭제
 boardRouter.delete(

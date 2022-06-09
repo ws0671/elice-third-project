@@ -3,10 +3,7 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
-const backendPortNumber = "5000";
-const serverUrl =
-  "http://" + window.location.hostname + ":" + backendPortNumber + "/";
+import * as Api from "./api";
 
 function App() {
   const [pickedImage, setPickedImage] = useState({
@@ -17,13 +14,16 @@ function App() {
   const [changeImage, setChangeImage] = useState(
     "http://placekitten.com/200/200"
   );
+
   const submitImg = async () => {
     if (pickedImage.data !== "") {
       try {
         const formData = new FormData();
+
         formData.append("image", pickedImage.data);
-        const res = await axios.put(
-          "http://localhost:5000/users/b33bfe21-53e2-433b-a906-c412d298048a",
+        console.log(formData);
+        const res = await axios.post(
+          "http://localhost:5000/users/images",
           formData,
           {
             headers: {
@@ -31,8 +31,14 @@ function App() {
             },
           }
         );
-        console.log(res.data);
-        setChangeImage(res.data.imageUrl);
+        const imageUrl = res.data.imageUrl;
+
+        const userEditRes = await Api.put(
+          "users/b33bfe21-53e2-433b-a906-c412d298048a",
+          { imageUrl }
+        );
+        console.log(userEditRes);
+        setChangeImage(userEditRes.data.imageUrl);
       } catch (err) {
         console.error(err);
       }

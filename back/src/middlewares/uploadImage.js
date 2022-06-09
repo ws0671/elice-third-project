@@ -22,6 +22,7 @@ const uploadImage = (req, res, next) => {
   // console.log(req.file);
   if (!req.file) {
     next();
+    return;
   }
 
   // 버킷에 새로운 blob을 생성하고 파일 데이터를 업로드
@@ -38,18 +39,14 @@ const uploadImage = (req, res, next) => {
     next(err);
   });
 
+  const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
   blobStream.on("finish", () => {
     // The public URL can be used to directly access the file via HTTP.
-    const publicUrl = format(
-      `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-    );
-    req.imageUrl = publicUrl;
-    // console.log(publicUrl);
-    // console.log(req.imageUrl);
+    const imageUrl = format(publicUrl);
+    res.status(200).send({ imageUrl });
   });
 
   blobStream.end(req.file.buffer);
-  next();
 };
 
 export { uploadImageMulter, uploadImage };

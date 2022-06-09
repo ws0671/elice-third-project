@@ -15,9 +15,9 @@ import {
     ListDate,
     ListTitle,
     WritePost,
-    TagButton,
+    Tag,
     Count,
-} from "./BoardStyle";
+} from "./NewPostsStyle";
 
 const Newposts = () => {
     const navigate = useNavigate();
@@ -65,7 +65,7 @@ const Newposts = () => {
                                 fontSize: "18px",
                             }}
                             onClick={() => {
-                                navigate("/posting");
+                                navigate("/postEditor");
                             }}
                         >
                             글쓰기
@@ -87,7 +87,10 @@ const Newposts = () => {
                     </PostUserInfo>
                     <PostInfo>
                         <ListTitle>초보집사! 궁금한게 있어요!</ListTitle>
-                        <TagButton>#해시태그</TagButton>
+                        <Grid style={{ display: "flex" }}>
+                            <Tag>#해시태그</Tag>
+                            <Tag>#해시태그</Tag>
+                        </Grid>
                     </PostInfo>
                     <PostSubInfo>
                         <VisibilityIcon

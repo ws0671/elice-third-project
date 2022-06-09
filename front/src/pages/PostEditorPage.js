@@ -1,9 +1,9 @@
-import Posting from "../components/common/board/Posting";
+import PostEditor from "../components/common/board/PostEditor";
 
 const PostingPage = () => {
     return (
         <>
-            <Posting />
+            <PostEditor />
         </>
     );
 };

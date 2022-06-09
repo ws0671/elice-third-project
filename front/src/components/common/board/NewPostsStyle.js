@@ -27,17 +27,14 @@ const UnSelectMenu = styled(Button)`
         color: black;
     }
 `;
-const TagButton = styled(Button)`
+const Tag = styled(Grid)`
     color: #818479;
     font-size: 0.5rem;
     border-radius: 100px;
     background-color: #ffffff;
-    margin: 10px 5px 0 0;
-    padding: 3px 5px;
-    border: solid 1px;
-    &:hover {
-        background-color: #ffffff;
-    }
+    border: solid 1px #eae0cc;
+    margin: 10px 7px 0 0;
+    padding: 5px 10px;
 `;
 
 const PostList = styled(Grid)`
@@ -127,6 +124,6 @@ export {
     PostMenu,
     SelectMenu,
     UnSelectMenu,
-    TagButton,
+    Tag,
     Count,
 };

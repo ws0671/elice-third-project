@@ -9,7 +9,7 @@ import BoardPage from "./pages/BoardPage";
 import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/Register";
-import PostingPage from "./pages/PostingPage";
+import PostEditorPage from "./pages/PostEditorPage";
 import Post from "./components/common/board/Post";
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
                 <Route path="/ai" exact element={<AiPage />} />
                 <Route path="/login" exact element={<LoginPage />} />
                 <Route path="/register" exact element={<RegisterPage />} />
-                <Route path="/posting" exact element={<PostingPage />} />
+                <Route path="/postEditor" exact element={<PostEditorPage />} />
                 <Route path="/post" exact element={<Post />} />
             </Routes>
         </Router>

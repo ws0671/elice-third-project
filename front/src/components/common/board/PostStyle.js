@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const Left = styled(Grid)`
     width: 69%;
-    border: solid 1px #d9d9d9;
-    border-radius: 7px;
+    border: solid 1px #d6e5e3;
+    border-radius: 10px;
     min-height: 600px;
     padding: 1% 3%;
     position: relative;
@@ -12,13 +12,13 @@ const Left = styled(Grid)`
 
 const Right = styled(Grid)`
     width: 29%;
-    border: solid 1px #d9d9d9;
-    border-radius: 7px;
+    border: solid 1px #d6e5e3;
+    border-radius: 10px;
     padding: 1% 3%;
     position: relative;
 `;
 const User = styled(Grid)`
-    border-bottom: solid 1px #d9d9d9;
+    border-bottom: solid 1px #d6e5e3;
     display: flex;
     justify-content: space-between;
     padding: 0 0 1% 0;
@@ -65,10 +65,11 @@ const PostTag = styled(Grid)`
     padding: 2% 5%;
     top: 90%;
     position: absolute;
+    display: flex;
 `;
 
 const PostInfo = styled(Grid)`
-    border-bottom: solid 1px #d9d9d9;
+    border-bottom: solid 1px #d6e5e3;
     height: 47px;
     font-size: 14px;
     color: gray;
@@ -89,10 +90,19 @@ const CommentName = styled(Grid)`
 const CommentWrite = styled(Grid)`
     top: 90%;
     position: absolute;
-    border-top: solid 1px #d9d9d9;
+    border-top: solid 1px #d6e5e3;
     width: 80%;
     padding: 3%;
     display: flex;
+`;
+
+const Tag = styled(Grid)`
+    color: black;
+    border: solid 1px #d6e5e3;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    margin: 0 7px 0 0;
+    padding: 6px 12px;
 `;
 
 export {
@@ -110,4 +120,5 @@ export {
     Comment,
     CommentName,
     CommentWrite,
+    Tag,
 };

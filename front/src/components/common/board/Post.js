@@ -17,6 +17,7 @@ import {
     Comment,
     CommentName,
     CommentWrite,
+    Tag,
 } from "./PostStyle";
 
 const Post = () => {
@@ -57,17 +58,8 @@ const Post = () => {
                     <PostImg>이미지</PostImg>
                     <Content>고양이도 산책 할 수 있나요?</Content>
                     <PostTag>
-                        <Button
-                            sx={{
-                                color: "#818479",
-                                border: "solid 1px",
-                                borderRadius: "20px",
-                                fontSize: "0.5rem",
-                                margin: "0 5px 0 0",
-                            }}
-                        >
-                            해시태그
-                        </Button>
+                        <Tag>해시태그</Tag>
+                        <Tag>해시태그2</Tag>
                     </PostTag>
                 </Left>
                 <Right>

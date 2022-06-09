@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -31,34 +31,29 @@ const RegisterPage = () => {
     passwordNotSameError: "",
   });
 
+  const formRef = useRef();
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const formData = new FormData(e.currentTarget);
-      const nickname = formData.get("nickname");
-      const email = formData.get("email");
-      const password = formData.get("password");
-      const passwordConfirm = formData.get("passwordConfirm");
+    if (formRef.current.reportValidity()) {
+      try {
+        let isFormDataVaild = true;
+        Object.keys(errorMessage).forEach((key) => {
+          isFormDataVaild = isFormDataVaild && errorMessage[key] === "";
+        });
 
-      const isFormDataVaild =
-        errorMessage.nicknameError === "" &&
-        errorMessage.emailError === "" &&
-        errorMessage.passwordError === "" &&
-        errorMessage.passwordNotSameError === "" &&
-        nickname !== "" &&
-        email !== "" &&
-        password !== "" &&
-        passwordConfirm !== "";
-
-      if (isFormDataVaild) {
-        await Api.post("users/register", formData);
-        alert(`회원가입 완료! ${nickname}님 회원이 되신 것을 환영합니다.`);
+        if (isFormDataVaild) {
+          await Api.post("users/register", formData);
+          alert(
+            `회원가입 완료! ${formData.nickname}님 회원이 되신 것을 환영합니다.`
+          );
+        }
+      } catch (err) {
+        alert("회원가입에 실패하였습니다.", err);
       }
-    } catch (err) {
-      alert("회원가입에 실패하였습니다.", err);
     }
   };
 
@@ -158,6 +153,7 @@ const RegisterPage = () => {
             noValidate
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
+            ref={formRef}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>

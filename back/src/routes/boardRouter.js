@@ -1,8 +1,17 @@
 import { Router } from "express";
 import { loginRequired } from "../middlewares/loginRequired";
 import { boardController } from "../controllers/boardController";
+import { uploadImageMulter, uploadImage } from "../middlewares/uploadImage";
 
 const boardRouter = Router();
+
+// 사진 업로드
+boardRouter.post(
+  "/boards/images",
+  loginRequired,
+  uploadImageMulter.single("image"),
+  uploadImage
+);
 
 // 게시판 생성
 boardRouter.post("/boards", loginRequired, boardController.createBoard);

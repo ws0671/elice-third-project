@@ -12,11 +12,13 @@ class boardController {
       }
 
       const authorId = req.currentUserId;
-      const { title, content } = req.body;
+      const { title, content, imageUrl, hashTagArray } = req.body;
       const newBoard = await boardService.addBoard({
         authorId,
         title,
         content,
+        imageUrl,
+        hashTagArray,
       });
 
       res.status(201).json(newBoard);
@@ -51,8 +53,8 @@ class boardController {
   static editBoard = async (req, res, next) => {
     try {
       const boardId = req.params.boardId;
-      const { title, content } = req.body ?? null;
-      const toUpdate = { title, content };
+      const { title, content, imageUrl, hashTagArray } = req.body ?? null;
+      const toUpdate = { title, content, imageUrl, hashTagArray };
 
       const updatedBoard = await boardService.updateBoard({
         boardId,

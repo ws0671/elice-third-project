@@ -3,9 +3,22 @@ import { BoardModel } from "../db";
 
 class boardService {
   // board 생성
-  static addBoard = async ({ authorId, title, content }) => {
+  static addBoard = async ({
+    authorId,
+    title,
+    content,
+    imageUrl,
+    hashTagArray,
+  }) => {
     const boardId = uuidv4();
-    const newBoard = { boardId, authorId, title, content };
+    const newBoard = {
+      boardId,
+      authorId,
+      title,
+      content,
+      imageUrl,
+      hashTagArray,
+    };
 
     const createdNewBoard = await BoardModel.create(newBoard);
 

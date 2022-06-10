@@ -18,6 +18,11 @@ class boardService {
     return boards;
   };
 
+  static sortBoards = async ({ sortNum }) => {
+    const boards = await BoardModel.find({ viewCount: sortNum });
+    return boards;
+  };
+
   // board 상세 조회
   static findBoard = async ({ userId, boardId }) => {
     const board = await BoardModel.findOne({ boardId });
@@ -83,13 +88,21 @@ class boardService {
   }
 
   // title로 board리스트를 찾아 페이징처리하여 반환하는 함수
-  static async getSearchList({ title, page, perPage }) {
+  static async getSearchList({ title, page, perPage, sort }) {
     //title 정규식에 따른 board리스트 불러오기
     //paging 처리
+    let sortValue = "createdAt";
+    if (sort === "date") {
+      sortValue = "createdAt";
+    } else if (sort === "view") {
+      sortValue = "viewCount";
+    } else if (sort === "like") {
+      sortValue = "likeCount";
+    }
     return await BoardModel.find({
       title: { $regex: title, $options: "i" },
     })
-      .sort({ createdAt: -1 }) //createdAt 기준으로 정렬
+      .sort({ sortValue: -1 }) //최신순,조회순,좋아요순으로 정렬
       .limit(perPage) //한페이지에서 확인할 수 있는 결과의 수
       .skip((page - 1) * perPage) //페이지에 따른 skip 기준
       .lean();

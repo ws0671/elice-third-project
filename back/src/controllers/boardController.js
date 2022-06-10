@@ -37,6 +37,16 @@ class boardController {
     }
   };
 
+  static getSortBoards = async (req, res, next) => {
+    try {
+      const sortNum = req.query;
+      const boards = await boardService.sortBoards({ sortNum });
+      res.status(200).json(boards);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // 게시판 상세 내용 조회
   static getBoardContent = async (req, res, next) => {
     try {
@@ -93,12 +103,14 @@ class boardController {
       const { title } = req.query;
       const page = req.query.page || 1; //default 1페이지
       const perPage = req.query.perPage || 10; //default 10페이지
+      const sort = req.query.sort;
 
       const finalPage = await boardService.getFinalPage({ title, perPage });
       const searchList = await boardService.getSearchList({
         title,
         page,
         perPage,
+        sort,
       });
       const listPaged = {
         finalPage: finalPage,

@@ -1,12 +1,8 @@
-# dependencies
-.env
 mongobuild.sh
 mysqlbuild.sh
 nestbuild.sh
-key.json
 
 !images/.keep
 !common/.keep
 !pages/.keep
 !utils/.keep
-node_modules

@@ -172,6 +172,7 @@ const RegisterPage = () => {
                   onBlur={handleBlur}
                   error={errorMessage.nicknameError !== ""}
                   helperText={errorMessage.nicknameError}
+                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>

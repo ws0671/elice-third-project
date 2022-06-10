@@ -46,7 +46,11 @@ const RegisterPage = () => {
         });
 
         if (isFormDataVaild) {
-          await Api.post("users/register", formData);
+          await Api.post("users/register", {
+            name: formData.nickname,
+            email: formData.email,
+            password: formData.password,
+          });
           alert(
             `회원가입 완료! ${formData.nickname}님 회원이 되신 것을 환영합니다.`
           );

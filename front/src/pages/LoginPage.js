@@ -51,6 +51,10 @@ const LoginPage = () => {
           password: password,
         });
 
+        if (res.status !== 200) {
+          throw new Error(res.data);
+        }
+
         // 유저 정보는 response의 data임.
         const user = res.data;
         // JWT 토큰은 유저 정보의 token임.
@@ -63,8 +67,7 @@ const LoginPage = () => {
         // 메인 화면으로 돌아감. (뒤로가기 불가능)
         navigate("/", { replace: true });
       } catch (err) {
-        console.log(err);
-        alert("로그인에 실패하였습니다.", err);
+        alert(err.message);
       }
     }
   };

@@ -19,6 +19,8 @@ boardRouter.post("/boards", loginRequired, boardController.createBoard);
 // 게시판 리스트 조회
 boardRouter.get("/boards", boardController.getBoards);
 
+// 게시판 검색
+boardRouter.get("/boards/search", boardController.boardSearch);
 // 게시판 상세 내용 조회
 boardRouter.get(
   "/boards/:boardId",

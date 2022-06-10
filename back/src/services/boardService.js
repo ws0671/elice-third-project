@@ -72,6 +72,28 @@ class boardService {
 
     return deleteResult;
   };
+
+  //title로 검색한 board 목록의 마지막 페이지 반환
+  static async getFinalPage({ title, perPage }) {
+    const boardList = await BoardModel.countDocuments({
+      title: { $regex: title, $options: "i" },
+    });
+    const finalPage = Math.ceil(boardList / perPage);
+    return finalPage;
+  }
+
+  // title로 board리스트를 찾아 페이징처리하여 반환하는 함수
+  static async getSearchList({ title, page, perPage }) {
+    //title 정규식에 따른 board리스트 불러오기
+    //paging 처리
+    return await BoardModel.find({
+      title: { $regex: title, $options: "i" },
+    })
+      .sort({ createdAt: -1 }) //createdAt 기준으로 정렬
+      .limit(perPage) //한페이지에서 확인할 수 있는 결과의 수
+      .skip((page - 1) * perPage) //페이지에 따른 skip 기준
+      .lean();
+  }
 }
 
 export { boardService };

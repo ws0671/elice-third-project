@@ -35,6 +35,7 @@ const Tag = styled(Grid)`
     border: solid 1px #eae0cc;
     margin: 10px 7px 0 0;
     padding: 5px 10px;
+    font-family: "NanumSquareRound";
 `;
 
 const PostList = styled(Grid)`
@@ -42,14 +43,13 @@ const PostList = styled(Grid)`
     border-radius: 20px;
     height: 100px;
     margin: 25px 0;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     overflow: hidden;
     padding: 0 15px;
     cursor: pointer;
 `;
 const PostUserImg = styled(Grid)`
-    background-color: #d9d9d9;
     border-radius: 100%;
     width: 60px;
     height: 60px;
@@ -65,7 +65,7 @@ const PostUserInfo = styled(Grid)`
 `;
 
 const PostInfo = styled(Grid)`
-    width: 53%;
+    width: 50%;
     max-width: 600px;
     height: 70px;
     margin: 20px;
@@ -73,14 +73,15 @@ const PostInfo = styled(Grid)`
 
 const PostSubInfo = styled(Grid)`
     width: 15%;
-    max-width: 200px;
+    max-width: 250px;
     height: 70px;
-    margin: 35px 0;
+    padding: 35px 0;
     display: flex;
 `;
 
 const ListName = styled(Grid)`
     font-size: 16px;
+    font-family: "NanumSquareRound";
 `;
 
 const ListDate = styled(Grid)`
@@ -89,6 +90,7 @@ const ListDate = styled(Grid)`
 
 const ListTitle = styled(Grid)`
     font-weight: bold;
+    font-family: "NanumSquareRound";
     font-size: 16px;
 `;
 
@@ -109,7 +111,7 @@ const WritePost = styled(Button)`
 const Count = styled(Grid)`
     font-size: 15px;
     font-color: gray;
-    margin: 0 30px 0 15px;
+    margin: 0 10%;
 `;
 export {
     PostList,

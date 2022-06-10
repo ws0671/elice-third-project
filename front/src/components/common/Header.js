@@ -1,17 +1,41 @@
 import { useNavigate } from "react-router-dom";
 import { Grid, Container } from "@mui/material";
 import styled from "styled-components";
-
+import Image from "../../assets/images/pet-house.png";
 const Menu = styled(Grid)`
-    padding: 22px 15px;
+    padding: 22px 0;
     font-size: 15px;
+    cursor: pointer;
+    color: #444444;
+    display: flex;
+    font-family: "GyeonggiTitleM";
+    ::after {
+        content: "|";
+        padding: 2px 12px;
+        color: gray;
+        font-size: 10px;
+    }
 `;
+
+const Logo = styled(Grid)`
+    padding: 12px 0;
+    cursor: pointer;
+`;
+
 const Header = () => {
     const navigate = useNavigate();
 
     return (
         <>
-            <Grid style={{ width: "100%", backgroundColor: "#F6F5EF" }}>
+            <Grid
+                style={{
+                    width: "100%",
+                    backgroundColor: "#F6F5EF",
+                    marginBottom: "20px",
+                    position: "fixed",
+                    zIndex: "100",
+                }}
+            >
                 <Container
                     style={{
                         display: "flex",
@@ -19,13 +43,13 @@ const Header = () => {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Menu
+                    <Logo
                         onClick={() => {
                             navigate("/");
                         }}
                     >
-                        로고 + 서비스명 (홈으로)
-                    </Menu>
+                        <img src={Image} style={{ height: "45px" }} />
+                    </Logo>
                     <Grid style={{ display: "flex" }}>
                         <Menu
                             onClick={() => {

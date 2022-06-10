@@ -17,6 +17,7 @@ const SelectMenu = styled(Button)`
     margin: 10px;
     color: #386150;
     font-weight: bold;
+    font-family: "GyeonggiTitleM";
     &:hover {
         color: black;
     }
@@ -27,7 +28,7 @@ const UnSelectMenu = styled(Button)`
     margin: 10px;
     color: #818479;
     font-weight: bold;
-
+    font-family: "GyeonggiTitleM";
     &:hover {
         color: black;
     }
@@ -39,7 +40,7 @@ const BoardPage = () => {
     return (
         <>
             <Header />
-            <Container maxWidth="lg" style={{ padding: "0" }}>
+            <Container maxWidth="lg" style={{ paddingTop: "65px" }}>
                 <PostMenu>
                     <StylesProvider injectFirst>
                         {menu ? (

@@ -8,15 +8,12 @@ const PageTitle = styled(Grid)`
 `;
 
 const TitleWrite = styled(TextareaAutosize)`
-    border-radius: 10px 10px 0 0;
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    border-bottom: solid 1px #dcdcdc;
-    font-size:20px;
+    border-radius: 10px;
+    border: solid 1px #dcdcdc;
+    font-size:18px;
     width: 99%;
     resize: none;
-    padding: 3%;
+    padding: 2%;
     &: hover {
       background-color: #F7F7F7;
     }
@@ -28,12 +25,13 @@ const TitleWrite = styled(TextareaAutosize)`
 `;
 
 const Write = styled(TextareaAutosize)`
-    font-size: 20px;
+    font-size: 15px;
     border: solid 1px #dcdcdc;
     border-radius: 10px;
     width: 99%;
     resize: none;
-    padding: 3%;
+    padding: 2%;
+    margin : 1% 0;
 
     &: hover {
       background-color: #F7F7F7;
@@ -44,4 +42,5 @@ const Write = styled(TextareaAutosize)`
       outline:none;
     },
 `;
+
 export { PageTitle, TitleWrite, Write };

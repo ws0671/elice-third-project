@@ -62,7 +62,7 @@ const Newposts = () => {
                     <StylesProvider injectFirst>
                         <WritePost
                             style={{
-                                fontSize: "18px",
+                                fontSize: "16px",
                             }}
                             onClick={() => {
                                 navigate("/postEditor");
@@ -80,7 +80,14 @@ const Newposts = () => {
                         navigate("/post");
                     }}
                 >
-                    <PostUserImg />
+                    <PostUserImg
+                        style={{
+                            backgroundImage:
+                                "url(http://www.urbanbrush.net/web/wp-content/uploads/edd/2019/01/urbanbrush-20190108131811238895.png)",
+                            backgroundSize: "100% 100%",
+                            backgroundRepeat: "no-repeat",
+                        }}
+                    />
                     <PostUserInfo>
                         <ListName>Aerim</ListName>
                         <ListDate>2022-05-01</ListDate>
@@ -93,11 +100,7 @@ const Newposts = () => {
                         </Grid>
                     </PostInfo>
                     <PostSubInfo>
-                        <VisibilityIcon
-                            style={{
-                                margin: "0 5px",
-                            }}
-                        />
+                        <VisibilityIcon />
                         <Count> 3 </Count>
                         <FavoriteIcon />
                         <Count> 10</Count>

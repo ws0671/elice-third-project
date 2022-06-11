@@ -94,8 +94,16 @@ class userController {
       // URI로부터 사용자 id를 추출함.
       const userId = req.params.userId;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
-      const { name, email, password, description, imageUrl } = req.body ?? null;
-      const toUpdate = { name, email, password, description, imageUrl };
+      const { name, email, password, description, imageUrl, speciesArray } =
+        req.body ?? null;
+      const toUpdate = {
+        name,
+        email,
+        password,
+        description,
+        imageUrl,
+        speciesArray,
+      };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ userId, toUpdate });

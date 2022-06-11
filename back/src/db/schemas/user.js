@@ -28,6 +28,10 @@ const UserSchema = new Schema(
       required: true,
       default: "http://placekitten.com/200/200",
     },
+    speciesArray: {
+      type: [String],
+      required: true,
+    },
   },
   {
     timestamps: true,

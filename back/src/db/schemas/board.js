@@ -28,6 +28,14 @@ const BoardSchema = new Schema(
       required: true,
       default: 0,
     },
+    imageUrl: {
+      type: String,
+      required: false,
+    },
+    hashTagArray: {
+      type: [String],
+      required: false,
+    },
   },
   {
     timestamps: true,

@@ -35,7 +35,7 @@ async function post(endpoint, data) {
       },
     })
     .then((res) => res)
-    .catch((error) => error.response.data);
+    .catch((error) => error.response);
 }
 
 async function put(endpoint, data) {

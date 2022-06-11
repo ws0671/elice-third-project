@@ -2,6 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { Grid, Container } from "@mui/material";
 import styled from "styled-components";
 import Image from "../../assets/images/pet-house.png";
+
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { LOGOUT } from "../../store/slices/authSlice";
+
 const Menu = styled(Grid)`
     padding: 22px 0;
     font-size: 15px;
@@ -24,6 +29,8 @@ const Logo = styled(Grid)`
 
 const Header = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth.value);
 
     return (
         <>
@@ -86,13 +93,32 @@ const Header = () => {
                         >
                             회원가입
                         </Menu>
-                        <Menu
-                            onClick={() => {
-                                navigate("/login");
-                            }}
-                        >
-                            로그인
-                        </Menu>
+                        {!user && (
+                            <Menu
+                                onClick={() => {
+                                    navigate("/login");
+                                }}
+                            >
+                                로그인
+                            </Menu>
+                        )}
+                        {user && (
+                            <>
+                                <div
+                                    onClick={() => {
+                                        // sessionStorage에 저장했던 JWT 토큰 삭제
+                                        sessionStorage.removeItem("userToken");
+                                        // dispatch 함수를 이용해 로그아웃함.
+                                        dispatch(LOGOUT());
+                                        // 메인 화면으로 돌아감. (뒤로가기 불가능)
+                                        navigate("/", { replace: true });
+                                    }}
+                                >
+                                    로그아웃
+                                </div>
+                                <h3>{user.name}님 로그인 상태</h3>
+                            </>
+                        )}
                     </Grid>
                 </Container>
             </Grid>

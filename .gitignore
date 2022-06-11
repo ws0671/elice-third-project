@@ -3,6 +3,7 @@
 mongobuild.sh
 mysqlbuild.sh
 nestbuild.sh
+key.json
 
 !images/.keep
 !common/.keep

@@ -13,13 +13,16 @@ class boardService {
   };
 
   // board 목록 조회 - pagination 기능이 포함되어 있지 않음
-  static findBoards = async () => {
-    const boards = await BoardModel.find({});
-    return boards;
-  };
-
-  static sortBoards = async ({ sortNum }) => {
-    const boards = await BoardModel.find({ viewCount: sortNum });
+  static findBoards = async (sort) => {
+    let sortValue = "createdAt";
+    if (sort === "date") {
+      sortValue = "createdAt";
+    } else if (sort === "view") {
+      sortValue = "viewCount";
+    } else if (sort === "like") {
+      sortValue = "likeCount";
+    }
+    const boards = await BoardModel.find({}).sort({ [sortValue]: -1 });
     return boards;
   };
 
@@ -102,7 +105,7 @@ class boardService {
     return await BoardModel.find({
       title: { $regex: title, $options: "i" },
     })
-      .sort({ sortValue: -1 }) //최신순,조회순,좋아요순으로 정렬
+      .sort({ [sortValue]: -1 }) //최신순,조회순,좋아요순으로 정렬
       .limit(perPage) //한페이지에서 확인할 수 있는 결과의 수
       .skip((page - 1) * perPage) //페이지에 따른 skip 기준
       .lean();

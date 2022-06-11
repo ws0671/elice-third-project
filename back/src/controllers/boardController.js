@@ -30,17 +30,8 @@ class boardController {
   // 게시판 리스트 조회
   static getBoards = async (req, res, next) => {
     try {
-      const boards = await boardService.findBoards();
-      res.status(200).json(boards);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  static getSortBoards = async (req, res, next) => {
-    try {
-      const sortNum = req.query;
-      const boards = await boardService.sortBoards({ sortNum });
+      const sort = req.query.sort;
+      const boards = await boardService.findBoards(sort);
       res.status(200).json(boards);
     } catch (error) {
       next(error);

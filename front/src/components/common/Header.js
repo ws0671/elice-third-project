@@ -46,24 +46,34 @@ const Header = () => {
       >
         AI 종 분석
       </div>
-      <div
-        onClick={() => {
-          navigate("/register");
-        }}
-      >
-        회원가입
-      </div>
+
       {!user && (
-        <div
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          로그인
-        </div>
+        <>
+          <div
+            onClick={() => {
+              navigate("/register");
+            }}
+          >
+            회원가입
+          </div>
+          <div
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            로그인
+          </div>
+        </>
       )}
       {user && (
         <>
+          <div
+            onClick={() => {
+              navigate("/mypage");
+            }}
+          >
+            마이 페이지
+          </div>
           <div
             onClick={() => {
               // sessionStorage에 저장했던 JWT 토큰 삭제

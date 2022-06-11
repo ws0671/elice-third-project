@@ -14,6 +14,7 @@ import BoardPage from "./pages/BoardPage";
 import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import MypagePage from "./pages/MypagePage";
 
 function App() {
   const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -58,6 +59,7 @@ function App() {
           <Route path="/ai" exact element={<AiPage />} />
           <Route path="/login" exact element={<LoginPage />} />
           <Route path="/register" exact element={<RegisterPage />} />
+          <Route path="/mypage" exact element={<MypagePage />} />
         </Routes>
       </Router>
     </React.Suspense>

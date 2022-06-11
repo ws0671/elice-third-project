@@ -1,5 +1,5 @@
-import Newposts from "../components/common/board/NewPosts";
-import BestPosts from "../components/common/board/BestPosts";
+import Newposts from "../components/board/NewPosts";
+import BestPosts from "../components/board/BestPosts";
 import Header from "../components/common/Header";
 import { Container, Grid } from "@mui/material";
 import styled from "styled-components";

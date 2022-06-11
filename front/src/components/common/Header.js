@@ -55,7 +55,11 @@ const Header = () => {
                             navigate("/");
                         }}
                     >
-                        <img src={Image} style={{ height: "45px" }} />
+                        <img
+                            src={Image}
+                            style={{ height: "45px" }}
+                            alt="logo"
+                        />
                     </Logo>
                     <Grid style={{ display: "flex" }}>
                         <Menu

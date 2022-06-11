@@ -1,4 +1,4 @@
-import PostEditor from "../components/common/board/PostEditor";
+import PostEditor from "../components/board/PostEditor";
 import Header from "../components/common/Header";
 const PostingPage = () => {
     return (

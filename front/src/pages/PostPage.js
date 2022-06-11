@@ -1,5 +1,5 @@
 import Header from "../components/common/Header";
-import Post from "../components/common/board/Post";
+import Post from "../components/board/Post";
 const PostPage = () => {
     return (
         <>

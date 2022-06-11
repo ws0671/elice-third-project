@@ -4,6 +4,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Grid, InputBase } from "@mui/material";
 import { StylesProvider } from "@material-ui/core";
 import SearchIcon from "@mui/icons-material/Search";
+import { useSelector } from "react-redux";
 
 import {
     PostList,
@@ -21,6 +22,8 @@ import {
 
 const Newposts = () => {
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.value);
+    console.log(user);
 
     return (
         <>

@@ -26,16 +26,15 @@ class boardService {
   };
 
   // board 목록 조회 - pagination 기능이 포함되어 있지 않음
-  static findBoards = async (sort) => {
-    let sortValue = "createdAt";
-    if (sort === "date") {
-      sortValue = "createdAt";
-    } else if (sort === "view") {
-      sortValue = "viewCount";
-    } else if (sort === "like") {
-      sortValue = "likeCount";
-    }
-    const boards = await BoardModel.find({}).sort({ [sortValue]: -1 });
+  static findBoards = async (sort, direction) => {
+    const sortMap = {
+      date: "createdAt",
+      view: "viewCount",
+      like: "likeCount",
+    };
+    const boards = await BoardModel.find({}).sort({
+      ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }),
+    });
     return boards;
   };
 
@@ -104,21 +103,18 @@ class boardService {
   }
 
   // title로 board리스트를 찾아 페이징처리하여 반환하는 함수
-  static async getSearchList({ title, page, perPage, sort }) {
+  static async getSearchList({ title, page, perPage, sort, direction }) {
     //title 정규식에 따른 board리스트 불러오기
     //paging 처리
-    let sortValue = "createdAt";
-    if (sort === "date") {
-      sortValue = "createdAt";
-    } else if (sort === "view") {
-      sortValue = "viewCount";
-    } else if (sort === "like") {
-      sortValue = "likeCount";
-    }
+    const sortMap = {
+      date: "createdAt",
+      view: "viewCount",
+      like: "likeCount",
+    };
     return await BoardModel.find({
       title: { $regex: title, $options: "i" },
     })
-      .sort({ [sortValue]: -1 }) //최신순,조회순,좋아요순으로 정렬
+      .sort({ ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }) }) //최신순,조회순,좋아요순으로 정렬
       .limit(perPage) //한페이지에서 확인할 수 있는 결과의 수
       .skip((page - 1) * perPage) //페이지에 따른 skip 기준
       .lean();

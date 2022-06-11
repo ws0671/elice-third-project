@@ -33,7 +33,8 @@ class boardController {
   static getBoards = async (req, res, next) => {
     try {
       const sort = req.query.sort;
-      const boards = await boardService.findBoards(sort);
+      const direction = req.query.direction;
+      const boards = await boardService.findBoards(sort, direction);
       res.status(200).json(boards);
     } catch (error) {
       next(error);
@@ -97,6 +98,7 @@ class boardController {
       const page = req.query.page || 1; //default 1페이지
       const perPage = req.query.perPage || 10; //default 10페이지
       const sort = req.query.sort;
+      const direction = req.query.direction;
 
       const finalPage = await boardService.getFinalPage({ title, perPage });
       const searchList = await boardService.getSearchList({
@@ -104,6 +106,7 @@ class boardController {
         page,
         perPage,
         sort,
+        direction,
       });
       const listPaged = {
         finalPage: finalPage,

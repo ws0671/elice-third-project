@@ -1,9 +1,8 @@
 import Newposts from "../components/board/NewPosts";
 import BestPosts from "../components/board/BestPosts";
 import Header from "../components/common/Header";
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Button } from "@mui/material";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import { useState } from "react";
 import { StylesProvider } from "@material-ui/core";
 

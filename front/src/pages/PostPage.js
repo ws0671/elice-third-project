@@ -1,11 +1,12 @@
 import Header from "../components/common/Header";
-
-const HomePage = () => {
+import Post from "../components/board/Post";
+const PostPage = () => {
     return (
         <>
             <Header />
+            <Post />
         </>
     );
 };
 
-export default HomePage;
+export default PostPage;

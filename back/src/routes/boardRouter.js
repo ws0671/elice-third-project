@@ -1,8 +1,17 @@
 import { Router } from "express";
 import { loginRequired } from "../middlewares/loginRequired";
 import { boardController } from "../controllers/boardController";
+import { uploadImageMulter, uploadImage } from "../middlewares/uploadImage";
 
 const boardRouter = Router();
+
+// 사진 업로드
+boardRouter.post(
+  "/boards/images",
+  loginRequired,
+  uploadImageMulter.single("image"),
+  uploadImage
+);
 
 // 게시판 생성
 boardRouter.post("/boards", loginRequired, boardController.createBoard);
@@ -10,6 +19,8 @@ boardRouter.post("/boards", loginRequired, boardController.createBoard);
 // 게시판 리스트 조회
 boardRouter.get("/boards", boardController.getBoards);
 
+// 게시판 검색
+boardRouter.get("/boards/search", boardController.boardSearch);
 // 게시판 상세 내용 조회
 boardRouter.get(
   "/boards/:boardId",

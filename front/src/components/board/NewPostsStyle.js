@@ -1,5 +1,4 @@
-import Button from "@material-ui/core/Button";
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import styled from "styled-components";
 
 const PostMenu = styled(Grid)`

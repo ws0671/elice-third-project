@@ -5,6 +5,8 @@ import { Grid, InputBase } from "@mui/material";
 import { StylesProvider } from "@material-ui/core";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
+import react, { useEffect, useState } from "react";
+import * as Api from "../../api";
 
 import {
     PostList,
@@ -23,7 +25,17 @@ import {
 const Newposts = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.value);
-    console.log(user);
+
+    const [allContents, setAllContents] = useState(undefined);
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await Api.get("boards");
+            setAllContents(res.data);
+        }
+        fetchData();
+        console.log(allContents);
+    }, []);
 
     return (
         <>
@@ -60,55 +72,65 @@ const Newposts = () => {
                     />
                     <InputBase
                         placeholder="검색어를 입력하세요."
-                        sx={{ color: "white", margin: "0 0 0 25px" }}
+                        sx={{ color: "white", margin: "7px  0 0 25px" }}
                     />
-                    <StylesProvider injectFirst>
-                        <WritePost
-                            style={{
-                                fontSize: "16px",
-                            }}
-                            onClick={() => {
-                                navigate("/postEditor");
-                            }}
-                        >
-                            글쓰기
-                        </WritePost>
-                    </StylesProvider>
+                    {user && (
+                        <>
+                            <StylesProvider injectFirst>
+                                <WritePost
+                                    style={{
+                                        fontSize: "14px",
+                                        margin: "2px",
+                                        fontWeight: "bold",
+                                    }}
+                                    onClick={() => {
+                                        navigate("/postEditor");
+                                    }}
+                                >
+                                    글쓰기
+                                </WritePost>
+                            </StylesProvider>
+                        </>
+                    )}
                 </Grid>
             </Grid>
             <Grid>
-                <PostList
-                    container
-                    onClick={() => {
-                        navigate("/post");
-                    }}
-                >
-                    <PostUserImg
-                        style={{
-                            backgroundImage:
-                                "url(http://www.urbanbrush.net/web/wp-content/uploads/edd/2019/01/urbanbrush-20190108131811238895.png)",
-                            backgroundSize: "100% 100%",
-                            backgroundRepeat: "no-repeat",
+                {allContents?.map((content, idx) => (
+                    <PostList
+                        container
+                        key={idx}
+                        onClick={() => {
+                            navigate("/post");
                         }}
-                    />
-                    <PostUserInfo>
-                        <ListName>Aerim</ListName>
-                        <ListDate>2022-05-01</ListDate>
-                    </PostUserInfo>
-                    <PostInfo>
-                        <ListTitle>초보집사! 궁금한게 있어요!</ListTitle>
-                        <Grid style={{ display: "flex" }}>
-                            <Tag>#해시태그</Tag>
-                            <Tag>#해시태그</Tag>
-                        </Grid>
-                    </PostInfo>
-                    <PostSubInfo>
-                        <VisibilityIcon />
-                        <Count> 3 </Count>
-                        <FavoriteIcon />
-                        <Count> 10</Count>
-                    </PostSubInfo>
-                </PostList>
+                    >
+                        <PostUserImg
+                            style={{
+                                backgroundImage:
+                                    "url(http://www.urbanbrush.net/web/wp-content/uploads/edd/2019/01/urbanbrush-20190108131811238895.png)",
+                                backgroundSize: "100% 100%",
+                                backgroundRepeat: "no-repeat",
+                            }}
+                        />
+                        <PostUserInfo>
+                            <ListName>{content.authorId}</ListName>
+                            <ListDate>{content.createdAt}</ListDate>
+                        </PostUserInfo>
+                        <PostInfo>
+                            <ListTitle>{content.title}</ListTitle>
+                            <Grid style={{ display: "flex" }}>
+                                {content.hashTagArray?.map((tag, index) => (
+                                    <Tag key={index}>{tag}</Tag>
+                                ))}
+                            </Grid>
+                        </PostInfo>
+                        <PostSubInfo>
+                            <VisibilityIcon />
+                            <Count> {content.viewCount} </Count>
+                            <FavoriteIcon />
+                            <Count> {content.likeCount} </Count>
+                        </PostSubInfo>
+                    </PostList>
+                ))}
             </Grid>
         </>
     );

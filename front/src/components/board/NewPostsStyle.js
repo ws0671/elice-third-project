@@ -99,9 +99,7 @@ const WritePost = styled(Button)`
     color: black;
     border: solid 3px white;
     border-radius: 10px;
-    padding: 0px 25px;
-    margin: 5px;
-
+    padding: 0px 20px;
     &:hover {
         background-color: white;
         font-weight: bold;

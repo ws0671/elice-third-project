@@ -15,6 +15,7 @@ import BoardPage from "./pages/BoardPage";
 import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import MypagePage from "./pages/MypagePage";
 
 function App() {
     const [isFetchCompleted, setIsFetchCompleted] = useState(false);
@@ -68,6 +69,7 @@ function App() {
                         element={<PostEditorPage />}
                     />
                     <Route path="/post" exact element={<PostPage />} />
+                    <Route path="/mypage" exact element={<MypagePage />} />
                 </Routes>
             </Router>
         </React.Suspense>

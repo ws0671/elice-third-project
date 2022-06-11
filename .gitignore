@@ -9,5 +9,7 @@ key.json
 !common/.keep
 !pages/.keep
 !utils/.keep
+
 node_modules
 key.json
+.env

@@ -1,8 +1,7 @@
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Grid, InputBase } from "@mui/material";
-import { StylesProvider } from "@material-ui/core";
+import { Grid, InputBase, withStyles } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
 import react, { useEffect, useState } from "react";
@@ -76,20 +75,26 @@ const Newposts = () => {
                     />
                     {user && (
                         <>
-                            <StylesProvider injectFirst>
-                                <WritePost
-                                    style={{
-                                        fontSize: "14px",
-                                        margin: "2px",
-                                        fontWeight: "bold",
-                                    }}
-                                    onClick={() => {
-                                        navigate("/postEditor");
-                                    }}
-                                >
-                                    글쓰기
-                                </WritePost>
-                            </StylesProvider>
+                            <WritePost
+                                sx={{
+                                    fontSize: "14px",
+                                    margin: "2px",
+                                    fontWeight: "bold",
+                                    color: "white",
+                                    border: "solid 1px",
+                                    p: "0",
+                                    m: "2px",
+                                    "&:hover": {
+                                        backgroundColor: "#FDF6F0",
+                                        color: "#386150",
+                                    },
+                                }}
+                                onClick={() => {
+                                    navigate("/postEditor");
+                                }}
+                            >
+                                글쓰기
+                            </WritePost>
                         </>
                     )}
                 </Grid>
@@ -100,23 +105,38 @@ const Newposts = () => {
                         container
                         key={idx}
                         onClick={() => {
-                            navigate("/post");
+                            navigate(`/post/${content.boardId}`);
                         }}
                     >
                         <PostUserImg
                             style={{
-                                backgroundImage:
-                                    "url(http://www.urbanbrush.net/web/wp-content/uploads/edd/2019/01/urbanbrush-20190108131811238895.png)",
+                                backgroundImage: `url(${content.imageUrl})`,
                                 backgroundSize: "100% 100%",
                                 backgroundRepeat: "no-repeat",
                             }}
                         />
                         <PostUserInfo>
-                            <ListName>{content.authorId}</ListName>
-                            <ListDate>{content.createdAt}</ListDate>
+                            <ListName>
+                                {content.authorId.length > 10 ? (
+                                    <>
+                                        {content.authorId.substr(0, 10) + "..."}
+                                    </>
+                                ) : (
+                                    <>{content.authorId}</>
+                                )}
+                            </ListName>
+                            <ListDate>
+                                {content.createdAt.slice(0, 10)}
+                            </ListDate>
                         </PostUserInfo>
                         <PostInfo>
-                            <ListTitle>{content.title}</ListTitle>
+                            <ListTitle>
+                                {content.title.length > 25 ? (
+                                    <>{content.title.substr(0, 25) + "..."}</>
+                                ) : (
+                                    <>{content.title}</>
+                                )}
+                            </ListTitle>
                             <Grid style={{ display: "flex" }}>
                                 {content.hashTagArray?.map((tag, index) => (
                                     <Tag key={index}>{tag}</Tag>

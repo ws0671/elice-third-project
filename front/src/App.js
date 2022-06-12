@@ -68,7 +68,7 @@ function App() {
                         exact
                         element={<PostEditorPage />}
                     />
-                    <Route path="/post" exact element={<PostPage />} />
+                    <Route path="/post/:boardId" exact element={<PostPage />} />
                     <Route path="/mypage" exact element={<MypagePage />} />
                 </Routes>
             </Router>

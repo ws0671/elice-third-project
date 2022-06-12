@@ -3,6 +3,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import { Container } from "@mui/system";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
     Left,
@@ -24,6 +26,10 @@ import {
 
 const Post = () => {
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.value);
+    const params = useParams();
+    console.log(params);
+
     return (
         <>
             <Container

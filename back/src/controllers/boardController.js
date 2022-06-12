@@ -98,7 +98,7 @@ class boardController {
       const sort = req.query.sort;
       const direction = req.query.direction;
 
-      const finalPage = await boardService.getFinalPage({ title, perPage });
+      const lastPage = await boardService.getLastPage({ title, perPage });
       const searchList = await boardService.getSearchList({
         title,
         page,
@@ -107,8 +107,8 @@ class boardController {
         direction,
       });
       const listPaged = {
-        finalPage: finalPage,
-        searchList: searchList,
+        lastPage,
+        searchList,
       };
       //board리스트를 응답값으로 반환
       res.status(200).json(listPaged);

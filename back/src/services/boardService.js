@@ -81,12 +81,12 @@ class boardService {
   };
 
   //title로 검색한 board 목록의 마지막 페이지 반환
-  static async getFinalPage({ title, perPage }) {
+  static async getLastPage({ title, perPage }) {
     const boardList = await BoardModel.countDocuments({
       title: { $regex: title, $options: "i" },
     });
-    const finalPage = Math.ceil(boardList / perPage);
-    return finalPage;
+    const lastPage = Math.ceil(boardList / perPage);
+    return lastPage;
   }
 
   // title로 board리스트를 찾아 페이징처리하여 반환하는 함수

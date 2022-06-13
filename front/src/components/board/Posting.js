@@ -3,8 +3,6 @@ import { PageTitle, TitleWrite, Write, TagInput, Tag } from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Api from "../../api";
-import Newposts from "./NewPosts";
-import axios from "axios";
 
 const Posting = () => {
     const navigate = useNavigate();

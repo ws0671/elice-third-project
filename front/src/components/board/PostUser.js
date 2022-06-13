@@ -5,7 +5,7 @@ import { User, UserImg, UserDate, UserName } from "./PostStyle";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const PostUser = ({ post }) => {
+const PostUser = ({ post, setPostEdit }) => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.value);
     const [author, setAuthor] = useState("");
@@ -16,8 +16,6 @@ const PostUser = ({ post }) => {
         };
         getUserData();
     }, []);
-    console.log("user", user);
-    console.log("author", author);
 
     const postDelete = () => {
         if (window.confirm("정말 삭제합니까?")) {
@@ -49,6 +47,7 @@ const PostUser = ({ post }) => {
                             color: "#FAC213",
                             margin: " 0 5px",
                         }}
+                        onClick={() => setPostEdit(true)}
                     >
                         수정
                     </Button>

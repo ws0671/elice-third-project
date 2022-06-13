@@ -22,8 +22,7 @@ const PostData = ({ content }) => {
     const navigate = useNavigate();
     const authorId = content.authorId;
     const [author, setAuthor] = useState("");
-    console.log("postdata", authorId);
-    console.log(content);
+
     useEffect(() => {
         const getUserData = async () => {
             const res = await Api.get("users", authorId);

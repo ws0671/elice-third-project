@@ -1,10 +1,10 @@
-import PostEditor from "../components/board/PostEditor";
+import Posting from "../components/board/Posting";
 import Header from "../components/common/Header";
 const PostingPage = () => {
     return (
         <>
             <Header />
-            <PostEditor />
+            <Posting />
         </>
     );
 };

@@ -16,17 +16,17 @@ userAuthRouter.get("/users", loginRequired, userController.getUsers);
 
 // 현재 회원 정보 조회
 userAuthRouter.get(
-  "/users/current",
-  loginRequired,
-  userController.getCurrentUserInfo
+    "/users/current",
+    loginRequired,
+    userController.getCurrentUserInfo
 );
 
 // 사진 업로드
 userAuthRouter.post(
-  "/users/images",
-  loginRequired,
-  uploadImageMulter.single("image"),
-  uploadImage
+    "/users/images",
+    loginRequired,
+    uploadImageMulter.single("image"),
+    uploadImage
 );
 
 // 회원 정보 수정

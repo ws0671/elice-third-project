@@ -6,20 +6,17 @@ const Left = styled(Grid)`
     border: solid 1px #fdf6f0;
     border-radius: 10px;
     background-color: #fdf6f0;
-    min-height: 500px;
+    min-height: 600px;
 `;
 
 const Right = styled(Grid)`
     width: 29%;
     position: relative;
     background-color: #fdf6f0;
+    border-radius: 10px;
     position: sticky;
     top: 105px;
-    max-height: 700px;
-    overflow: auto;
-    ::-webkit-scrollbar {
-        display: none;
-    }
+    max-height: 650px;
 `;
 const User = styled(Grid)`
     background-color: #386150;
@@ -47,9 +44,9 @@ const UserName = styled(Grid)`
 const UserDate = styled(Grid)`
     width: 50%;
     color: white;
-    font-size: 15px;
+    font-size: 16px;
     text-align: right;
-    padding: 8px 0 0 0;
+    padding: 12px 0 0 0;
     font-family: "NanumSquareRound";
 `;
 
@@ -98,6 +95,21 @@ const Comment = styled(Grid)`
     font-family: "NanumSquareRound";
 `;
 
+const Comments = styled(Grid)`
+    min-height: 500px;
+    max-height: 500px;
+    overflow: auto;
+    &::-webkit-scrollbar {
+        border-radius: 10px;
+        background: #fad4d4;
+        width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: #ef9f9f;
+    }
+`;
+
 const CommentName = styled(Grid)`
     font-size: 14px;
     font-weight: bold;
@@ -107,8 +119,6 @@ const CommentName = styled(Grid)`
 `;
 
 const CommentWrite = styled(Grid)`
-    top: 92%;
-    position: absolute;
     border-top: solid 1px #d6e5e3;
     width: 100%;
     padding: 4% 10%;
@@ -142,4 +152,5 @@ export {
     CommentName,
     CommentWrite,
     Tag,
+    Comments,
 };

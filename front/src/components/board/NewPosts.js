@@ -1,25 +1,12 @@
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Grid, InputBase, withStyles } from "@mui/material";
+import { Grid, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import PostData from "./PostData";
 import * as Api from "../../api";
 
-import {
-    PostList,
-    PostUserImg,
-    PostUserInfo,
-    PostInfo,
-    PostSubInfo,
-    ListName,
-    ListDate,
-    ListTitle,
-    WritePost,
-    Tag,
-    Count,
-} from "./NewPostsStyle";
+import { WritePost } from "./NewPostsStyle";
 
 const Newposts = () => {
     const navigate = useNavigate();
@@ -28,12 +15,11 @@ const Newposts = () => {
     const [allContents, setAllContents] = useState(undefined);
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             const res = await Api.get("boards");
             setAllContents(res.data);
-        }
+        };
         fetchData();
-        console.log(allContents);
     }, []);
 
     return (
@@ -74,82 +60,32 @@ const Newposts = () => {
                         sx={{ color: "white", margin: "7px  0 0 25px" }}
                     />
                     {user && (
-                        <>
-                            <WritePost
-                                sx={{
-                                    fontSize: "14px",
-                                    margin: "2px",
-                                    fontWeight: "bold",
-                                    color: "white",
-                                    border: "solid 1px",
-                                    p: "0",
-                                    m: "2px",
-                                    "&:hover": {
-                                        backgroundColor: "#FDF6F0",
-                                        color: "#386150",
-                                    },
-                                }}
-                                onClick={() => {
-                                    navigate("/postEditor");
-                                }}
-                            >
-                                글쓰기
-                            </WritePost>
-                        </>
+                        <WritePost
+                            sx={{
+                                fontSize: "14px",
+                                margin: "2px",
+                                fontWeight: "bold",
+                                color: "white",
+                                border: "solid 1px",
+                                p: "0",
+                                m: "2px",
+                                "&:hover": {
+                                    backgroundColor: "#FDF6F0",
+                                    color: "#386150",
+                                },
+                            }}
+                            onClick={() => {
+                                navigate("/postEditor");
+                            }}
+                        >
+                            글쓰기
+                        </WritePost>
                     )}
                 </Grid>
             </Grid>
             <Grid>
-                {allContents?.map((content, idx) => (
-                    <PostList
-                        container
-                        key={idx}
-                        onClick={() => {
-                            navigate(`/post/${content.boardId}`);
-                        }}
-                    >
-                        <PostUserImg
-                            style={{
-                                backgroundImage: `url(${content.imageUrl})`,
-                                backgroundSize: "100% 100%",
-                                backgroundRepeat: "no-repeat",
-                            }}
-                        />
-                        <PostUserInfo>
-                            <ListName>
-                                {content.authorId.length > 10 ? (
-                                    <>
-                                        {content.authorId.substr(0, 10) + "..."}
-                                    </>
-                                ) : (
-                                    <>{content.authorId}</>
-                                )}
-                            </ListName>
-                            <ListDate>
-                                {content.createdAt.slice(0, 10)}
-                            </ListDate>
-                        </PostUserInfo>
-                        <PostInfo>
-                            <ListTitle>
-                                {content.title.length > 25 ? (
-                                    <>{content.title.substr(0, 25) + "..."}</>
-                                ) : (
-                                    <>{content.title}</>
-                                )}
-                            </ListTitle>
-                            <Grid style={{ display: "flex" }}>
-                                {content.hashTagArray?.map((tag, index) => (
-                                    <Tag key={index}>{tag}</Tag>
-                                ))}
-                            </Grid>
-                        </PostInfo>
-                        <PostSubInfo>
-                            <VisibilityIcon />
-                            <Count> {content.viewCount} </Count>
-                            <FavoriteIcon />
-                            <Count> {content.likeCount} </Count>
-                        </PostSubInfo>
-                    </PostList>
+                {allContents?.map((content) => (
+                    <PostData key={content} content={content} />
                 ))}
             </Grid>
         </>

@@ -149,7 +149,7 @@ const RegisterPage = () => {
           }}
         >
           <AuthLogo />
-          <Typography component="h1" variant="h5">
+          <Typography component="h5" variant="h5">
             회원가입
           </Typography>
           <Box

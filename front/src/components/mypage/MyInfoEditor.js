@@ -77,8 +77,6 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
   };
 
   const handleImgUpload = async (e) => {
-    console.log(e.target.files);
-
     const formData = new FormData();
     formData.append("image", e.target.files[0]);
     const res = await axios.post(
@@ -175,6 +173,7 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
         variant="contained"
         size="medium"
         onClick={() => {
+          handleSaveClick();
           setIsEditing(false);
         }}
         startIcon={<CheckCircleIcon />}

@@ -59,12 +59,16 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
 
   const handleEnter = (addedSpecies) => {
     let newSpeciesArray = myInfo.speciesArray;
-    newSpeciesArray.push(addedSpecies);
 
-    setMyInfo((current) => {
-      return { ...current, speciesArray: newSpeciesArray };
-    });
+    if (newSpeciesArray.includes(addedSpecies)) {
+      alert("이미 동일한 반려동물이 등록되어있습니다.");
+    } else {
+      newSpeciesArray.push(addedSpecies);
 
+      setMyInfo((current) => {
+        return { ...current, speciesArray: newSpeciesArray };
+      });
+    }
     setIsSpeciesAdding(false);
   };
 

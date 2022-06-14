@@ -6,9 +6,9 @@ const BoardSchema = new Schema(
       type: String,
       required: true,
     },
-    authorId: {
-      type: String,
-      required: true,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     title: {
       type: String,

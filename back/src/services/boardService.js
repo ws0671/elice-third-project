@@ -4,7 +4,7 @@ import { BoardModel } from "../db";
 class boardService {
   // board 생성
   static addBoard = async ({
-    authorId,
+    // authorId,
     title,
     content,
     imageUrl,
@@ -13,7 +13,7 @@ class boardService {
     const boardId = uuidv4();
     const newBoard = {
       boardId,
-      authorId,
+      // authorId,
       title,
       content,
       imageUrl,
@@ -32,24 +32,26 @@ class boardService {
       view: "viewCount",
       like: "likeCount",
     };
-    const boards = await BoardModel.find({}).sort({
-      ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }),
-    });
+    const boards = await BoardModel.find({})
+      .sort({
+        ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }),
+      })
+      .populate("author");
     return boards;
   };
 
   // board 상세 조회
   static findBoard = async ({ userId, boardId }) => {
-    const board = await BoardModel.findOne({ boardId });
+    const board = await BoardModel.findOne({ boardId }).populate("author");
 
     // 현재 상세 조회를 진행하는 사용자가 작성한 글이 아닐 경우에만 조회수 증가
-    if (userId !== board.authorId) {
-      await BoardModel.findOneAndUpdate(
-        { boardId },
-        { $inc: { viewCount: 1 } },
-        { returnOriginal: false }
-      );
-    }
+    // if (userId !== board.authorId) {
+    //   await BoardModel.findOneAndUpdate(
+    //     { boardId },
+    //     { $inc: { viewCount: 1 } },
+    //     { returnOriginal: false }
+    //   );
+    // }
 
     return board;
   };

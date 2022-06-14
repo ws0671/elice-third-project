@@ -1,16 +1,22 @@
 import { Grid, Button, InputBase } from "@mui/material";
+import { Container } from "@mui/system";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import CloseIcon from "@mui/icons-material/Close";
+import axios from "axios";
+
 import { useEffect, useState, useRef } from "react";
+
 import PostingEditor from "./PostingEditor";
-import { Container } from "@mui/system";
+import CommentDetail from "./CommentData";
+import PostUser from "./PostUser";
+
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
-import CommentDetail from "./CommentData";
-import PostUser from "./PostUser";
+
 import {
     Left,
     Right,
@@ -33,18 +39,29 @@ const Post = () => {
     const [allComment, setAllComment] = useState(undefined);
     const [WriteComment, setWriteComment] = useState("");
     const [postEdit, setPostEdit] = useState(false);
+    const [like, setLike] = useState(undefined);
+
+    const fetchData = async () => {
+        const res = await Api.get(`boards/${params.boardId}`);
+        setPost(res.data);
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            const res = await Api.get(`boards/${params.boardId}`);
-            setPost(res.data);
-        };
         fetchData();
     }, []);
 
     const fetchCommentData = async () => {
-        const res = await Api.get(`comments/${params.boardId}`);
-        setAllComment(res.data);
+        await Api.get(`comments/${params.boardId}`)
+            .then((res) => {
+                setAllComment(res.data);
+            })
+            .then(() => {
+                console.log(messagesEndRef);
+                messagesEndRef.current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "end",
+                });
+            });
     };
 
     useEffect(() => {
@@ -59,18 +76,31 @@ const Post = () => {
             boardId: params.boardId,
             authorId: user.userId,
             content: WriteComment,
-        });
-        setWriteComment("");
-        fetchCommentData();
-        messagesEndRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "end",
+        })
+            .then(fetchCommentData)
+            .then(setWriteComment(""));
+        console.log(allComment);
+    };
+
+    const fetchLikeData = async () => {
+        await Api.get("likes").then((res) => {
+            setLike(res.data.boardIdArray);
         });
     };
+    const handleLikeClick = async () => {
+        await Api.put("likes", {
+            boardId: post.boardId,
+        })
+            .then(fetchLikeData)
+            .then(fetchData);
+    };
+    useEffect(() => {
+        fetchLikeData();
+    }, []);
 
     return (
         <>
-            {post && (
+            {post && like && allComment && (
                 <Container
                     max-width="lg"
                     style={{
@@ -125,12 +155,27 @@ const Post = () => {
                                 <PostInfo>
                                     <Grid>
                                         <IconButton>
-                                            <FavoriteBorderIcon
-                                                sx={{
-                                                    margin: "0 5%",
-                                                    color: "white",
-                                                }}
-                                            />
+                                            {like?.includes(post.boardId) ? (
+                                                <FavoriteIcon
+                                                    sx={{
+                                                        margin: "0 5%",
+                                                        color: "white",
+                                                    }}
+                                                    onClick={(e) => {
+                                                        handleLikeClick();
+                                                    }}
+                                                />
+                                            ) : (
+                                                <FavoriteBorderIcon
+                                                    sx={{
+                                                        margin: "0 5%",
+                                                        color: "white",
+                                                    }}
+                                                    onClick={(e) => {
+                                                        handleLikeClick();
+                                                    }}
+                                                />
+                                            )}
                                         </IconButton>
                                         {post.likeCount}
                                     </Grid>

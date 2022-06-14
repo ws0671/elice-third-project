@@ -35,9 +35,7 @@ const MypagePage = () => {
         email: currentUser.email,
         description: currentUser.description,
         imageUrl: currentUser.imageUrl,
-        // 임시
-        speciesArray: ["웰시코기", "말티즈"],
-        // speciesArray: currentUser.speciesArray,
+        speciesArray: currentUser.speciesArray,
       };
     });
   };

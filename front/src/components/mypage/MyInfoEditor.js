@@ -88,23 +88,27 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
     setMyInfo((current) => {
       return { ...current, imageUrl: imageUrl };
     });
+    return imageUrl;
   };
 
   const handleSaveClick = async () => {
     // 사진 변경시
     if (previewImg.src !== "") {
-      imgUpload();
+      const imageUrl = await imgUpload();
+      updateUser(imageUrl);
+    } else {
+      updateUser();
     }
-    // console.log(myInfo);
+  };
 
-    // 유저 정보 수정
+  // 유저 정보 수정
+  const updateUser = async (imageUrl) => {
     try {
-      console.log("try");
       await Api.put(`users/${user.userId}`, {
         name: myInfo.name,
         description: myInfo.description,
         speciesArray: myInfo.speciesArray,
-        imageUrl: myInfo.imageUrl,
+        imageUrl: imageUrl ? imageUrl : myInfo.imageUrl,
       });
       setIsEditing(false);
     } catch (err) {

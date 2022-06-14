@@ -29,8 +29,8 @@ const MyInfo = ({ setIsEditing, myInfo }) => {
       <Info>
         <InfoTitle>반려동물</InfoTitle>
         <InfoContent>
-          {myInfo.speciesArray.map((item, idx) => {
-            return <Species key={idx}>{item}</Species>;
+          {myInfo.speciesArray?.map((item, idx) => {
+            return <Species key={item}>{item}</Species>;
           })}
         </InfoContent>
       </Info>
@@ -40,8 +40,8 @@ const MyInfo = ({ setIsEditing, myInfo }) => {
         onClick={() => {
           setIsEditing(true);
         }}
+        startIcon={<EditIcon />}
       >
-        <EditIcon sx={{ marginRight: "5px" }} />
         수정하기
       </Button>
     </>

@@ -196,10 +196,10 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
       </Info>
       <Info>
         <InfoTitle>반려동물</InfoTitle>
-        {myInfo.speciesArray.map((item, index) => {
+        {myInfo.speciesArray?.map((item, index) => {
           return (
             <Species key={item}>
-              {item}{" "}
+              {item}
               <RemoveCircleIcon onClick={() => handleRemoveClick(index)} />
             </Species>
           );

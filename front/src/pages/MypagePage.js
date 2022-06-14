@@ -29,14 +29,12 @@ const MypagePage = () => {
   const getCurrentUser = async () => {
     const res = await Api.get("users/current");
     const currentUser = res.data;
-    setMyInfo((current) => {
-      return {
-        name: currentUser.name,
-        email: currentUser.email,
-        description: currentUser.description,
-        imageUrl: currentUser.imageUrl,
-        speciesArray: currentUser.speciesArray,
-      };
+    setMyInfo({
+      name: currentUser.name,
+      email: currentUser.email,
+      description: currentUser.description,
+      imageUrl: currentUser.imageUrl,
+      speciesArray: currentUser.speciesArray,
     });
   };
 

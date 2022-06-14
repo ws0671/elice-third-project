@@ -28,6 +28,12 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
 
   const [isSpeciesAdding, setIsSpeciesAdding] = useState(false);
 
+  // 프로필 이미지 미리보기
+  const [previewImg, setPreviewImg] = useState({
+    src: "",
+    name: "",
+  });
+
   const handleChange = (e) => {
     setMyInfo((current) => {
       return { ...current, [e.target.name]: e.target.value };
@@ -62,23 +68,12 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
     setIsSpeciesAdding(false);
   };
 
-  const handleSaveClick = async () => {
-    try {
-      await Api.put(`users/${user.userId}`, {
-        name: myInfo.name,
-        description: myInfo.description,
-        speciesArray: myInfo.speciesArray,
-        imageUrl: myInfo.imageUrl,
-      });
-      setIsEditing(false);
-    } catch (err) {
-      alert(err);
-    }
-  };
+  // 구글 스토리지에 업로드
+  const imgUpload = async () => {
+    const file = dataURLToFile(previewImg.src, previewImg.name);
 
-  const handleImgUpload = async (e) => {
     const formData = new FormData();
-    formData.append("image", e.target.files[0]);
+    formData.append("image", file);
     const res = await axios.post(
       "http://localhost:5000/users/images",
       formData,
@@ -95,10 +90,65 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
     });
   };
 
+  const handleSaveClick = async () => {
+    // 사진 변경시
+    if (previewImg.src !== "") {
+      imgUpload();
+    }
+    // console.log(myInfo);
+
+    // 유저 정보 수정
+    try {
+      console.log("try");
+      await Api.put(`users/${user.userId}`, {
+        name: myInfo.name,
+        description: myInfo.description,
+        speciesArray: myInfo.speciesArray,
+        imageUrl: myInfo.imageUrl,
+      });
+      setIsEditing(false);
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  // 미리보기에 필요
+  const fileToDataURL = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    return new Promise((resolve) => {
+      reader.onload = () => {
+        setPreviewImg(() => {
+          return { src: reader.result, name: file.name };
+        });
+        resolve();
+      };
+    });
+  };
+
+  // 구글 스토리지 업로드에 필요
+  const dataURLToFile = (dataURL, fileName) => {
+    const arr = dataURL.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], fileName, { type: mime });
+  };
+
   return (
     <>
       <UserImgWrapper>
-        <UserImg src={myInfo.imageUrl} alt="프로필 사진" />
+        {previewImg.src ? (
+          <UserImg src={previewImg.src} alt="프로필 사진 미리보기" />
+        ) : (
+          <UserImg src={myInfo.imageUrl} alt="프로필 사진" />
+        )}
       </UserImgWrapper>
       <UserName>
         <TextField
@@ -114,7 +164,9 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
           accept="image/*"
           id="icon-button-file"
           type="file"
-          onChange={handleImgUpload}
+          onChange={(e) => {
+            fileToDataURL(e.target.files[0]);
+          }}
         />
         <IconButton
           color="primary"

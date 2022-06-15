@@ -93,7 +93,7 @@ const LoginPage = () => {
           }}
         >
           <AuthLogo />
-          <Typography component="h1" variant="h5">
+          <Typography component="h5" variant="h5">
             로그인
           </Typography>
           <Box

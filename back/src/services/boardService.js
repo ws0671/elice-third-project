@@ -11,6 +11,8 @@ class boardService {
     hashTagArray,
   }) => {
     const boardId = uuidv4();
+    // authorId를 통해 해당하는 user(author)의 정보를 얻음
+    // 게시판의 정보를 받아올 때 populate를 사용하기 위해 해당 user의 _id를 author에 저장
     const author = await UserModel.findOne({ userId: authorId });
     const newBoard = {
       boardId,

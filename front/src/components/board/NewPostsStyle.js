@@ -28,12 +28,12 @@ const UnSelectMenu = styled(Button)`
 `;
 const Tag = styled(Grid)`
     color: #818479;
-    font-size: 0.5rem;
+    font-size: 0.7rem;
     border-radius: 100px;
     background-color: #ffffff;
     border: solid 1px #eae0cc;
-    margin: 10px 7px 0 0;
-    padding: 5px 10px;
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.3rem 0.5rem;
     font-family: "NanumSquareRound";
 `;
 
@@ -68,6 +68,7 @@ const PostInfo = styled(Grid)`
     max-width: 600px;
     height: 70px;
     margin: 20px;
+    padding: 0.4rem 0;
 `;
 
 const PostSubInfo = styled(Grid)`
@@ -81,6 +82,7 @@ const PostSubInfo = styled(Grid)`
 const ListName = styled(Grid)`
     font-size: 16px;
     font-family: "NanumSquareRound";
+    padding: 0.3rem 0;
 `;
 
 const ListDate = styled(Grid)`
@@ -90,20 +92,10 @@ const ListDate = styled(Grid)`
 const ListTitle = styled(Grid)`
     font-weight: bold;
     font-family: "NanumSquareRound";
-    font-size: 16px;
+    font-size: 1rem;
 `;
 
-const WritePost = styled(Button)`
-    background-color: #ffffff;
-    color: black;
-    border: solid 3px white;
-    border-radius: 10px;
-    padding: 0px 20px;
-    &:hover {
-        background-color: white;
-        font-weight: bold;
-    }
-`;
+const WritePost = styled(Button)``;
 
 const Count = styled(Grid)`
     font-size: 15px;

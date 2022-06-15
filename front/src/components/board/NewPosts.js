@@ -1,41 +1,41 @@
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Grid, InputBase } from "@mui/material";
-import { StylesProvider } from "@material-ui/core";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
-import react, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import PostData from "./PostData";
 import * as Api from "../../api";
 
-import {
-    PostList,
-    PostUserImg,
-    PostUserInfo,
-    PostInfo,
-    PostSubInfo,
-    ListName,
-    ListDate,
-    ListTitle,
-    WritePost,
-    Tag,
-    Count,
-} from "./NewPostsStyle";
+import { WritePost } from "./NewPostsStyle";
 
 const Newposts = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.value);
 
     const [allContents, setAllContents] = useState(undefined);
+    const [search, setSearch] = useState("");
+    const [searchData, setSearchData] = useState(undefined);
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             const res = await Api.get("boards");
             setAllContents(res.data);
-        }
+        };
         fetchData();
-        console.log(allContents);
     }, []);
+
+    // 검색어로 게시글 찾기
+    const searchHandler = async (e) => {
+        // e.preventDefault();
+        // await Api.getQuery("boards/search", {
+        //     params: {
+        //         title: search,
+        //     },
+        // }).then((res) => {
+        //     setSearchData(res.data);
+        //     console.log(searchData);
+        // });
+    };
 
     return (
         <>
@@ -61,76 +61,62 @@ const Newposts = () => {
                 >
                     질문을 통해 궁금한 점을 해결하고 다양한 정보를 얻어가세요!
                 </Grid>
-                <Grid sx={{ position: "relative" }}>
+                <Grid style={{ display: "flex" }}>
                     <SearchIcon
                         sx={{
                             color: "white",
                             fontSize: "25px",
-                            position: "absolute",
-                            top: "20%",
+                            margin: "9px 0",
                         }}
                     />
-                    <InputBase
-                        placeholder="검색어를 입력하세요."
-                        sx={{ color: "white", margin: "7px  0 0 25px" }}
-                    />
+                    <form onSubmit={searchHandler}>
+                        <InputBase
+                            placeholder="검색어를 입력하세요."
+                            sx={{ color: "white", margin: "7px" }}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}
+                        />
+                    </form>
+                </Grid>
+                <Grid>
                     {user && (
-                        <>
-                            <StylesProvider injectFirst>
-                                <WritePost
-                                    style={{
-                                        fontSize: "14px",
-                                        margin: "2px",
-                                        fontWeight: "bold",
-                                    }}
-                                    onClick={() => {
-                                        navigate("/postEditor");
-                                    }}
-                                >
-                                    글쓰기
-                                </WritePost>
-                            </StylesProvider>
-                        </>
+                        <WritePost
+                            sx={{
+                                fontSize: "14px",
+                                fontWeight: "bold",
+                                color: "white",
+                                border: "solid 1px",
+                                p: "0",
+                                m: "8px 0",
+                                "&:hover": {
+                                    backgroundColor: "#FDF6F0",
+                                    color: "#386150",
+                                },
+                            }}
+                            onClick={() => {
+                                navigate("/postEditor");
+                            }}
+                        >
+                            글쓰기
+                        </WritePost>
                     )}
                 </Grid>
             </Grid>
             <Grid>
-                {allContents?.map((content, idx) => (
-                    <PostList
-                        container
-                        key={idx}
-                        onClick={() => {
-                            navigate("/post");
-                        }}
-                    >
-                        <PostUserImg
-                            style={{
-                                backgroundImage:
-                                    "url(http://www.urbanbrush.net/web/wp-content/uploads/edd/2019/01/urbanbrush-20190108131811238895.png)",
-                                backgroundSize: "100% 100%",
-                                backgroundRepeat: "no-repeat",
-                            }}
-                        />
-                        <PostUserInfo>
-                            <ListName>{content.authorId}</ListName>
-                            <ListDate>{content.createdAt}</ListDate>
-                        </PostUserInfo>
-                        <PostInfo>
-                            <ListTitle>{content.title}</ListTitle>
-                            <Grid style={{ display: "flex" }}>
-                                {content.hashTagArray?.map((tag, index) => (
-                                    <Tag key={index}>{tag}</Tag>
-                                ))}
-                            </Grid>
-                        </PostInfo>
-                        <PostSubInfo>
-                            <VisibilityIcon />
-                            <Count> {content.viewCount} </Count>
-                            <FavoriteIcon />
-                            <Count> {content.likeCount} </Count>
-                        </PostSubInfo>
-                    </PostList>
-                ))}
+                {searchData ? (
+                    <>
+                        {searchData?.map((content, idx) => (
+                            <PostData key={idx} content={content} />
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {allContents?.map((content, idx) => (
+                            <PostData key={idx} content={content} />
+                        ))}
+                    </>
+                )}
             </Grid>
         </>
     );

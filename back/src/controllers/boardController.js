@@ -13,10 +13,10 @@ class boardController {
         );
       }
 
-      // const authorId = req.currentUserId;
+      const authorId = req.currentUserId;
       const { title, content, imageUrl, hashTagArray } = req.body;
       const newBoard = await boardService.addBoard({
-        // authorId,
+        authorId,
         title,
         content,
         imageUrl,

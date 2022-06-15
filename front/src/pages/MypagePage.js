@@ -2,18 +2,12 @@ import { useEffect, useState } from "react";
 
 import { Container, Grid } from "@mui/material";
 
-import {
-  PageTitle,
-  InfoTitle,
-  MapInfo,
-  Map,
-} from "../components/mypage/styledCP";
-
 import * as Api from "../api";
 
 import Header from "../components/common/Header";
 import MyInfoEditor from "../components/mypage/MyInfoEditor";
 import MyInfo from "../components/mypage/MyInfo";
+import MyLike from "../components/mypage/MyLike";
 
 const MypagePage = () => {
   const [myInfo, setMyInfo] = useState({
@@ -45,15 +39,8 @@ const MypagePage = () => {
   return (
     <>
       <Header />
-      <Container
-        component="main"
-        maxWidth="lg"
-        sx={{ backgroundColor: "#FDF6F0" }}
-      >
+      <Container component="main" maxWidth="lg" sx={{ paddingTop: "65px" }}>
         <Grid container>
-          <Grid item xs={12}>
-            <PageTitle>my page</PageTitle>
-          </Grid>
           <Grid
             item
             md={6}
@@ -63,6 +50,9 @@ const MypagePage = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              position: "relative",
+              paddingRight: "10px",
+              minHeight: "650px",
             }}
           >
             {isEditing ? (
@@ -76,15 +66,7 @@ const MypagePage = () => {
             )}
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
-            {/* 임시 코드 */}
-            <MapInfo>
-              <InfoTitle>내가 찜한 병원</InfoTitle>
-              <Map></Map>
-            </MapInfo>
-            <MapInfo>
-              <InfoTitle>내가 찜한 산책로</InfoTitle>
-              <Map></Map>
-            </MapInfo>
+            <MyLike />
           </Grid>
         </Grid>
       </Container>

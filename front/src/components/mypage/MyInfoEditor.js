@@ -2,7 +2,13 @@ import { useState } from "react";
 
 import axios from "axios";
 
-import { Button, TextField, Input, IconButton } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Input,
+  IconButton,
+  ButtonGroup,
+} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,7 +22,8 @@ import {
   Info,
   InfoTitle,
   InfoContent,
-  Species,
+  Animals,
+  AnimalEdit,
 } from "./styledCP";
 
 import * as Api from "../../api";
@@ -157,6 +164,27 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
         ) : (
           <UserImg src={myInfo.imageUrl} alt="프로필 사진" />
         )}
+        <label
+          htmlFor="icon-button-file"
+          style={{ position: "absolute", right: "25px", top: "20px" }}
+        >
+          <Input
+            sx={{ display: "none" }}
+            accept="image/*"
+            id="icon-button-file"
+            type="file"
+            onChange={(e) => {
+              fileToDataURL(e.target.files[0]);
+            }}
+          />
+          <IconButton
+            color="primary"
+            aria-label="upload picture"
+            component="span"
+          >
+            <PhotoCamera />
+          </IconButton>
+        </label>
       </UserImgWrapper>
       <UserName>
         <TextField
@@ -166,30 +194,13 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
           onChange={handleChange}
         />
       </UserName>
-      <label htmlFor="icon-button-file">
-        <Input
-          sx={{ display: "none" }}
-          accept="image/*"
-          id="icon-button-file"
-          type="file"
-          onChange={(e) => {
-            fileToDataURL(e.target.files[0]);
-          }}
-        />
-        <IconButton
-          color="primary"
-          aria-label="upload picture"
-          component="span"
-        >
-          <PhotoCamera />
-        </IconButton>
-      </label>
+
       <Info>
         <InfoTitle>이메일</InfoTitle>
         <InfoContent>{myInfo.email}</InfoContent>
       </Info>
       <Info>
-        <InfoTitle>소개</InfoTitle>
+        <InfoTitle>한 줄 소개</InfoTitle>
         <TextField
           fullWidth
           size="small"
@@ -200,46 +211,55 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
       </Info>
       <Info>
         <InfoTitle>반려동물</InfoTitle>
-        {myInfo.speciesArray?.map((item, index) => {
-          return (
-            <Species key={item}>
-              {item}
-              <RemoveCircleIcon onClick={() => handleRemoveClick(index)} />
-            </Species>
-          );
-        })}
-        {isSpeciesAdding ? (
-          <TextField
-            onBlur={handleBlur}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleEnter(e.target.value);
-              }
-            }}
-          />
-        ) : (
-          <AddIcon onClick={handleAddClick} />
-        )}
+        <Animals>
+          {myInfo.speciesArray?.map((item, index) => {
+            return (
+              <AnimalEdit key={item}>
+                {item}
+                <RemoveCircleIcon
+                  onClick={() => handleRemoveClick(index)}
+                  sx={{ marginLeft: "5px" }}
+                />
+              </AnimalEdit>
+            );
+          })}
+          {isSpeciesAdding ? (
+            <TextField
+              size="small"
+              onBlur={handleBlur}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleEnter(e.target.value);
+                }
+              }}
+            />
+          ) : (
+            <AddIcon onClick={handleAddClick} fontSize="large" />
+          )}
+        </Animals>
       </Info>
-      <Button
-        variant="contained"
-        size="medium"
-        onClick={handleSaveClick}
-        startIcon={<ArrowBackIcon />}
-      >
-        돌아가기
-      </Button>
-      <Button
-        variant="contained"
-        size="medium"
-        onClick={() => {
-          handleSaveClick();
-          setIsEditing(false);
-        }}
-        startIcon={<CheckCircleIcon />}
-      >
-        저장하기
-      </Button>
+      <ButtonGroup sx={{ position: "absolute", bottom: "30px" }}>
+        <Button
+          variant="contained"
+          size="medium"
+          color="warning"
+          onClick={handleSaveClick}
+          startIcon={<ArrowBackIcon />}
+        >
+          돌아가기
+        </Button>
+        <Button
+          variant="contained"
+          size="medium"
+          onClick={() => {
+            handleSaveClick();
+            setIsEditing(false);
+          }}
+          startIcon={<CheckCircleIcon />}
+        >
+          저장하기
+        </Button>
+      </ButtonGroup>
     </>
   );
 };

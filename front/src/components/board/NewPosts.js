@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Grid, InputBase } from "@mui/material";
+import { Grid, InputBase, Pagination, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
@@ -15,6 +15,8 @@ const Newposts = () => {
     const [allContents, setAllContents] = useState(undefined);
     const [search, setSearch] = useState("");
     const [searchData, setSearchData] = useState(undefined);
+    const [finalPage, setFinalPage] = useState(undefined);
+    const [page, setPage] = useState(1);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,24 +24,64 @@ const Newposts = () => {
             setAllContents(res.data);
         };
         fetchData();
+        setSearchData(undefined);
     }, []);
 
+    const pageHandler = (e, value) => {
+        setPage(value);
+        paginationHandler();
+    };
+
+    useEffect(() => {
+        if (search && searchData) {
+            paginationHandler();
+        }
+    }, [page]);
+
+    useEffect(() => {
+        setPage(1);
+    }, [search]);
+
     // 검색어로 게시글 찾기
-    const searchHandler = async (e) => {
-        e.preventDefault();
+
+    const searchHandler = async () => {
         await Api.getQuery("boards/search", {
             params: {
                 title: search,
-                page: 1,
+                page: page,
                 perPage: 10,
                 sort: "date",
                 direction: 1,
             },
         }).then((res) => {
-            setSearch("");
             setSearchData(res.data.searchList);
+            setFinalPage(res.data.finalPage);
             console.log(searchData);
+            setPage(1);
         });
+    };
+
+    const paginationHandler = async () => {
+        try {
+            await Api.getQuery(
+                "boards/search",
+                {
+                    params: {
+                        title: search,
+                        page: page,
+                        perPage: 10,
+                        sort: "date",
+                        direction: 1,
+                    },
+                },
+                { withCredentials: true }
+            ).then((res) => {
+                setSearchData(res.data.searchList);
+                setFinalPage(res.data.finalPage);
+            });
+        } catch {
+            alert("일치하는 게시글이 없습니다.");
+        }
     };
 
     return (
@@ -74,15 +116,18 @@ const Newposts = () => {
                             margin: "9px 0",
                         }}
                     />
-                    <form onSubmit={searchHandler}>
-                        <InputBase
-                            placeholder="검색어를 입력하세요."
-                            sx={{ color: "white", margin: "7px" }}
-                            onChange={(e) => {
-                                setSearch(e.target.value);
-                            }}
-                        />
-                    </form>
+
+                    <InputBase
+                        placeholder="검색어를 입력하세요."
+                        sx={{ color: "white", margin: "7px" }}
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onKeyDown={(e) => {
+                            if (e.keyCode == 13) {
+                                searchHandler();
+                            }
+                        }}
+                    />
                 </Grid>
                 <Grid>
                     {user && (
@@ -114,6 +159,16 @@ const Newposts = () => {
                         {searchData?.map((content, idx) => (
                             <PostData key={idx} content={content} />
                         ))}
+                        <Grid style={{ display: "flex", margin: "10px" }}>
+                            <Pagination
+                                count={finalPage}
+                                page={page}
+                                onChange={pageHandler}
+                                style={{
+                                    margin: "10px auto",
+                                }}
+                            />
+                        </Grid>
                     </>
                 ) : (
                     <>

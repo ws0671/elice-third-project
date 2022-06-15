@@ -54,6 +54,7 @@ const CommentDetail = ({ commentData, fetchCommentData }) => {
                         <CommentButton
                             commentData={commentData}
                             setCommentEdit={setCommentEdit}
+                            fetchCommentData={fetchCommentData}
                         />
                     )}
                 </>

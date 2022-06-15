@@ -1,10 +1,11 @@
 import { Grid, Button, InputBase } from "@mui/material";
 import * as Api from "../../api";
 
-const CommentButton = ({ commentData, setCommentEdit }) => {
+const CommentButton = ({ commentData, setCommentEdit, fetchCommentData }) => {
     const handleCommentDelete = () => {
-        Api.delete("comments", commentData.commentId);
-        window.location.replace(`/post/${commentData.boardId}`);
+        Api.delete("comments", commentData.commentId).then(() =>
+            fetchCommentData()
+        );
         alert("삭제하였습니다.");
     };
     return (

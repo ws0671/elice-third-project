@@ -6,14 +6,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CloseIcon from "@mui/icons-material/Close";
 
 import React, { useEffect, useState, useRef } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import PostingEditor from "./PostingEditor";
 import CommentDetail from "./CommentData";
 import PostUser from "./PostUser";
 
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import * as Api from "../../api";
 
 import {
@@ -47,6 +46,7 @@ const Post = () => {
 
     useEffect(() => {
         fetchData();
+        console.log(post);
     }, []);
 
     const fetchCommentData = async () => {
@@ -55,9 +55,11 @@ const Post = () => {
                 setAllComment(res.data);
             })
             .then(() => {
-                messagesEndRef.current.scrollIntoView({
-                    behavior: "smooth",
-                });
+                if (allComment) {
+                    messagesEndRef.current.scrollIntoView({
+                        behavior: "smooth",
+                    });
+                }
             });
     };
 
@@ -76,7 +78,6 @@ const Post = () => {
         })
             .then(fetchCommentData)
             .then(setWriteComment(""));
-        console.log(allComment);
     };
 
     const fetchLikeData = async () => {
@@ -125,7 +126,7 @@ const Post = () => {
                                 >
                                     <Grid>
                                         <Title>{post.title}</Title>
-                                        {post.imageUrl && (
+                                        {post?.imageUrl && (
                                             <PostImg>
                                                 <img
                                                     src={post.imageUrl}
@@ -214,6 +215,7 @@ const Post = () => {
                                                 setWriteComment(e.target.value);
                                             }}
                                         />
+
                                         <Button
                                             type="submit"
                                             size="small"

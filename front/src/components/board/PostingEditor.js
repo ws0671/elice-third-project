@@ -3,8 +3,8 @@ import { PageTitle, TitleWrite, Write, TagInput, Tag } from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Api from "../../api";
-
-const PostingEditor = ({ post, setPost, setPostEdit, postEdit }) => {
+import React from "react";
+const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const navigate = useNavigate();
 
     const [title, setTitle] = useState(post.title);
@@ -47,9 +47,8 @@ const PostingEditor = ({ post, setPost, setPostEdit, postEdit }) => {
                 content,
                 imageUrl: image,
                 hashTagArray,
-            });
+            }).then(fetchData);
             alert("게시글 수정을 성공하였습니다.");
-            window.location.replace(`/post/${post.boardId}`);
         } catch (error) {
             alert("게시글 수정에 실패하였습니다.", error);
         }

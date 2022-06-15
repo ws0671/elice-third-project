@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Grid, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PostData from "./PostData";
 import * as Api from "../../api";
 
@@ -13,6 +13,8 @@ const Newposts = () => {
     const user = useSelector((state) => state.auth.value);
 
     const [allContents, setAllContents] = useState(undefined);
+    const [search, setSearch] = useState("");
+    const [searchData, setSearchData] = useState(undefined);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,6 +23,24 @@ const Newposts = () => {
         };
         fetchData();
     }, []);
+
+    // 검색어로 게시글 찾기
+    const searchHandler = async (e) => {
+        e.preventDefault();
+        await Api.getQuery("boards/search", {
+            params: {
+                title: search,
+                page: 1,
+                perPage: 10,
+                sort: "date",
+                direction: 1,
+            },
+        }).then((res) => {
+            setSearch("");
+            setSearchData(res.data.searchList);
+            console.log(searchData);
+        });
+    };
 
     return (
         <>
@@ -46,29 +66,34 @@ const Newposts = () => {
                 >
                     질문을 통해 궁금한 점을 해결하고 다양한 정보를 얻어가세요!
                 </Grid>
-                <Grid sx={{ position: "relative" }}>
+                <Grid style={{ display: "flex" }}>
                     <SearchIcon
                         sx={{
                             color: "white",
                             fontSize: "25px",
-                            position: "absolute",
-                            top: "20%",
+                            margin: "9px 0",
                         }}
                     />
-                    <InputBase
-                        placeholder="검색어를 입력하세요."
-                        sx={{ color: "white", margin: "7px  0 0 25px" }}
-                    />
+                    <form onSubmit={searchHandler}>
+                        <InputBase
+                            placeholder="검색어를 입력하세요."
+                            sx={{ color: "white", margin: "7px" }}
+                            onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}
+                        />
+                    </form>
+                </Grid>
+                <Grid>
                     {user && (
                         <WritePost
                             sx={{
                                 fontSize: "14px",
-                                margin: "2px",
                                 fontWeight: "bold",
                                 color: "white",
                                 border: "solid 1px",
                                 p: "0",
-                                m: "2px",
+                                m: "8px 0",
                                 "&:hover": {
                                     backgroundColor: "#FDF6F0",
                                     color: "#386150",
@@ -84,9 +109,19 @@ const Newposts = () => {
                 </Grid>
             </Grid>
             <Grid>
-                {allContents?.map((content) => (
-                    <PostData key={content} content={content} />
-                ))}
+                {searchData?.length >= 1 ? (
+                    <>
+                        {searchData?.map((content, idx) => (
+                            <PostData key={idx} content={content} />
+                        ))}
+                    </>
+                ) : (
+                    <>
+                        {allContents?.map((content, idx) => (
+                            <PostData key={idx} content={content} />
+                        ))}
+                    </>
+                )}
             </Grid>
         </>
     );

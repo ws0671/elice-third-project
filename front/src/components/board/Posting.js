@@ -3,7 +3,7 @@ import { PageTitle, TitleWrite, Write, TagInput, Tag } from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Api from "../../api";
-
+import React from "react";
 const Posting = () => {
     const navigate = useNavigate();
 
@@ -99,8 +99,8 @@ const Posting = () => {
                         display: "flex",
                     }}
                 >
-                    {hashTagArray?.map((tagItem, idx) => (
-                        <Tag key={idx}>
+                    {hashTagArray?.map((tagItem) => (
+                        <Tag key={tagItem}>
                             {tagItem}
                             <Button
                                 style={{

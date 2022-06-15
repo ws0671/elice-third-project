@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Api from "../../api";
 import { Button } from "@mui/material";
 import { User, UserImg, UserDate, UserName } from "./PostStyle";

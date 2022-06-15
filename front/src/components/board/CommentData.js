@@ -5,7 +5,7 @@ import { useState } from "react";
 import CommentButton from "./CommentButton";
 import { useSelector } from "react-redux";
 
-const CommentDetail = ({ commentData }) => {
+const CommentDetail = ({ commentData, fetchCommentData }) => {
     const user = useSelector((state) => state.auth.value);
     const [currentComment, setCurrentComment] = useState(commentData.content);
     const [commentEdit, setCommentEdit] = useState(false);
@@ -14,8 +14,7 @@ const CommentDetail = ({ commentData }) => {
         e.preventDefault();
         Api.put(`comments/${commentData.commentId}`, {
             content: currentComment,
-        });
-        window.location.replace(`/post/${commentData.boardId}`);
+        }).then(fetchCommentData);
         setCommentEdit(false);
     };
 

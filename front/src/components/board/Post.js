@@ -4,9 +4,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
 
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import PostingEditor from "./PostingEditor";
 import CommentDetail from "./CommentData";
@@ -56,10 +55,8 @@ const Post = () => {
                 setAllComment(res.data);
             })
             .then(() => {
-                console.log(messagesEndRef);
                 messagesEndRef.current.scrollIntoView({
                     behavior: "smooth",
-                    block: "end",
                 });
             });
     };
@@ -198,6 +195,9 @@ const Post = () => {
                                         <Comment key={idx}>
                                             <CommentDetail
                                                 commentData={commentData}
+                                                fetchCommentData={
+                                                    fetchCommentData
+                                                }
                                             />
                                         </Comment>
                                     ))}
@@ -232,9 +232,8 @@ const Post = () => {
                         <>
                             <PostingEditor
                                 post={post}
-                                setPost={setPost}
                                 setPostEdit={setPostEdit}
-                                postEdit={postEdit}
+                                fetchData={fetchData}
                             />
                         </>
                     )}

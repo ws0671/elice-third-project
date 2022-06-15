@@ -34,7 +34,7 @@ const MypagePage = () => {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  }, [isEditing]);
 
   return (
     <>

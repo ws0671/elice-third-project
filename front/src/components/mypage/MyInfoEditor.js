@@ -243,7 +243,9 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
           variant="contained"
           size="medium"
           color="warning"
-          onClick={handleSaveClick}
+          onClick={() => {
+            setIsEditing(false);
+          }}
           startIcon={<ArrowBackIcon />}
         >
           돌아가기

@@ -62,7 +62,7 @@ class boardService {
 
   // board 수정
   static updateBoard = async ({ boardId, toUpdate }) => {
-    const board = await BoardModel.findOne({ boardId });
+    const board = await BoardModel.findOne({ boardId }).populate("author");
 
     if (!board) {
       const errorMessage =
@@ -80,7 +80,7 @@ class boardService {
       { boardId },
       { $set: toUpdate },
       { returnOriginal: false }
-    );
+    ).populate("author");
 
     return updatedBoard;
   };
@@ -120,6 +120,7 @@ class boardService {
     return await BoardModel.find({
       title: { $regex: title, $options: "i" },
     })
+      .populate("author")
       .sort({ ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }) }) //최신순,조회순,좋아요순으로 정렬
       .limit(perPage) //한페이지에서 확인할 수 있는 결과의 수
       .skip((page - 1) * perPage) //페이지에 따른 skip 기준

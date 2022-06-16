@@ -36,10 +36,10 @@ class boardService {
       like: "likeCount",
     };
     const boards = await BoardModel.find({})
+      .populate("author")
       .sort({
         ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }),
-      })
-      .populate("author");
+      });
     return boards;
   };
 
@@ -54,7 +54,7 @@ class boardService {
         { boardId },
         { $inc: { viewCount: 1 } },
         { returnOriginal: false }
-      );
+      ).populate("author");
     }
 
     return board;

@@ -41,17 +41,13 @@ class commentController {
   static editComment = async (req, res, next) => {
     try {
       const commentId = req.params.commentId;
-      const { content } = req.body ?? null;
+      const { content } = req.body;
       const toUpdate = { content };
 
       const updatedComment = await commentService.updateComment({
         commentId,
         toUpdate,
       });
-
-      if (updatedComment.errorMessage) {
-        throw new Error(updatedComment.errorMessage);
-      }
 
       res.status(200).json(updatedComment);
     } catch (error) {
@@ -64,10 +60,6 @@ class commentController {
     try {
       const commentId = req.params.commentId;
       const result = await commentService.deleteComment({ commentId });
-
-      if (result.errorMessage) {
-        throw new Error(result.errorMessage);
-      }
 
       res.status(204).json(result);
     } catch (error) {

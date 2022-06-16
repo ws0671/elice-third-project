@@ -56,17 +56,13 @@ class boardController {
   static editBoard = async (req, res, next) => {
     try {
       const boardId = req.params.boardId;
-      const { title, content, imageUrl, hashTagArray } = req.body ?? null;
+      const { title, content, imageUrl, hashTagArray } = req.body;
       const toUpdate = { title, content, imageUrl, hashTagArray };
 
       const updatedBoard = await boardService.updateBoard({
         boardId,
         toUpdate,
       });
-
-      if (updatedBoard.errorMessage) {
-        throw new Error(updatedBoard.errorMessage);
-      }
 
       res.status(200).json(updatedBoard);
     } catch (error) {
@@ -80,10 +76,6 @@ class boardController {
       const boardId = req.params.boardId;
 
       const result = await boardService.deleteBoard({ boardId });
-
-      if (result.errorMessage) {
-        throw new Error(result.errorMessage);
-      }
 
       res.status(204).json(result);
     } catch (error) {

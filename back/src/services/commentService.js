@@ -25,7 +25,7 @@ class commentService {
     if (!comment) {
       const errorMessage =
         "해당하는 댓글이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     Object.keys(toUpdate).forEach((key) => {
@@ -51,7 +51,7 @@ class commentService {
     if (!deleteResult) {
       const errorMessage =
         "해당 commentId를 가진 댓글은 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     return deleteResult;

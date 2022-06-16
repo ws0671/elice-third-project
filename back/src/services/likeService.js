@@ -6,7 +6,7 @@ class likeService {
     const isLikeInfoExist = await LikeModel.findOne({ userId });
     if (isLikeInfoExist) {
       const errorMessage = "해당 userId에 대한 likeInfo가 이미 존재합니다.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     const newLikeInfo = { userId };
@@ -26,7 +26,7 @@ class likeService {
     const likeInfo = await LikeModel.findOne({ userId });
     if (!likeInfo) {
       const errorMessage = "해당 userId에 대한 likeInfo가 존재하지 않습니다.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     let likedBoardIdArray = likeInfo.boardIdArray;

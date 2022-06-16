@@ -36,17 +36,17 @@ class boardService {
       like: "likeCount",
     };
     const boards = await BoardModel.find({})
+      .populate("author")
       .sort({
         ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }),
-      })
-      .populate("author");
+      });
     return boards;
   };
 
   // board 상세 조회
   static findBoard = async ({ userId, boardId }) => {
     let board = await BoardModel.findOne({ boardId }).populate("author");
-
+    console.log(board);
     // 현재 상세 조회를 진행하는 사용자가 작성한 글이 아닐 경우에만 조회수 증가
     // 증가된 조회수가 적용된 board를 반환
     if (userId !== board.author.userId) {
@@ -54,9 +54,9 @@ class boardService {
         { boardId },
         { $inc: { viewCount: 1 } },
         { returnOriginal: false }
-      );
+      ).populate("author");
     }
-
+    console.log(board);
     return board;
   };
 
@@ -67,7 +67,7 @@ class boardService {
     if (!board) {
       const errorMessage =
         "해당하는 게시글이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     Object.keys(toUpdate).forEach((key) => {
@@ -93,7 +93,7 @@ class boardService {
     if (!deleteResult) {
       const errorMessage =
         "해당 boardId를 가진 게시글은 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     return deleteResult;

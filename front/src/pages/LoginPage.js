@@ -82,7 +82,7 @@ const LoginPage = () => {
   return (
     <>
       <Header />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ paddingTop: "65px" }}>
         <CssBaseline />
         <Box
           sx={{

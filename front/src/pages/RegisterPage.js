@@ -138,7 +138,7 @@ const RegisterPage = () => {
   return (
     <>
       <Header />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ paddingTop: "65px" }}>
         <CssBaseline />
         <Box
           sx={{

@@ -1,11 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
-import { CommentModel } from "../db";
+import { CommentModel, UserModel } from "../db";
 
 class commentService {
   // comment 생성
   static addComment = async ({ boardId, authorId, content }) => {
     const commentId = uuidv4();
-    const newComment = { commentId, boardId, authorId, content };
+    // authorId를 통해 해당하는 user(author)의 정보를 얻음
+    // 댓글의 정보를 받아올 때 populate를 사용하기 위해 해당 user의 _id를 author에 저장
+    const author = await UserModel.findOne({ userId: authorId });
+    const newComment = { commentId, boardId, author: author._id, content };
 
     const createdNewComment = await CommentModel.create(newComment);
 
@@ -14,13 +17,15 @@ class commentService {
 
   // boardId에 해당하는 모든 comment 찾기
   static findComments = async ({ boardId }) => {
-    const comments = await CommentModel.find({ boardId });
+    const comments = await CommentModel.find({ boardId }).populate("author");
     return comments;
   };
 
   // comment 수정
   static updateComment = async ({ commentId, toUpdate }) => {
-    const comment = await CommentModel.findOne({ commentId });
+    const comment = await CommentModel.findOne({ commentId }).populate(
+      "author"
+    );
 
     if (!comment) {
       const errorMessage =
@@ -38,7 +43,7 @@ class commentService {
       { commentId },
       { $set: toUpdate },
       { returnOriginal: false }
-    );
+    ).populate("author");
 
     return updatedComment;
   };

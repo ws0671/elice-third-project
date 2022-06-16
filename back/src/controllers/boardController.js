@@ -1,7 +1,5 @@
 import is from "@sindresorhus/is";
-import { userAuthRouter } from "../routes/userRouter";
 import { boardService } from "../services/boardService";
-import { userAuthService } from "../services/userService";
 
 class boardController {
   // 게시판 생성
@@ -13,6 +11,7 @@ class boardController {
         );
       }
 
+      // authorId는 Service에서 author 정보를 찾기 위해 쓰임
       const authorId = req.currentUserId;
       const { title, content, imageUrl, hashTagArray } = req.body;
       const newBoard = await boardService.addBoard({

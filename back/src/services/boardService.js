@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { BoardModel } from "../db";
+import { BoardModel, UserModel } from "../db";
 
 class boardService {
   // board 생성
@@ -11,9 +11,12 @@ class boardService {
     hashTagArray,
   }) => {
     const boardId = uuidv4();
+    // authorId를 통해 해당하는 user(author)의 정보를 얻음
+    // 게시판의 정보를 받아올 때 populate를 사용하기 위해 해당 user의 _id를 author에 저장
+    const author = await UserModel.findOne({ userId: authorId });
     const newBoard = {
       boardId,
-      authorId,
+      author: author._id,
       title,
       content,
       imageUrl,
@@ -32,19 +35,22 @@ class boardService {
       view: "viewCount",
       like: "likeCount",
     };
-    const boards = await BoardModel.find({}).sort({
-      ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }),
-    });
+    const boards = await BoardModel.find({})
+      .sort({
+        ...(sort ? { [sortMap[sort]]: direction } : { createdAt: -1 }),
+      })
+      .populate("author");
     return boards;
   };
 
   // board 상세 조회
   static findBoard = async ({ userId, boardId }) => {
-    const board = await BoardModel.findOne({ boardId });
+    let board = await BoardModel.findOne({ boardId }).populate("author");
 
     // 현재 상세 조회를 진행하는 사용자가 작성한 글이 아닐 경우에만 조회수 증가
-    if (userId !== board.authorId) {
-      await BoardModel.findOneAndUpdate(
+    // 증가된 조회수가 적용된 board를 반환
+    if (userId !== board.author.userId) {
+      board = await BoardModel.findOneAndUpdate(
         { boardId },
         { $inc: { viewCount: 1 } },
         { returnOriginal: false }

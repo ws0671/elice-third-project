@@ -39,6 +39,7 @@ const Post = () => {
     const [postEdit, setPostEdit] = useState(false);
     const [like, setLike] = useState(undefined);
 
+    console.log(user);
     const fetchData = async () => {
         const res = await Api.get(`boards/${params.boardId}`);
         setPost(res.data);
@@ -81,9 +82,14 @@ const Post = () => {
     };
 
     const fetchLikeData = async () => {
-        await Api.get("likes").then((res) => {
-            setLike(res.data.boardIdArray);
-        });
+        try {
+            await Api.get("likes").then((res) => {
+                setLike(res.data.boardIdArray);
+                console.log("여기", res.data);
+            });
+        } catch (err) {
+            console.log(err);
+        }
     };
     const handleLikeClick = async () => {
         await Api.put("likes", {

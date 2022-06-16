@@ -20,7 +20,7 @@ const CommentDetail = ({ commentData, fetchCommentData }) => {
 
     return (
         <>
-            <CommentName>{commentData.authorId}</CommentName>
+            <CommentName>{commentData.author.name}</CommentName>
             {commentEdit ? (
                 <>
                     <form onSubmit={submitCommentEdit}>
@@ -50,7 +50,7 @@ const CommentDetail = ({ commentData, fetchCommentData }) => {
                 <>
                     {commentData.content}
                     <br />
-                    {commentData.authorId === user.userId && (
+                    {commentData.author.userId === user.userId && (
                         <CommentButton
                             commentData={commentData}
                             setCommentEdit={setCommentEdit}

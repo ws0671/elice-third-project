@@ -41,7 +41,7 @@ const PostList = styled(Grid)`
     background-color: #f6f5ef;
     border-radius: 20px;
     height: 100px;
-    margin: 25px 0;
+    margin-bottom: 25px;
     justify-content: space-between;
     width: 100%;
     overflow: hidden;
@@ -102,6 +102,12 @@ const Count = styled(Grid)`
     font-color: gray;
     margin: 0 10%;
 `;
+
+const SortGrid = styled(Grid)`
+    display: flex;
+    justify-content: end;
+    margin: 5px 0;
+`;
 export {
     PostList,
     PostUserImg,
@@ -117,4 +123,5 @@ export {
     UnSelectMenu,
     Tag,
     Count,
+    SortGrid,
 };

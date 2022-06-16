@@ -1,10 +1,12 @@
+import { Container } from "@mui/material";
+
 import Header from "../components/common/Header";
 
 const HospitalPage = () => {
   return (
     <>
-      <h1>우리동네 동물 병원 페이지</h1>
       <Header />
+      <Container maxWidth="lg" sx={{ paddingTop: "65px" }}></Container>
     </>
   );
 };

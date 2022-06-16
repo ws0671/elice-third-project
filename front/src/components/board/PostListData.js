@@ -16,21 +16,11 @@ import {
     ListTitle,
     Tag,
     Count,
-} from "./NewPostsStyle";
+} from "./PostsStyle";
 
 const PostData = ({ content }) => {
     const navigate = useNavigate();
-    const authorId = content.authorId;
-    const [author, setAuthor] = useState("");
-
-    useEffect(() => {
-        const getUserData = async () => {
-            const res = await Api.get("users", authorId);
-            setAuthor(res.data);
-        };
-        getUserData();
-    }, []);
-
+    const [author, setAuthor] = useState(content?.author);
     return (
         <>
             {author && (
@@ -49,7 +39,13 @@ const PostData = ({ content }) => {
                         }}
                     />
                     <PostUserInfo>
-                        <ListName>{author.name}</ListName>
+                        <ListName>
+                            {author.name.length > 10 ? (
+                                <>{author.name.slice(0, 10) + "..."}</>
+                            ) : (
+                                <>{author.name}</>
+                            )}
+                        </ListName>
                         <ListDate>{content.createdAt.slice(0, 10)}</ListDate>
                     </PostUserInfo>
                     <PostInfo>

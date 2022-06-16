@@ -1,4 +1,4 @@
-import Newposts from "../components/board/NewPosts";
+import Posts from "../components/board/Posts";
 import BestPosts from "../components/board/BestPosts";
 import Header from "../components/common/Header";
 import { Container, Grid, Button } from "@mui/material";
@@ -89,7 +89,7 @@ const BoardPage = () => {
                         </>
                     )}
                 </PostMenu>
-                {menu ? <Newposts /> : <BestPosts />}
+                {menu ? <Posts /> : <BestPosts />}
             </Container>
         </>
     );

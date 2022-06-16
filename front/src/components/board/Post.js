@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 import PostingEditor from "./PostingEditor";
 import CommentDetail from "./CommentData";
-import PostUser from "./PostUser";
+import PostAuthor from "./PostAuthor";
 
 import * as Api from "../../api";
 
@@ -42,11 +42,11 @@ const Post = () => {
     const fetchData = async () => {
         const res = await Api.get(`boards/${params.boardId}`);
         setPost(res.data);
+        console.log(post);
     };
 
     useEffect(() => {
         fetchData();
-        console.log(post);
     }, []);
 
     const fetchCommentData = async () => {
@@ -111,7 +111,7 @@ const Post = () => {
                     {!postEdit ? (
                         <>
                             <Left>
-                                <PostUser
+                                <PostAuthor
                                     post={post}
                                     setPostEdit={setPostEdit}
                                 />

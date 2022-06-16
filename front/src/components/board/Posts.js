@@ -3,10 +3,20 @@ import { Grid, InputBase, Pagination, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
-import PostData from "./PostData";
+import PostListData from "./PostListData";
 import * as Api from "../../api";
+import { styled } from "@mui/material/styles";
 
-import { WritePost } from "./NewPostsStyle";
+import { PostList, SortGrid, WritePost } from "./PostsStyle";
+
+const SortButton = styled(Button)({
+    fontSize: 12,
+    color: "gray",
+    margin: "0 5px",
+    "&:hover": {
+        fontWeight: "bold",
+    },
+});
 
 const Newposts = () => {
     const navigate = useNavigate();
@@ -17,14 +27,10 @@ const Newposts = () => {
     const [searchData, setSearchData] = useState(undefined);
     const [finalPage, setFinalPage] = useState(undefined);
     const [page, setPage] = useState(1);
+    const [sort, setSort] = useState("date");
 
     useEffect(() => {
-        const fetchData = async () => {
-            const res = await Api.get("boards");
-            setAllContents(res.data);
-        };
         fetchData();
-        setSearchData(undefined);
     }, []);
 
     const pageHandler = (e, value) => {
@@ -39,49 +45,66 @@ const Newposts = () => {
     }, [page]);
 
     useEffect(() => {
+        if (search) {
+            searchHandler();
+        } else {
+            fetchData();
+        }
+    }, [sort]);
+
+    useEffect(() => {
         setPage(1);
+        setSort("date");
     }, [search]);
 
     // 검색어로 게시글 찾기
-
     const searchHandler = async () => {
         await Api.getQuery("boards/search", {
             params: {
                 title: search,
                 page: page,
                 perPage: 10,
-                sort: "date",
-                direction: 1,
+                sort: sort,
+                direction: -1,
             },
         }).then((res) => {
             setSearchData(res.data.searchList);
             setFinalPage(res.data.finalPage);
-            console.log(searchData);
             setPage(1);
         });
     };
 
+    // 페이지네이션 핸들러
     const paginationHandler = async () => {
-        try {
-            await Api.getQuery(
-                "boards/search",
-                {
-                    params: {
-                        title: search,
-                        page: page,
-                        perPage: 10,
-                        sort: "date",
-                        direction: 1,
-                    },
+        await Api.getQuery(
+            "boards/search",
+            {
+                params: {
+                    title: search,
+                    page: page,
+                    perPage: 10,
+                    sort: sort,
+                    direction: -1,
                 },
-                { withCredentials: true }
-            ).then((res) => {
-                setSearchData(res.data.searchList);
-                setFinalPage(res.data.finalPage);
-            });
-        } catch {
-            alert("일치하는 게시글이 없습니다.");
-        }
+            },
+            { withCredentials: true }
+        ).then((res) => {
+            setSearchData(res.data.searchList);
+            setFinalPage(res.data.finalPage);
+        });
+    };
+
+    // 전체 게시물 조회 (query 사용)
+    const fetchData = async () => {
+        await Api.getQuery("boards", {
+            params: {
+                sort: sort,
+                direction: -1,
+            },
+        }).then((res) => {
+            setAllContents(res.data);
+            setSearchData(undefined);
+        });
     };
 
     return (
@@ -154,10 +177,33 @@ const Newposts = () => {
                 </Grid>
             </Grid>
             <Grid>
-                {searchData?.length >= 1 ? (
+                <SortGrid>
+                    <SortButton
+                        onClick={() => {
+                            setSort("date");
+                        }}
+                    >
+                        최신순
+                    </SortButton>
+                    <SortButton
+                        onClick={() => {
+                            setSort("like");
+                        }}
+                    >
+                        하트순
+                    </SortButton>
+                    <SortButton
+                        onClick={() => {
+                            setSort("view");
+                        }}
+                    >
+                        조회순
+                    </SortButton>
+                </SortGrid>
+                {searchData ? (
                     <>
                         {searchData?.map((content, idx) => (
-                            <PostData key={idx} content={content} />
+                            <PostListData key={idx} content={content} />
                         ))}
                         <Grid style={{ display: "flex", margin: "10px" }}>
                             <Pagination
@@ -173,7 +219,7 @@ const Newposts = () => {
                 ) : (
                     <>
                         {allContents?.map((content, idx) => (
-                            <PostData key={idx} content={content} />
+                            <PostListData key={idx} content={content} />
                         ))}
                     </>
                 )}

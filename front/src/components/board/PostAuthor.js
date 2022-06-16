@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as Api from "../../api";
 import { Button } from "@mui/material";
 import { User, UserImg, UserDate, UserName } from "./PostStyle";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const PostUser = ({ post, setPostEdit }) => {
+const PostAuthor = ({ post, setPostEdit }) => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.value);
-    const [author, setAuthor] = useState("");
-    useEffect(() => {
-        const getUserData = async () => {
-            const res = await Api.get("users", post.authorId);
-            setAuthor(res.data);
-        };
-        getUserData();
-    }, []);
+    const [author, setAuthor] = useState(post.author);
+    console.log(author);
 
     const postDelete = () => {
         if (window.confirm("정말 삭제합니까?")) {
@@ -29,13 +23,15 @@ const PostUser = ({ post, setPostEdit }) => {
 
     return (
         <User>
-            <UserImg
-                style={{
-                    backgroundImage: `url(${author.imageUrl})`,
-                    backgroundSize: "100% 100%",
-                    backgroundRepeat: "no-repeat",
-                }}
-            />
+            {author?.imageUrl && (
+                <UserImg
+                    style={{
+                        backgroundImage: `url(${author.imageUrl})`,
+                        backgroundSize: "100% 100%",
+                        backgroundRepeat: "no-repeat",
+                    }}
+                />
+            )}
 
             <UserName>{author.name}</UserName>
             <UserDate>{post.createdAt.slice(0, 10)}</UserDate>
@@ -66,4 +62,4 @@ const PostUser = ({ post, setPostEdit }) => {
         </User>
     );
 };
-export default PostUser;
+export default PostAuthor;

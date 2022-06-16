@@ -11,7 +11,9 @@ class commentController {
         );
       }
 
-      const { boardId, authorId, content } = req.body;
+      // authorId는 Service에서 author 정보를 찾기 위해 쓰임
+      const authorId = req.currentUserId;
+      const { boardId, content } = req.body;
 
       const newComment = await commentService.addComment({
         boardId,

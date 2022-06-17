@@ -1,5 +1,13 @@
-import { Container, Grid, Button, FormControl } from "@mui/material";
-import { PageTitle, TitleWrite, Write, TagInput, Tag } from "./PostEditorStyle";
+import { Container, Grid, Button, ButtonBase } from "@mui/material";
+import {
+    PageTitle,
+    TitleWrite,
+    Write,
+    TagInput,
+    Tag,
+    EditPageTitle,
+} from "./PostEditorStyle";
+import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Api from "../../api";
@@ -31,14 +39,13 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
 
     const onUploadImg = (value) => {
         const formData = new FormData();
-        console.log(value);
-        // formData.append("image", e.target.files[0]);
-        // const res = Api.post("boards/images", formData, {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data",
-        //     },
-        // });
-        // setImage(res.data);
+        formData.append("image", value);
+        const res = Api.post("boards/images", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        setImage(res.data);
     };
 
     const handleSubmit = async () => {
@@ -65,99 +72,98 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     };
 
     return (
-        <>
-            <Container maxWidth="lg">
-                <PageTitle>게시글 수정</PageTitle>
-                <TitleWrite
-                    required
-                    maxRows={1}
-                    placeholder="제목을 입력하세요"
-                    value={title}
-                    name="title"
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <Write
-                    required
-                    minRows={15}
-                    maxRows={15}
-                    placeholder="내용을 입력하세요"
-                    value={content}
-                    name="content"
-                    onChange={(e) => setContent(e.target.value)}
-                />
+        <Container maxWidth="lg">
+            <EditPageTitle>게시글 수정</EditPageTitle>
+            <TitleWrite
+                required
+                maxRows={1}
+                placeholder="제목을 입력하세요"
+                value={title}
+                name="title"
+                onChange={(e) => setTitle(e.target.value)}
+            />
+            <Write
+                required
+                minRows={15}
+                maxRows={15}
+                placeholder="내용을 입력하세요"
+                value={content}
+                name="content"
+                onChange={(e) => setContent(e.target.value)}
+            />
 
-                <TagInput
-                    maxRows={1}
-                    value={hashTag}
-                    placeholder="엔터로 해시태그를 등록해주세요."
-                    onChange={(e) => setHashTag(e.target.value)}
-                    onKeyPress={onKeyPress}
-                />
-                <Grid
-                    style={{
-                        color: "gray",
-                        padding: "1%",
-                        display: "flex",
-                    }}
-                >
-                    {hashTagArray?.map((tagItem, idx) => (
-                        <Tag key={idx}>
-                            {tagItem}
-                            <Button
-                                style={{
-                                    maxWidth: "30px",
-                                    maxHeight: "20px",
-                                    minWidth: "30px",
-                                    minHeight: "20px",
-                                }}
-                                onClick={deleteTagItem}
-                            >
-                                X
-                            </Button>
-                        </Tag>
-                    ))}
-                </Grid>
-                <Grid
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        margin: "1% 0",
-                    }}
-                >
-                    <Grid>
-                        <input
-                            type="file"
-                            accept="image/png, image/jpeg"
-                            placeholder="이미지 첨부"
-                            onChange={(e) =>
-                                console.log("here", e.target.files)
-                            }
+            <TagInput
+                maxRows={1}
+                value={hashTag}
+                placeholder="엔터로 해시태그를 등록해주세요."
+                onChange={(e) => setHashTag(e.target.value)}
+                onKeyPress={onKeyPress}
+            />
+            <Grid
+                style={{
+                    color: "gray",
+                    padding: "5px",
+                    display: "flex",
+                    height: "45px",
+                }}
+            >
+                {hashTagArray?.map((tagItem, idx) => (
+                    <Tag key={idx}>
+                        {tagItem}
+
+                        <DoNotDisturbOnOutlinedIcon
+                            style={{
+                                width: "20px",
+                                height: "20px",
+                                position: "absolute",
+                                padding: " 0 3px",
+                                top: "7px",
+                                cursor: "pointer",
+                                borderRadius: "100%",
+                            }}
+                            onClick={deleteTagItem}
                         />
-                    </Grid>
-                    <Grid>
-                        <Button
-                            sx={{
-                                color: "#187498",
-                                border: "solid 1px #187498",
-                            }}
-                            onClick={stopEvent}
-                        >
-                            수정 완료
-                        </Button>
-                        {"  "}
-                        <Button
-                            sx={{
-                                color: "#FF4949",
-                                border: "solid 1px #FF4949",
-                            }}
-                            onClick={() => navigate("/board")}
-                        >
-                            취소
-                        </Button>
-                    </Grid>
+                    </Tag>
+                ))}
+            </Grid>
+            <Grid
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    margin: "20px 0",
+                }}
+            >
+                <Grid>
+                    <input
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        placeholder="이미지 첨부"
+                        onChange={(e) => onUploadImg(e.target.files[0])}
+                    />
                 </Grid>
-            </Container>
-        </>
+                <Grid>
+                    <Button
+                        sx={{
+                            color: "#187498",
+                            border: "solid 1px #187498",
+                        }}
+                        onClick={stopEvent}
+                    >
+                        수정 완료
+                    </Button>
+                    {"  "}
+                    <Button
+                        sx={{
+                            color: "#FF4949",
+                            border: "solid 1px #FF4949",
+                        }}
+                        onClick={() => navigate("/board")}
+                    >
+                        취소
+                    </Button>
+                </Grid>
+            </Grid>
+        </Container>
     );
 };
 

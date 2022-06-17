@@ -1,4 +1,4 @@
-import { Grid, Button, InputBase } from "@mui/material";
+import { Grid, ButtonBase, InputBase } from "@mui/material";
 import { Container } from "@mui/system";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
@@ -34,10 +34,10 @@ const Post = () => {
     const user = useSelector((state) => state.auth.value);
     const params = useParams();
     const [post, setPost] = useState("");
-    const [allComment, setAllComment] = useState(undefined);
+    const [allComment, setAllComment] = useState([]);
     const [WriteComment, setWriteComment] = useState("");
     const [postEdit, setPostEdit] = useState(false);
-    const [like, setLike] = useState(undefined);
+    const [like, setLike] = useState([]);
 
     const fetchData = async () => {
         const res = await Api.get(`boards/${params.boardId}`);
@@ -49,6 +49,7 @@ const Post = () => {
         fetchData();
     }, []);
 
+    // 댓글 데이터 들고오기
     const fetchCommentData = async () => {
         await Api.get(`comments/${params.boardId}`)
             .then((res) => {
@@ -69,6 +70,7 @@ const Post = () => {
 
     const messagesEndRef = useRef(null);
 
+    // 댓글 제출 post
     const submitComment = async (e) => {
         e.preventDefault();
         Api.post("comments", {
@@ -80,6 +82,7 @@ const Post = () => {
             .then(setWriteComment(""));
     };
 
+    // 좋아요 데이터 불러오기
     const fetchLikeData = async () => {
         try {
             await Api.get("likes").then((res) => {
@@ -90,6 +93,8 @@ const Post = () => {
             console.log(err);
         }
     };
+
+    // 좋아요 클릭 핸들러
     const handleLikeClick = async () => {
         await Api.put("likes", {
             boardId: post.boardId,
@@ -97,6 +102,7 @@ const Post = () => {
             .then(fetchLikeData)
             .then(fetchData);
     };
+
     useEffect(() => {
         fetchLikeData();
     }, []);
@@ -157,15 +163,16 @@ const Post = () => {
                             <Right>
                                 <PostInfo>
                                     <Grid>
-                                        <IconButton>
+                                        <IconButton
+                                            onClick={() => {
+                                                handleLikeClick();
+                                            }}
+                                        >
                                             {like?.includes(post.boardId) ? (
                                                 <FavoriteIcon
                                                     sx={{
                                                         margin: "0 5%",
                                                         color: "white",
-                                                    }}
-                                                    onClick={(e) => {
-                                                        handleLikeClick();
                                                     }}
                                                 />
                                             ) : (
@@ -174,23 +181,21 @@ const Post = () => {
                                                         margin: "0 5%",
                                                         color: "white",
                                                     }}
-                                                    onClick={(e) => {
-                                                        handleLikeClick();
-                                                    }}
                                                 />
                                             )}
                                         </IconButton>
                                         {post.likeCount}
                                     </Grid>
                                     <Grid>
-                                        <IconButton>
+                                        <IconButton
+                                            onClick={() => {
+                                                navigate("/board");
+                                            }}
+                                        >
                                             <CloseIcon
                                                 sx={{
                                                     margin: "0 5%",
                                                     color: "#EC9B3B",
-                                                }}
-                                                onClick={() => {
-                                                    navigate("/board");
                                                 }}
                                             />
                                         </IconButton>
@@ -221,16 +226,19 @@ const Post = () => {
                                             }}
                                         />
 
-                                        <Button
+                                        <ButtonBase
                                             type="submit"
                                             size="small"
                                             sx={{
-                                                padding: "0",
-                                                width: "15px",
+                                                width: "45px",
+                                                fontWeight: "bold",
+                                                color: "white",
+                                                backgroundColor: "#A0A083",
+                                                borderRadius: "10px",
                                             }}
                                         >
                                             입력
-                                        </Button>
+                                        </ButtonBase>
                                     </CommentWrite>
                                 </form>
                             </Right>

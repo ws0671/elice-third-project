@@ -201,8 +201,8 @@ const Newposts = () => {
                 </SortGrid>
                 {searchData ? (
                     <>
-                        {searchData?.map((content, idx) => (
-                            <PostListData key={idx} content={content} />
+                        {searchData?.map((content) => (
+                            <PostListData key={content} content={content} />
                         ))}
                         <Grid style={{ display: "flex", margin: "10px" }}>
                             <Pagination
@@ -217,8 +217,8 @@ const Newposts = () => {
                     </>
                 ) : (
                     <>
-                        {allContents?.map((content, idx) => (
-                            <PostListData key={idx} content={content} />
+                        {allContents?.map((content) => (
+                            <PostListData key={content._id} content={content} />
                         ))}
                     </>
                 )}

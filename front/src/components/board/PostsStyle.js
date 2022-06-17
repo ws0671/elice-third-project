@@ -28,13 +28,13 @@ const UnSelectMenu = styled(Button)`
 `;
 const Tag = styled(Grid)`
     color: #818479;
-    font-size: 0.7rem;
-    border-radius: 100px;
-    background-color: #ffffff;
-    border: solid 1px #eae0cc;
-    margin: 0.5rem 0.5rem 0 0;
-    padding: 0.3rem 0.5rem;
-    font-family: "NanumSquareRound";
+    font-size: 13px;
+    border-radius: 10px;
+    background-color: #c9ada1;
+    margin: 7px 7px 0 0;
+    padding: 4px 10px;
+    font-weight: bold;
+    color: white;
 `;
 
 const PostList = styled(Grid)`

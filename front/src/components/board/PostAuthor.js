@@ -1,15 +1,23 @@
 import React, { useState } from "react";
 import * as Api from "../../api";
-import { Button } from "@mui/material";
+import { Button, ButtonBase } from "@mui/material";
 import { User, UserImg, UserDate, UserName } from "./PostStyle";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { borderRadius, styled } from "@mui/system";
+
+const EditButton = styled(Button)({
+    border: "none",
+    fontWeight: "bold",
+    fontSize: "15px",
+    margin: "5px 3px",
+    padding: "0",
+});
 
 const PostAuthor = ({ post, setPostEdit }) => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.value);
     const [author, setAuthor] = useState(post.author);
-    console.log(author);
 
     const postDelete = () => {
         if (window.confirm("정말 삭제합니까?")) {
@@ -37,26 +45,22 @@ const PostAuthor = ({ post, setPostEdit }) => {
             <UserDate>{post.createdAt.slice(0, 10)}</UserDate>
             {user.userId == author.userId && (
                 <>
-                    <Button
-                        size="small"
+                    <EditButton
                         sx={{
                             color: "#FAC213",
-                            margin: " 0 5px",
                         }}
                         onClick={() => setPostEdit(true)}
                     >
                         수정
-                    </Button>
-                    <Button
-                        size="small"
+                    </EditButton>
+                    <EditButton
                         sx={{
-                            padding: "0",
                             color: "#F77E21",
                         }}
                         onClick={() => postDelete()}
                     >
                         삭제
-                    </Button>
+                    </EditButton>
                 </>
             )}
         </User>

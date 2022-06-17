@@ -1,6 +1,7 @@
-import { Container, Grid, Button, FormControl } from "@mui/material";
+import { Container, Grid, Button } from "@mui/material";
 import { PageTitle, TitleWrite, Write, TagInput, Tag } from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
+import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import { useState } from "react";
 import * as Api from "../../api";
 import React from "react";
@@ -95,24 +96,27 @@ const Posting = () => {
                 <Grid
                     style={{
                         color: "gray",
-                        padding: "1%",
+                        padding: "5px",
                         display: "flex",
+                        height: "45px",
                     }}
                 >
                     {hashTagArray?.map((tagItem) => (
                         <Tag key={tagItem}>
                             {tagItem}
-                            <Button
+
+                            <DoNotDisturbOnOutlinedIcon
                                 style={{
-                                    maxWidth: "30px",
-                                    maxHeight: "20px",
-                                    minWidth: "30px",
-                                    minHeight: "20px",
+                                    width: "20px",
+                                    height: "20px",
+                                    position: "absolute",
+                                    padding: " 0 3px",
+                                    top: "7px",
+                                    cursor: "pointer",
+                                    borderRadius: "100%",
                                 }}
                                 onClick={deleteTagItem}
-                            >
-                                X
-                            </Button>
+                            />
                         </Tag>
                     ))}
                 </Grid>
@@ -120,7 +124,7 @@ const Posting = () => {
                     style={{
                         display: "flex",
                         justifyContent: "space-between",
-                        margin: "1% 0",
+                        margin: "20px 0",
                     }}
                 >
                     <Grid>

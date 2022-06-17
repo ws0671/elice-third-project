@@ -1,4 +1,4 @@
-import { Grid, Input } from "@mui/material";
+import { Grid } from "@mui/material";
 import styled from "styled-components";
 
 const Left = styled(Grid)`
@@ -27,8 +27,10 @@ const User = styled(Grid)`
 `;
 
 const UserImg = styled(Grid)`
-    width: 42px;
-    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    max-width: 42px;
+    max-width: 42px;
     border-radius: 100%;
     background-color: gray;
 `;
@@ -38,7 +40,6 @@ const UserName = styled(Grid)`
     font-weight: 600;
     padding: 11px 5px 0 5px;
     font-size: 17px;
-    font-family: "NanumSquareRound";
 `;
 
 const UserDate = styled(Grid)`
@@ -46,8 +47,8 @@ const UserDate = styled(Grid)`
     color: white;
     font-size: 16px;
     text-align: right;
-    padding: 12px 0 0 0;
-    font-family: "NanumSquareRound";
+    padding: 10px 0 0 0;
+    margin: 0 10px;
 `;
 
 const Title = styled(Grid)`
@@ -55,7 +56,6 @@ const Title = styled(Grid)`
     color: #464646;
     margin: 3% 5%;
     font-weight: 600;
-    font-family: "NanumSquareRound";
 `;
 const PostImg = styled(Grid)`
     margin: 2% auto;
@@ -66,7 +66,6 @@ const Content = styled(Grid)`
     font-size: 15px;
     color: #464646;
     margin: 3% 5%;
-    font-family: "NanumSquareRound";
 `;
 
 const PostTag = styled(Grid)`
@@ -82,7 +81,6 @@ const PostInfo = styled(Grid)`
     padding: 5% 3%;
     background-color: #386150;
     border-radius: 10px 10px 0 0;
-    font-family: "NanumSquareRound";
     display: flex;
     justify-content: space-between;
 `;
@@ -92,7 +90,6 @@ const Comment = styled(Grid)`
     padding: 1% 5%;
     font-size: 14px;
     color: gray;
-    font-family: "NanumSquareRound";
 `;
 
 const Comments = styled(Grid)`
@@ -115,25 +112,24 @@ const CommentName = styled(Grid)`
     font-weight: bold;
     padding: 1% 0;
     color: #505050;
-    font-family: "NanumSquareRound";
 `;
 
 const CommentWrite = styled(Grid)`
-    border-top: solid 1px #d6e5e3;
+    border-top: dashed 1px #a0a083;
     width: 100%;
-    padding: 4% 10%;
+    padding: 10px 15px;
     display: flex;
     justify-content: space-between;
 `;
 
 const Tag = styled(Grid)`
-    color: black;
-    border: solid 1px #d6e5e3;
+    color: white;
     border-radius: 20px;
-    font-size: 0.6rem;
+    background-color #C9ADA1;
+    font-size: 16px;
+    font-weight: bold;
     margin: 0 7px 0 0;
     padding: 6px 12px;
-    background-color: white;
 `;
 
 export {

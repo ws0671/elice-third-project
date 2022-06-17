@@ -124,10 +124,13 @@ const Posting = () => {
                     }}
                 >
                     <Grid>
-                        <TagInput
+                        <input
                             type="file"
+                            accept="image/png, image/jpeg"
                             placeholder="이미지 첨부"
-                            //onChange={onUploadImg}
+                            onChange={(e) =>
+                                console.log("here", e.target.files)
+                            }
                         />
                     </Grid>
                     <Grid>

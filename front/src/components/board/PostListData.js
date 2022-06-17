@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { Grid } from "@mui/material";
+import { useSelector } from "react-redux";
 
 import {
     PostList,
@@ -18,7 +19,8 @@ import {
     Count,
 } from "./PostsStyle";
 
-const PostData = ({ content, user }) => {
+const PostData = ({ content }) => {
+    const user = useSelector((state) => state.auth.value);
     const navigate = useNavigate();
     const [author, setAuthor] = useState(undefined);
 

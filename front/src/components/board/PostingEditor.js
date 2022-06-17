@@ -29,15 +29,16 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
         setHashTagArray(filteredTagList);
     };
 
-    const onUploadImg = (e) => {
+    const onUploadImg = (value) => {
         const formData = new FormData();
-        formData.append("image", e.target.files[0]);
-        const res = Api.post("boards/images", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        setImage(res.data);
+        console.log(value);
+        // formData.append("image", e.target.files[0]);
+        // const res = Api.post("boards/images", formData, {
+        //     headers: {
+        //         "Content-Type": "multipart/form-data",
+        //     },
+        // });
+        // setImage(res.data);
     };
 
     const handleSubmit = async () => {
@@ -124,10 +125,13 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                     }}
                 >
                     <Grid>
-                        <TagInput
+                        <input
                             type="file"
+                            accept="image/png, image/jpeg"
                             placeholder="이미지 첨부"
-                            //onChange={onUploadImg}
+                            onChange={(e) =>
+                                console.log("here", e.target.files)
+                            }
                         />
                     </Grid>
                     <Grid>

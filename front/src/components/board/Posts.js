@@ -202,11 +202,7 @@ const Newposts = () => {
                 {searchData ? (
                     <>
                         {searchData?.map((content, idx) => (
-                            <PostListData
-                                key={idx}
-                                content={content}
-                                user={user}
-                            />
+                            <PostListData key={idx} content={content} />
                         ))}
                         <Grid style={{ display: "flex", margin: "10px" }}>
                             <Pagination

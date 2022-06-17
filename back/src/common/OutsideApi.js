@@ -8,6 +8,7 @@ const OutsideApi = {
       toy_dog: 100000709,
       trainingProduct_dog: 100000707,
       fashion_dog: 100000715,
+      walk_dog: 100000712,
       feed_cat: 100000720,
       toy_cat: 100000721,
       trainingProduct_cat: 100000719,

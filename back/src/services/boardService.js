@@ -29,7 +29,7 @@ class boardService {
   };
 
   // board 목록 조회 - pagination 기능이 포함되어 있지 않음
-  static findBoards = async (sort, direction) => {
+  static findBoards = async ({ sort, direction }) => {
     const sortMap = {
       date: "createdAt",
       view: "viewCount",

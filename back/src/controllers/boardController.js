@@ -5,12 +5,6 @@ class boardController {
   // 게시판 생성
   static createBoard = async (req, res, next) => {
     try {
-      if (is.emptyObject(req.body)) {
-        throw new Error(
-          "요청 내용이 빈 객체입니다. headers의 Content-Type을 application/json으로 설정해주세요"
-        );
-      }
-
       // authorId는 Service에서 author 정보를 찾기 위해 쓰임
       const authorId = req.currentUserId;
       const { title, content, imageUrl, hashTagArray } = req.body;
@@ -33,7 +27,7 @@ class boardController {
     try {
       const sort = req.query.sort;
       const direction = req.query.direction;
-      const boards = await boardService.findBoards(sort, direction);
+      const boards = await boardService.findBoards({ sort, direction });
       res.status(200).json(boards);
     } catch (error) {
       next(error);

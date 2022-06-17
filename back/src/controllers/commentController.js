@@ -5,12 +5,6 @@ class commentController {
   // 댓글 생성
   static createComment = async (req, res, next) => {
     try {
-      if (is.emptyObject(req.body)) {
-        throw new Error(
-          "요청 내용이 빈 객체입니다. headers의 Content-Type을 application/json으로 설정해주세요"
-        );
-      }
-
       const { boardId, authorId, content } = req.body;
 
       const newComment = await commentService.addComment({

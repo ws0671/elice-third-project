@@ -18,9 +18,14 @@ import {
     Count,
 } from "./PostsStyle";
 
-const PostData = ({ content }) => {
+const PostData = ({ content, user }) => {
     const navigate = useNavigate();
-    const [author, setAuthor] = useState(content?.author);
+    const [author, setAuthor] = useState(undefined);
+
+    useEffect(() => {
+        setAuthor(content.author);
+    }, [content]);
+
     return (
         <>
             {author && (
@@ -28,7 +33,11 @@ const PostData = ({ content }) => {
                     container
                     key={content.boardId}
                     onClick={() => {
-                        navigate(`/post/${content.boardId}`);
+                        if (user) {
+                            navigate(`/post/${content.boardId}`);
+                        } else {
+                            alert("로그인을 한 후 서비스를 이용해주세요.");
+                        }
                     }}
                 >
                     <PostUserImg

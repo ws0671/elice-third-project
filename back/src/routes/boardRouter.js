@@ -7,10 +7,10 @@ const boardRouter = Router();
 
 // 사진 업로드
 boardRouter.post(
-  "/boards/images",
-  loginRequired,
-  uploadImageMulter.single("image"),
-  uploadImage
+    "/boards/images",
+    loginRequired,
+    uploadImageMulter.single("image"),
+    uploadImage
 );
 
 // 게시판 생성
@@ -23,9 +23,9 @@ boardRouter.get("/boards", boardController.getBoards);
 boardRouter.get("/boards/search", boardController.boardSearch);
 // 게시판 상세 내용 조회
 boardRouter.get(
-  "/boards/:boardId",
-  loginRequired,
-  boardController.getBoardContent
+    "/boards/:boardId",
+    loginRequired,
+    boardController.getBoardContent
 );
 
 // 게시판 수정
@@ -33,9 +33,9 @@ boardRouter.put("/boards/:boardId", loginRequired, boardController.editBoard);
 
 // 게시판 삭제
 boardRouter.delete(
-  "/boards/:boardId",
-  loginRequired,
-  boardController.deleteBoard
+    "/boards/:boardId",
+    loginRequired,
+    boardController.deleteBoard
 );
 
 export { boardRouter };

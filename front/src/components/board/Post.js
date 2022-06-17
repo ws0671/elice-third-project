@@ -39,7 +39,6 @@ const Post = () => {
     const [postEdit, setPostEdit] = useState(false);
     const [like, setLike] = useState(undefined);
 
-    console.log(user);
     const fetchData = async () => {
         const res = await Api.get(`boards/${params.boardId}`);
         setPost(res.data);

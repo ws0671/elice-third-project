@@ -35,27 +35,23 @@ const Newposts = () => {
 
     const pageHandler = (e, value) => {
         setPage(value);
-        paginationHandler();
+        searchHandler();
     };
 
     useEffect(() => {
         if (search && searchData) {
-            paginationHandler();
+            searchHandler();
         }
     }, [page]);
 
     useEffect(() => {
         if (search) {
+            setPage(1);
             searchHandler();
         } else {
             fetchData();
         }
     }, [sort]);
-
-    useEffect(() => {
-        setPage(1);
-        setSort("date");
-    }, [search]);
 
     // 검색어로 게시글 찾기
     const searchHandler = async () => {
@@ -70,29 +66,28 @@ const Newposts = () => {
         }).then((res) => {
             setSearchData(res.data.searchList);
             setFinalPage(res.data.finalPage);
-            setPage(1);
         });
     };
 
     // 페이지네이션 핸들러
-    const paginationHandler = async () => {
-        await Api.getQuery(
-            "boards/search",
-            {
-                params: {
-                    title: search,
-                    page: page,
-                    perPage: 10,
-                    sort: sort,
-                    direction: -1,
-                },
-            },
-            { withCredentials: true }
-        ).then((res) => {
-            setSearchData(res.data.searchList);
-            setFinalPage(res.data.finalPage);
-        });
-    };
+    // const paginationHandler = async () => {
+    //     await Api.getQuery(
+    //         "boards/search",
+    //         {
+    //             params: {
+    //                 title: search,
+    //                 page: page,
+    //                 perPage: 10,
+    //                 sort: sort,
+    //                 direction: -1,
+    //             },
+    //         },
+    //         { withCredentials: true }
+    //     ).then((res) => {
+    //         setSearchData([...res.data.searchList]);
+    //         setFinalPage(res.data.finalPage);
+    //     });
+    // };
 
     // 전체 게시물 조회 (query 사용)
     const fetchData = async () => {
@@ -147,7 +142,11 @@ const Newposts = () => {
                         onChange={(e) => setSearch(e.target.value)}
                         onKeyDown={(e) => {
                             if (e.keyCode == 13) {
-                                searchHandler();
+                                if (search.length > 0) {
+                                    setSort("date");
+                                    searchHandler();
+                                    setPage(1);
+                                }
                             }
                         }}
                     />
@@ -203,7 +202,11 @@ const Newposts = () => {
                 {searchData ? (
                     <>
                         {searchData?.map((content, idx) => (
-                            <PostListData key={idx} content={content} />
+                            <PostListData
+                                key={idx}
+                                content={content}
+                                user={user}
+                            />
                         ))}
                         <Grid style={{ display: "flex", margin: "10px" }}>
                             <Pagination

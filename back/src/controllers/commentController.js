@@ -5,16 +5,9 @@ class commentController {
   // 댓글 생성
   static createComment = async (req, res, next) => {
     try {
-      if (is.emptyObject(req.body)) {
-        throw new Error(
-          "요청 내용이 빈 객체입니다. headers의 Content-Type을 application/json으로 설정해주세요"
-        );
-      }
-
       // authorId는 Service에서 author 정보를 찾기 위해 쓰임
       const authorId = req.currentUserId;
       const { boardId, content } = req.body;
-
       const newComment = await commentService.addComment({
         boardId,
         authorId,
@@ -43,17 +36,13 @@ class commentController {
   static editComment = async (req, res, next) => {
     try {
       const commentId = req.params.commentId;
-      const { content } = req.body ?? null;
+      const { content } = req.body;
       const toUpdate = { content };
 
       const updatedComment = await commentService.updateComment({
         commentId,
         toUpdate,
       });
-
-      if (updatedComment.errorMessage) {
-        throw new Error(updatedComment.errorMessage);
-      }
 
       res.status(200).json(updatedComment);
     } catch (error) {
@@ -66,10 +55,6 @@ class commentController {
     try {
       const commentId = req.params.commentId;
       const result = await commentService.deleteComment({ commentId });
-
-      if (result.errorMessage) {
-        throw new Error(result.errorMessage);
-      }
 
       res.status(204).json(result);
     } catch (error) {

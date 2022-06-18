@@ -42,7 +42,7 @@ const Post = () => {
     const fetchData = async () => {
         const res = await Api.get(`boards/${params.boardId}`);
         setPost(res.data);
-        console.log(post);
+        console.log("게시글 데이터", post);
     };
 
     useEffect(() => {

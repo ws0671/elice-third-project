@@ -37,26 +37,49 @@ const Posting = () => {
     const onUploadImg = async () => {
         const formData = new FormData();
         formData.append("image", file);
-        // const res = await axios.post("boards/images", formData, {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data",
-        //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-        //     },
-        // });
-        // setImage(res.data);
-        console.log(image);
+        const res = await axios.post(
+            "http://localhost:5000/boards/images",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
+                },
+            }
+        );
+        const imageUrl = res.data.imageUrl;
+        setImage(imageUrl);
+        return imageUrl;
     };
 
     const handleSubmit = async () => {
-        await Api.post("boards", {
-            title,
-            content,
-            imageUrl: image,
-            hashTagArray,
-        });
-        alert("게시글 등록을 성공하였습니다.");
-        navigate(`/board`);
+        if (file) {
+            await onUploadImg().then((imageUrl) => {
+                updatePost(imageUrl);
+            });
+        } else {
+            updatePost();
+        }
     };
+
+    const updatePost = async (imageUrl) => {
+        try {
+            await Api.post("boards", {
+                title,
+                content,
+                imageUrl: imageUrl ? imageUrl : image,
+                hashTagArray,
+            });
+            console.log("이미지", image, imageUrl);
+            alert("게시글 등록을 성공하였습니다.");
+            navigate(`/board`);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
     const stopEvent = (e) => {
         if ((title.length > 0) & (content.length > 0)) {
             e.preventDefault();
@@ -132,9 +155,7 @@ const Posting = () => {
                             type="file"
                             accept="image/png, image/jpeg"
                             placeholder="이미지 첨부"
-                            onChange={(e) =>
-                                console.log("here", e.target.files)
-                            }
+                            onChange={(e) => setFile(e.target.files[0])}
                         />
                     </Grid>
                     <Grid>

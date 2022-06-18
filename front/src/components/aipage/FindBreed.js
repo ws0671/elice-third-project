@@ -30,7 +30,7 @@ const AiContainer = styled.div`
 `;
 
 const imgDefault = 'pug25.jpg'
-const myModel = require('./models/model.json');
+// const myModel = require('./models/model.json');
 
 
 
@@ -66,6 +66,7 @@ const model = await loadGraphModel(MODEL_URL);
 const cat = document.getElementById('cat');
 model.execute(tf.browser.fromPixels(cat));
     */
+   /*
     const modelLoadTest = async () => {
       // try {
       const realModel = await loadGraphModel('models/model.json');  
@@ -105,6 +106,7 @@ model.execute(tf.browser.fromPixels(cat));
       console.log(predictions);
 
     }
+    */
     const ResultMsg = () => {
         return(
             <>
@@ -206,12 +208,12 @@ model.execute(tf.browser.fromPixels(cat));
                       onClick={handleOnClickPredict}>품종 확인하기</Button>
 
                 <br />
-                <Button 
+                {/* <Button 
                       variant="contained"
                       color="primary"
                       aria-label="upload picture"
                       component="span"
-                      onClick={modelLoadTest}>모델로딩 테스트</Button>
+                      onClick={modelLoadTest}>모델로딩 테스트</Button> */}
    
               {isClassified && <ResultMsg />}   
             

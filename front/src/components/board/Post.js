@@ -34,7 +34,7 @@ const Post = () => {
     const user = useSelector((state) => state.auth.value);
     const params = useParams();
     const [post, setPost] = useState("");
-    const [allComment, setAllComment] = useState([]);
+    const [allComment, setAllComment] = useState(undefined);
     const [WriteComment, setWriteComment] = useState("");
     const [postEdit, setPostEdit] = useState(false);
     const [like, setLike] = useState([]);
@@ -42,7 +42,7 @@ const Post = () => {
     const fetchData = async () => {
         const res = await Api.get(`boards/${params.boardId}`);
         setPost(res.data);
-        console.log("게시글 데이터", post);
+        console.log("게시글 데이터", res.data);
     };
 
     useEffect(() => {
@@ -66,6 +66,7 @@ const Post = () => {
 
     useEffect(() => {
         fetchCommentData();
+        console.log("여기 왜 안나옴?", allComment);
     }, []);
 
     const messagesEndRef = useRef(null);
@@ -73,12 +74,15 @@ const Post = () => {
     // 댓글 제출 post
     const submitComment = async (e) => {
         e.preventDefault();
-        Api.post("comments", {
+        await Api.post("comments", {
             boardId: params.boardId,
             authorId: user.userId,
             content: WriteComment,
         })
-            .then(fetchCommentData)
+            .then(() => {
+                fetchCommentData();
+                console.log("댓글 입력");
+            })
             .then(setWriteComment(""));
     };
 

@@ -7,21 +7,24 @@ const PostMenu = styled(Grid)`
 `;
 
 const SelectMenu = styled(Button)`
-    padding: 0px 10px;
-    margin: 10px;
-    color: #386150;
-    font-weight: bold;
+    && {
+        padding: 0px 10px;
+        margin: 10px;
+        color: #386150;
+        font-weight: bold;
+    }
     &:hover {
         color: black;
     }
 `;
 
 const UnSelectMenu = styled(Button)`
-    padding: 0px 10px;
-    margin: 10px;
-    color: #818479;
-    font-weight: bold;
-
+    && {
+        padding: 0px 10px;
+        margin: 10px;
+        color: #818479;
+        font-weight: bold;
+    }
     &:hover {
         color: black;
     }
@@ -95,7 +98,21 @@ const ListTitle = styled(Grid)`
     font-size: 1rem;
 `;
 
-const WritePost = styled(Button)``;
+const WritePost = styled(Button)`
+    && {
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        border: solid 1px;
+        padding: 0;
+        margin: 8px 0;
+
+        &:hover {
+            background-color: #ffffff;
+            color: #386150;
+        }
+    }
+`;
 
 const Count = styled(Grid)`
     font-size: 15px;
@@ -107,6 +124,18 @@ const SortGrid = styled(Grid)`
     display: flex;
     justify-content: end;
     margin: 5px 0;
+`;
+
+const SortButton = styled(Button)`
+    && {
+        font-size: 12px;
+        color: gray;
+        margin: 0 5px;
+        padding: 3px;
+    }
+    &:hover {
+        font-weight: bold;
+    }
 `;
 export {
     PostList,
@@ -124,4 +153,5 @@ export {
     Tag,
     Count,
     SortGrid,
+    SortButton,
 };

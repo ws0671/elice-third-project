@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import styled from "styled-components";
 
 const Left = styled(Grid)`
@@ -132,6 +132,16 @@ const Tag = styled(Grid)`
     padding: 6px 12px;
 `;
 
+const EditButton = styled(Button)`
+    && {
+        border: none;
+        font-weight: bold;
+        font-size: 15px;
+        margin: 5px 3px;
+        padding: 0;
+    }
+`;
+
 export {
     Left,
     Right,
@@ -149,4 +159,5 @@ export {
     CommentWrite,
     Tag,
     Comments,
+    EditButton,
 };

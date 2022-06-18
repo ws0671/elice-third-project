@@ -5,18 +5,7 @@ import { useSelector } from "react-redux";
 import React, { useEffect, useState } from "react";
 import PostListData from "./PostListData";
 import * as Api from "../../api";
-import { styled } from "@mui/material/styles";
-
-import { PostList, SortGrid, WritePost } from "./PostsStyle";
-
-const SortButton = styled(Button)({
-    fontSize: 12,
-    color: "gray",
-    margin: "0 5px",
-    "&:hover": {
-        fontWeight: "bold",
-    },
-});
+import { SortGrid, WritePost, SortButton } from "./PostsStyle";
 
 const Newposts = () => {
     const navigate = useNavigate();
@@ -154,18 +143,6 @@ const Newposts = () => {
                 <Grid>
                     {user && (
                         <WritePost
-                            sx={{
-                                fontSize: "14px",
-                                fontWeight: "bold",
-                                color: "white",
-                                border: "solid 1px",
-                                p: "0",
-                                m: "8px 0",
-                                "&:hover": {
-                                    backgroundColor: "#FDF6F0",
-                                    color: "#386150",
-                                },
-                            }}
                             onClick={() => {
                                 navigate("/postEditor");
                             }}

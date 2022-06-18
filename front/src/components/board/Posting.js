@@ -6,6 +6,7 @@ import { useState } from "react";
 import * as Api from "../../api";
 import React from "react";
 import axios from "axios";
+
 const Posting = () => {
     const navigate = useNavigate();
 

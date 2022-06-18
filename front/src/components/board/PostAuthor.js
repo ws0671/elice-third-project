@@ -1,18 +1,8 @@
 import React, { useState } from "react";
 import * as Api from "../../api";
-import { Button, ButtonBase } from "@mui/material";
-import { User, UserImg, UserDate, UserName } from "./PostStyle";
+import { User, UserImg, UserDate, UserName, EditButton } from "./PostStyle";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { borderRadius, styled } from "@mui/system";
-
-const EditButton = styled(Button)({
-    border: "none",
-    fontWeight: "bold",
-    fontSize: "15px",
-    margin: "5px 3px",
-    padding: "0",
-});
 
 const PostAuthor = ({ post, setPostEdit }) => {
     const navigate = useNavigate();
@@ -43,7 +33,7 @@ const PostAuthor = ({ post, setPostEdit }) => {
 
             <UserName>{author.name}</UserName>
             <UserDate>{post.createdAt.slice(0, 10)}</UserDate>
-            {user.userId == author.userId && (
+            {user.userId === author.userId && (
                 <>
                     <EditButton
                         sx={{

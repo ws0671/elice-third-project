@@ -1,5 +1,5 @@
 import { Container } from "@mui/system";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import {
     MainTopBanner,
     MainSlogan,
@@ -9,18 +9,8 @@ import {
     ServiceContent,
     TitleLineWrap,
     TitleLine,
+    SloganButton,
 } from "./HomeStyle";
-
-import { styled } from "@mui/material/styles";
-
-const SloganButton = styled(Button)({
-    fontSize: "22px",
-    color: "white",
-    border: "solid 1px white",
-    margin: "15px 0",
-    padding: "5px 30px",
-    borderRadius: "10px",
-});
 
 const Home = () => {
     return (

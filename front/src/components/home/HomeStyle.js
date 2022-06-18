@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Button } from "@mui/material";
 import styled from "styled-components";
 import MainImg from "../../assets/images/pet.jpg";
 
@@ -53,6 +53,17 @@ const TitleLine = styled(Container)`
 
 const SubDomain = styled(Grid);
 
+const SloganButton = styled(Button)`
+    && {
+        font-size: 22px;
+        color: white;
+        border: solid 1px white;
+        margin: 15px 0;
+        padding: 5px 30px;
+        border-radius: 10px;
+    }
+`;
+
 export {
     MainTopBanner,
     MainSlogan,
@@ -62,4 +73,5 @@ export {
     ServiceContent,
     TitleLineWrap,
     TitleLine,
+    SloganButton,
 };

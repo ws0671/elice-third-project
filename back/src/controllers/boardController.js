@@ -5,12 +5,6 @@ class boardController {
   // 게시판 생성
   static createBoard = async (req, res, next) => {
     try {
-      if (is.emptyObject(req.body)) {
-        throw new Error(
-          "요청 내용이 빈 객체입니다. headers의 Content-Type을 application/json으로 설정해주세요"
-        );
-      }
-
       // authorId는 Service에서 author 정보를 찾기 위해 쓰임
       const authorId = req.currentUserId;
       const { title, content, imageUrl, hashTagArray } = req.body;
@@ -33,7 +27,7 @@ class boardController {
     try {
       const sort = req.query.sort;
       const direction = req.query.direction;
-      const boards = await boardService.findBoards(sort, direction);
+      const boards = await boardService.findBoards({ sort, direction });
       res.status(200).json(boards);
     } catch (error) {
       next(error);
@@ -56,17 +50,13 @@ class boardController {
   static editBoard = async (req, res, next) => {
     try {
       const boardId = req.params.boardId;
-      const { title, content, imageUrl, hashTagArray } = req.body ?? null;
+      const { title, content, imageUrl, hashTagArray } = req.body;
       const toUpdate = { title, content, imageUrl, hashTagArray };
 
       const updatedBoard = await boardService.updateBoard({
         boardId,
         toUpdate,
       });
-
-      if (updatedBoard.errorMessage) {
-        throw new Error(updatedBoard.errorMessage);
-      }
 
       res.status(200).json(updatedBoard);
     } catch (error) {
@@ -80,10 +70,6 @@ class boardController {
       const boardId = req.params.boardId;
 
       const result = await boardService.deleteBoard({ boardId });
-
-      if (result.errorMessage) {
-        throw new Error(result.errorMessage);
-      }
 
       res.status(204).json(result);
     } catch (error) {

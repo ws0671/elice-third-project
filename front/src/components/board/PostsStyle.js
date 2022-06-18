@@ -132,9 +132,10 @@ const SortButton = styled(Button)`
         color: gray;
         margin: 0 5px;
         padding: 3px;
-    }
-    &:hover {
-        font-weight: bold;
+
+        &:hover {
+            font-weight: bold;
+        }
     }
 `;
 export {

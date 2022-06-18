@@ -29,7 +29,7 @@ class boardService {
   };
 
   // board 목록 조회 - pagination 기능이 포함되어 있지 않음
-  static findBoards = async (sort, direction) => {
+  static findBoards = async ({ sort, direction }) => {
     const sortMap = {
       date: "createdAt",
       view: "viewCount",
@@ -46,7 +46,7 @@ class boardService {
   // board 상세 조회
   static findBoard = async ({ userId, boardId }) => {
     let board = await BoardModel.findOne({ boardId }).populate("author");
-
+    console.log(board);
     // 현재 상세 조회를 진행하는 사용자가 작성한 글이 아닐 경우에만 조회수 증가
     // 증가된 조회수가 적용된 board를 반환
     if (userId !== board.author.userId) {
@@ -56,7 +56,7 @@ class boardService {
         { returnOriginal: false }
       ).populate("author");
     }
-
+    console.log(board);
     return board;
   };
 
@@ -67,7 +67,7 @@ class boardService {
     if (!board) {
       const errorMessage =
         "해당하는 게시글이 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     Object.keys(toUpdate).forEach((key) => {
@@ -93,19 +93,19 @@ class boardService {
     if (!deleteResult) {
       const errorMessage =
         "해당 boardId를 가진 게시글은 없습니다. 다시 한 번 확인해 주세요.";
-      return { errorMessage };
+      throw new Error(errorMessage);
     }
 
     return deleteResult;
   };
 
   //title로 검색한 board 목록의 마지막 페이지 반환
-  static async getFinalPage({ title, perPage }) {
+  static async getLastPage({ title, perPage }) {
     const boardList = await BoardModel.countDocuments({
       title: { $regex: title, $options: "i" },
     });
-    const finalPage = Math.ceil(boardList / perPage);
-    return finalPage;
+    const lastPage = Math.ceil(boardList / perPage);
+    return lastPage;
   }
 
   // title로 board리스트를 찾아 페이징처리하여 반환하는 함수

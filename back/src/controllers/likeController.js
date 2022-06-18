@@ -16,10 +16,6 @@ class likeController {
         userId,
       });
 
-      if (newLike.errorMessage) {
-        throw new Error(newLike.errorMessage);
-      }
-
       res.status(201).json(newLike);
     } catch (error) {
       next(error);
@@ -31,10 +27,6 @@ class likeController {
     try {
       const userId = req.currentUserId;
       const LikeInfo = await likeService.findLikeInfo({ userId });
-
-      if (LikeInfo.errorMessage) {
-        throw new Error(LikeInfo.errorMessage);
-      }
 
       res.status(200).json(LikeInfo);
     } catch (error) {
@@ -50,10 +42,6 @@ class likeController {
 
       const toUpdate = { boardId };
       const LikeInfo = await likeService.setLikeInfo({ userId, toUpdate });
-
-      if (LikeInfo.errorMessage) {
-        throw new Error(LikeInfo.errorMessage);
-      }
 
       res.status(200).json(LikeInfo);
     } catch (error) {

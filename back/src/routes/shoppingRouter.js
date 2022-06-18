@@ -4,6 +4,6 @@ import { shoppingController } from "../controllers/shoppingController";
 
 const shoppingRouter = Router();
 
-shoppingRouter.get("/search/shop", shoppingController.connectNaverApi);
+shoppingRouter.get("/shop/search", shoppingController.connectNaverApi);
 
 export { shoppingRouter };

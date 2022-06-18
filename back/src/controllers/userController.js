@@ -23,18 +23,10 @@ class userController {
         password,
       });
 
-      if (newUser.errorMessage) {
-        throw new Error(newUser.errorMessage);
-      }
-
       const userId = newUser.userId;
-      const newLike = await likeService.addLikeInfo({
+      await likeService.addLikeInfo({
         userId,
       });
-
-      if (newLike.errorMessage) {
-        throw new Error(newLike.errorMessage);
-      }
 
       res.status(201).json(newUser);
     } catch (error) {
@@ -50,10 +42,6 @@ class userController {
 
       // 위 데이터를 이용하여 유저 db에서 유저 찾기
       const user = await userAuthService.getUser({ email, password });
-
-      if (user.errorMessage) {
-        throw new Error(user.errorMessage);
-      }
 
       res.status(200).send(user);
     } catch (error) {
@@ -79,10 +67,6 @@ class userController {
         userId,
       });
 
-      if (currentUserInfo.errorMessage) {
-        throw new Error(currentUserInfo.errorMessage);
-      }
-
       res.status(200).send(currentUserInfo);
     } catch (error) {
       next(error);
@@ -95,7 +79,7 @@ class userController {
       const userId = req.params.userId;
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const { name, email, password, description, imageUrl, speciesArray } =
-        req.body ?? null;
+        req.body;
       const toUpdate = {
         name,
         email,
@@ -108,10 +92,6 @@ class userController {
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ userId, toUpdate });
 
-      if (updatedUser.errorMessage) {
-        throw new Error(updatedUser.errorMessage);
-      }
-
       res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
@@ -123,22 +103,10 @@ class userController {
       const userId = req.params.userId;
       const currentUserInfo = await userAuthService.getUserInfo({ userId });
 
-      if (currentUserInfo.errorMessage) {
-        throw new Error(currentUserInfo.errorMessage);
-      }
-
       res.status(200).send(currentUserInfo);
     } catch (error) {
       next(error);
     }
-  }
-
-  static afterLogin(req, res, next) {
-    res
-      .status(200)
-      .send(
-        `안녕하세요 ${req.currentUserId}님, jwt 웹 토큰 기능 정상 작동 중입니다.`
-      );
   }
 }
 

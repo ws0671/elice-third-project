@@ -53,26 +53,20 @@ function App() {
     }
 
     return (
-        <React.Suspense fallback={<div>Loading...</div>}>
-            <Router>
-                <Routes>
-                    <Route path="/" exact element={<HomePage />} />
-                    <Route path="/walk" exact element={<WalkPage />} />
-                    <Route path="/hospital" exact element={<HospitalPage />} />
-                    <Route path="/board" exact element={<BoardPage />} />
-                    <Route path="/ai" exact element={<AiPage />} />
-                    <Route path="/login" exact element={<LoginPage />} />
-                    <Route path="/register" exact element={<RegisterPage />} />
-                    <Route
-                        path="/postEditor"
-                        exact
-                        element={<PostEditorPage />}
-                    />
-                    <Route path="/post" exact element={<PostPage />} />
-                    <Route path="/mypage" exact element={<MypagePage />} />
-                </Routes>
-            </Router>
-        </React.Suspense>
+        <Router>
+            <Routes>
+                <Route path="/" exact element={<HomePage />} />
+                <Route path="/walk" exact element={<WalkPage />} />
+                <Route path="/hospital" exact element={<HospitalPage />} />
+                <Route path="/board" exact element={<BoardPage />} />
+                <Route path="/ai" exact element={<AiPage />} />
+                <Route path="/login" exact element={<LoginPage />} />
+                <Route path="/register" exact element={<RegisterPage />} />
+                <Route path="/postEditor" exact element={<PostEditorPage />} />
+                <Route path="/post/:boardId" exact element={<PostPage />} />
+                <Route path="/mypage" exact element={<MypagePage />} />
+            </Routes>
+        </Router>
     );
 }
 

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { loginRequired } from "../middlewares/loginRequired";
 import { boardController } from "../controllers/boardController";
 import { uploadImageMulter, uploadImage } from "../middlewares/uploadImage";
+import { bodyValidator } from "../middlewares/validator";
 
 const boardRouter = Router();
 
@@ -14,7 +15,12 @@ boardRouter.post(
 );
 
 // 게시판 생성
-boardRouter.post("/boards", loginRequired, boardController.createBoard);
+boardRouter.post(
+  "/boards",
+  loginRequired,
+  bodyValidator,
+  boardController.createBoard
+);
 
 // 게시판 리스트 조회
 boardRouter.get("/boards", boardController.getBoards);

@@ -5,6 +5,7 @@ import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlin
 import { useState } from "react";
 import * as Api from "../../api";
 import React from "react";
+import axios from "axios";
 const Posting = () => {
     const navigate = useNavigate();
 
@@ -13,6 +14,7 @@ const Posting = () => {
     const [image, setImage] = useState("");
     const [hashTag, setHashTag] = useState("");
     const [hashTagArray, setHashTagArray] = useState([]);
+    const [file, setFile] = useState("");
 
     const onKeyPress = (e) => {
         if (e.target.value.length !== 0 && e.key === "Enter") {
@@ -31,31 +33,28 @@ const Posting = () => {
         setHashTagArray(filteredTagList);
     };
 
-    const onUploadImg = (e) => {
+    const onUploadImg = async () => {
         const formData = new FormData();
-        formData.append("image", e.target.files[0]);
-        const res = Api.post("boards/images", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        setImage(res.data);
+        formData.append("image", file);
+        // const res = await axios.post("boards/images", formData, {
+        //     headers: {
+        //         "Content-Type": "multipart/form-data",
+        //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+        //     },
+        // });
+        // setImage(res.data);
         console.log(image);
     };
 
     const handleSubmit = async () => {
-        try {
-            await Api.post("boards", {
-                title,
-                content,
-                imageUrl: image,
-                hashTagArray,
-            });
-            alert("게시글 등록을 성공하였습니다.");
-            navigate(`/board`);
-        } catch (error) {
-            alert("게시글 등록에 실패하였습니다.", error);
-        }
+        await Api.post("boards", {
+            title,
+            content,
+            imageUrl: image,
+            hashTagArray,
+        });
+        alert("게시글 등록을 성공하였습니다.");
+        navigate(`/board`);
     };
     const stopEvent = (e) => {
         if ((title.length > 0) & (content.length > 0)) {

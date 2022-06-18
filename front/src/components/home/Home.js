@@ -6,7 +6,11 @@ import {
     Domain,
     SloganInner,
     ServiceWrap,
+    ServiceContent,
+    TitleLineWrap,
+    TitleLine,
 } from "./HomeStyle";
+
 import { styled } from "@mui/material/styles";
 
 const SloganButton = styled(Button)({
@@ -44,7 +48,21 @@ const Home = () => {
                     </MainSlogan>
                 </MainTopBanner>
             </Grid>
-            <ServiceWrap sx="lg"> 여기</ServiceWrap>
+            <TitleLineWrap>
+                <TitleLine>
+                    반려동물에 관한 정보를 <br />
+                    쉽고 편리하게 조회할 수 있는 서비스
+                    <br />
+                    "궁금하냥? 그렇다멍!" 에서 다양한 서비스를 만나보세요
+                </TitleLine>
+            </TitleLineWrap>
+
+            <ServiceWrap sx="lg">
+                <ServiceContent />
+                <ServiceContent />
+                <ServiceContent />
+                <ServiceContent />
+            </ServiceWrap>
         </>
     );
 };

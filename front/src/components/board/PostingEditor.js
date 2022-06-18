@@ -40,12 +40,12 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const onUploadImg = (value) => {
         const formData = new FormData();
         formData.append("image", value);
-        const res = Api.post("boards/images", formData, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        });
-        setImage(res.data);
+        // const res = Api.post("boards/images", formData, {
+        //     headers: {
+        //         "Content-Type": "multipart/form-data",
+        //     },
+        // });
+        // setImage(res.data);
     };
 
     const handleSubmit = async () => {

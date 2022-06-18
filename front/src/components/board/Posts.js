@@ -124,7 +124,7 @@ const Newposts = () => {
                         minWidth: "500px",
                     }}
                 >
-                    질문을 통해 궁금한 점을 해결하고 다양한 정보를 얻어가세요!
+                    궁금한 점을 해결하고 다양한 정보를 얻어가세요!
                 </Grid>
                 <Grid style={{ display: "flex" }}>
                     <SearchIcon

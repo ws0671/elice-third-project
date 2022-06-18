@@ -4,11 +4,11 @@ import MainImg from "../../assets/images/pet.jpg";
 
 const MainTopBanner = styled(Grid)`
     width: 100vw;
-    height: 50vw;
-    max-width: 1800px;
-    max-height: 900px;
+    height: 49vw;
+    // max-width: 1800px;
+    // max-height: 900px;
     background-image: url(${MainImg});
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
 `;
 
@@ -33,4 +33,33 @@ const ServiceWrap = styled(Container)`
     border: solid 1px;
 `;
 
-export { MainTopBanner, MainSlogan, Domain, SloganInner, ServiceWrap };
+const ServiceContent = styled(Grid)`
+    border: solid 1px;
+    width: 100%;
+    height: 400px;
+`;
+
+const TitleLineWrap = styled(Grid)`
+    background-color: #fdf6f0;
+    padding: 100px 0;
+`;
+
+const TitleLine = styled(Container)`
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+`;
+
+const SubDomain = styled(Grid);
+
+export {
+    MainTopBanner,
+    MainSlogan,
+    Domain,
+    SloganInner,
+    ServiceWrap,
+    ServiceContent,
+    TitleLineWrap,
+    TitleLine,
+};

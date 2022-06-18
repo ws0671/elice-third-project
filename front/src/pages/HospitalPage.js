@@ -277,9 +277,9 @@ const HospitalPage = () => {
         <Grid container>
           <Grid item md={6} sm={12} xs={12}>
             <Map ref={hospitalMap}></Map>
-            <ul>
+            {/* <ul>
               <List places={places} />
-            </ul>
+            </ul> */}
           </Grid>
           <Grid item md={6} sm={12} xs={12}>
             <div id="menu_wrap">

@@ -10,6 +10,20 @@ import {
     TitleLineWrap,
     TitleLine,
     SloganButton,
+    LeftContent,
+    RightContent,
+    RightContentTitle,
+    LeftContentTitle,
+    RightContentButton,
+    LeftContentButton,
+    LeftContentWrap,
+    RightContentWrap,
+    ImageWrap,
+    Footer,
+    ReadyWrap,
+    ReadyContent,
+    ReadySlogan,
+    JoinButton,
 } from "./HomeStyle";
 
 const Home = () => {
@@ -47,12 +61,84 @@ const Home = () => {
                 </TitleLine>
             </TitleLineWrap>
 
-            <ServiceWrap sx="lg">
-                <ServiceContent />
-                <ServiceContent />
-                <ServiceContent />
-                <ServiceContent />
+            <ServiceWrap>
+                {/* 첫번째 서비스  */}
+                <ServiceContent>
+                    <ImageWrap />
+                    <RightContent>
+                        <RightContentWrap>
+                            <RightContentTitle>
+                                우리 동네 산책로
+                            </RightContentTitle>
+                            우리 동네에 있는 산책로를 <br />
+                            간편하고 쉽게 찾아보세요!
+                            <RightContentButton>바로가기</RightContentButton>
+                        </RightContentWrap>
+                    </RightContent>
+                </ServiceContent>
+
+                {/* 두번째 서비스  */}
+                <ServiceContent>
+                    <LeftContent>
+                        <LeftContentWrap>
+                            <LeftContentTitle>
+                                우리 동네 동물병원
+                            </LeftContentTitle>
+                            우리 동네에 있는 동물 병원을 <br />
+                            간편하고 쉽게 찾아보세요!
+                            <LeftContentButton>바로가기</LeftContentButton>
+                        </LeftContentWrap>
+                    </LeftContent>
+                    <ImageWrap />
+                </ServiceContent>
+
+                {/* 세번째 서비스  */}
+                <ServiceContent>
+                    <ImageWrap />
+                    <RightContent>
+                        <RightContentWrap>
+                            <RightContentTitle>
+                                종 분석 서비스
+                            </RightContentTitle>
+                            반려동물의 정확한 종을 알아보세요!
+                            <br />
+                            쉽고 간편하게
+                            <br />
+                            사진으로 확인 가능!
+                            <RightContentButton>바로가기</RightContentButton>
+                        </RightContentWrap>
+                    </RightContent>
+                </ServiceContent>
+
+                {/* 네번째 서비스  */}
+                <ServiceContent>
+                    <LeftContent>
+                        <LeftContentWrap>
+                            <LeftContentTitle>소통 공간</LeftContentTitle>
+                            소통 공간을 통해
+                            <br />
+                            궁금한 점을 해결해보세요!
+                            <br />
+                            꿀팁까지!
+                            <LeftContentButton>바로가기</LeftContentButton>
+                        </LeftContentWrap>
+                    </LeftContent>
+                    <ImageWrap />
+                </ServiceContent>
             </ServiceWrap>
+            {/* 회원가입및 로그인 권유 */}
+            <ReadyWrap>
+                <ReadyContent>
+                    <ReadySlogan>Ready to get started?</ReadySlogan>
+                    <Grid>
+                        <JoinButton>Login</JoinButton>
+                        <JoinButton>Sign Up</JoinButton>
+                    </Grid>
+                </ReadyContent>
+            </ReadyWrap>
+
+            {/* footer */}
+            <Footer />
         </>
     );
 };

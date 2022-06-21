@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
-
+import axios from "axios";
 import styled from "styled-components";
 
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 import Header from "../components/common/Header";
 import List from "../components/map/List";
+import DaumPostcode from "../components/map/DaumPostcode";
 
 import { Container, Box, Tab, Grid } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
@@ -18,6 +19,7 @@ const MapPage = () => {
   const [map, setMap] = useState();
   const [currentPos, setCurrentPos] = useState();
   const [pagination, setPagination] = useState();
+  const [address, setAddress] = useState();
 
   const { kakao } = window;
   const keywords = {
@@ -86,6 +88,29 @@ const MapPage = () => {
   }, []);
 
   useEffect(() => {
+    if (!address) return;
+
+    async function getLatAndLng() {
+      const res = await axios.get(
+        "https://dapi.kakao.com/v2/local/search/address",
+        {
+          headers: {
+            Authorization: `KakaoAK ${process.env.REACT_APP_KAKAO_API_REST}`,
+          },
+          params: {
+            query: address,
+          },
+        }
+      );
+
+      const data = res.data.documents[0];
+      setCurrentPos({ lat: parseFloat(data.y), lng: parseFloat(data.x) });
+    }
+
+    getLatAndLng();
+  }, [address]);
+
+  useEffect(() => {
     if (!map) return;
     if (!currentPos.lat || !currentPos.lng) return;
 
@@ -139,23 +164,26 @@ const MapPage = () => {
     ps.keywordSearch(keyword, placesSearchCB, searchOptions);
   }, [map, currentPos, value]);
 
-  // const displayTabPanel = () => {
-  //   return <displayTabPanel value={value}>{value}</displayTabPanel>;
-  // };
-
   return (
     <>
       <Header />
       <Container maxWidth="lg" sx={{ paddingTop: "90px" }}>
         <Box sx={{ width: "100%", typography: "body1" }}>
           <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Box
+              sx={{
+                borderBottom: 1,
+                borderColor: "divider",
+                position: "relative",
+              }}
+            >
               <TabList onChange={handleTabChange} aria-label="map tab list">
                 <Tab label="산책길" value="1" />
                 <Tab label="카페" value="2" />
                 <Tab label="미용" value="3" />
                 <Tab label="병원" value="4" />
               </TabList>
+              <DaumPostcode setAddress={setAddress} />
             </Box>
             <TabPanel value={value}>
               <Grid container>
@@ -196,11 +224,6 @@ const MapPage = () => {
                 </Grid>
               </Grid>
             </TabPanel>
-            {/* <TabPanel value="2">카페</TabPanel>
-            <TabPanel value="3">미용</TabPanel>
-            <TabPanel value="4">식당</TabPanel>
-            <TabPanel value="5">병원</TabPanel> */}
-            {/* {displayTabPanel()} */}
           </TabContext>
         </Box>
       </Container>

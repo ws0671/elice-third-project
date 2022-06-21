@@ -7,6 +7,7 @@ const bodyValidator = (req, res, next) => {
         "요청 내용이 빈 객체입니다. headers의 Content-Type을 다시 확인해주세요."
       );
     }
+    next();
   } catch (error) {
     next(error);
   }

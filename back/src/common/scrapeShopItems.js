@@ -1,9 +1,9 @@
 import axios from "axios";
 import cheerio from "cheerio";
 
-const OutsideApi = {
+const scrapeShopItems = {
   getShoppingList: async (category) => {
-    const categoryNumber = {
+    const categoryIdMap = {
       feed_dog: 100000708,
       toy_dog: 100000709,
       trainingProduct_dog: 100000707,
@@ -15,7 +15,7 @@ const OutsideApi = {
       tower_cat: 100000722,
     };
     const res = await axios.get(
-      `https://search.shopping.naver.com/search/category/${categoryNumber[category]}`
+      `https://search.shopping.naver.com/search/category/${categoryIdMap[category]}`
     );
     const $ = cheerio.load(res.data);
     const script = $("body > script");
@@ -50,4 +50,4 @@ const OutsideApi = {
   },
 };
 
-export { OutsideApi };
+export { scrapeShopItems };

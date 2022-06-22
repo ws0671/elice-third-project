@@ -29,9 +29,13 @@ const DaumPostcode = ({ setAddress }) => {
 
   return (
     <Button
-      variant="outlined"
       onClick={handleClick}
-      sx={{ position: "absolute", right: "0px", bottom: "10px" }}
+      sx={{
+        position: "absolute",
+        right: "0px",
+        bottom: "10px",
+        color: "#4d6a6d",
+      }}
     >
       위치 변경
     </Button>

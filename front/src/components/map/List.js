@@ -6,7 +6,7 @@ const List = ({ places, handleMouseOver, handleMouseOut }) => {
       <Ul>
         {places.map((place) => {
           return (
-            <Wrapper key={place.id}>
+            <Li key={place.id}>
               <div>
                 <PlaceName
                   href={place.place_url}
@@ -25,7 +25,7 @@ const List = ({ places, handleMouseOver, handleMouseOut }) => {
                   ? place.road_address_name
                   : place.address_name}
               </Address>
-            </Wrapper>
+            </Li>
           );
         })}
       </Ul>
@@ -37,13 +37,20 @@ export default List;
 
 const Ul = styled.ul`
   list-style: none;
+  padding-left: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const Wrapper = styled.div`
-  width: 100%;
+const Li = styled.li`
+  width: 90%;
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  background-color: rgba(121, 132, 120, 0.1);
+  padding: 10px;
+  border-radius: 10px;
 `;
 
 const PlaceName = styled.a`

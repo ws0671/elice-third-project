@@ -121,7 +121,7 @@ const MapPage = () => {
     const searchOptions = {
       location: new kakao.maps.LatLng(currentPos.lat, currentPos.lng), // 중심 좌표
       radius: 10000, // 중심 좌표로부터의 거리(반경) 필터링 값 (미터(m) 단위)
-      size: 5, // 한 페이지에 보여질 목록 개수
+      size: 7, // 한 페이지에 보여질 목록 개수
     };
 
     // 장소검색이 완료됐을 때 호출되는 콜백함수 입니다
@@ -167,65 +167,69 @@ const MapPage = () => {
   return (
     <>
       <Header />
-      <Container maxWidth="lg" sx={{ paddingTop: "90px" }}>
-        <Box sx={{ width: "100%", typography: "body1" }}>
-          <TabContext value={value}>
-            <Box
-              sx={{
-                borderBottom: 1,
-                borderColor: "divider",
-                position: "relative",
-              }}
+      <Container maxWidth="lg" sx={{ paddingTop: "100px" }}>
+        <TabContext value={value}>
+          <Box
+            sx={{
+              position: "relative",
+            }}
+          >
+            <CategoryTabList
+              onChange={handleTabChange}
+              aria-label="map tab list"
             >
-              <TabList onChange={handleTabChange} aria-label="map tab list">
-                <Tab label="산책길" value="1" />
-                <Tab label="카페" value="2" />
-                <Tab label="미용" value="3" />
-                <Tab label="병원" value="4" />
-              </TabList>
-              <DaumPostcode setAddress={setAddress} />
-            </Box>
-            <TabPanel value={value}>
-              <Grid container>
-                <Grid item md={6} sm={12} xs={12}>
-                  {currentPos?.lat && currentPos?.lng && (
-                    <Map
-                      center={{ lat: currentPos.lat, lng: currentPos.lng }}
-                      style={{ width: "100%", height: "400px" }}
-                      onCreate={setMap}
-                      isPanto={true}
-                    >
-                      {markers.map((marker) => (
-                        <MapMarker
-                          key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-                          position={marker.position}
-                          onMouseOver={() => {
-                            handleMouseOver(marker.content);
-                          }}
-                          onMouseOut={handleMouseOut}
-                        >
-                          {info && info.content === marker.content && (
-                            <div style={{ color: "#000" }}>
-                              {marker.content}
-                            </div>
-                          )}
-                        </MapMarker>
-                      ))}
-                    </Map>
-                  )}
-                </Grid>
-                <Grid item md={6} sm={12} xs={12}>
-                  <List
-                    places={places}
-                    handleMouseOver={handleMouseOver}
-                    handleMouseOut={handleMouseOut}
-                  />
-                  <PageNumberWrapper>{displayPagination()}</PageNumberWrapper>
-                </Grid>
+              <CategoryTab label="산책길" value="1" />
+              <CategoryTab label="카페" value="2" />
+              <CategoryTab label="미용" value="3" />
+              <CategoryTab label="병원" value="4" className="hos" />
+            </CategoryTabList>
+            <DaumPostcode setAddress={setAddress} />
+          </Box>
+          <TabPanel
+            value={value}
+            sx={{
+              backgroundColor: "#F6F5EF",
+              border: "solid 5px #798478",
+              borderRadius: "3px",
+            }}
+          >
+            <Grid container>
+              <Grid item md={6} sm={12} xs={12}>
+                {currentPos?.lat && currentPos?.lng && (
+                  <Map
+                    center={{ lat: currentPos.lat, lng: currentPos.lng }}
+                    style={{ width: "100%", height: "400px" }}
+                    onCreate={setMap}
+                    isPanto={true}
+                  >
+                    {markers.map((marker) => (
+                      <MapMarker
+                        key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+                        position={marker.position}
+                        onMouseOver={() => {
+                          handleMouseOver(marker.content);
+                        }}
+                        onMouseOut={handleMouseOut}
+                      >
+                        {info && info.content === marker.content && (
+                          <div style={{ color: "#000" }}>{marker.content}</div>
+                        )}
+                      </MapMarker>
+                    ))}
+                  </Map>
+                )}
               </Grid>
-            </TabPanel>
-          </TabContext>
-        </Box>
+              <Grid item md={6} sm={12} xs={12} sx={{ minHeight: "600px" }}>
+                <List
+                  places={places}
+                  handleMouseOver={handleMouseOver}
+                  handleMouseOut={handleMouseOut}
+                />
+                <PageNumberWrapper>{displayPagination()}</PageNumberWrapper>
+              </Grid>
+            </Grid>
+          </TabPanel>
+        </TabContext>
       </Container>
     </>
   );
@@ -235,12 +239,19 @@ export default MapPage;
 
 const PageNumber = styled.a`
   text-decoration: none;
-  color: black;
+  color: #798478;
   padding: 10px;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
 
   &.on {
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    color: white;
+    background-color: #798478;
+    border-radius: 50%;
   }
 `;
 
@@ -248,4 +259,33 @@ const PageNumberWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const CategoryTabList = styled(TabList)`
+  && .MuiTabs-indicator {
+    display: none;
+  }
+`;
+
+const CategoryTab = styled(Tab)`
+  && {
+    background-color: #c9ada1;
+    color: black;
+    border-radius: 15px 15px 0px 0px;
+    margin-right: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  &.hos {
+    background-color: #a0a083;
+  }
+
+  &&.Mui-selected {
+    color: white;
+    background-color: #798478;
+    border: solid #798478;
+    border-width: 5px 5px 0px 5px;
+  }
 `;

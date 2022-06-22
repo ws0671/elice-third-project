@@ -2,34 +2,32 @@ import styled from "styled-components";
 
 const List = ({ places, handleMouseOver, handleMouseOut }) => {
   return (
-    <>
-      <Ul>
-        {places.map((place) => {
-          return (
-            <Li key={place.id}>
-              <div>
-                <PlaceName
-                  href={place.place_url}
-                  target="_blank"
-                  onMouseOver={() => {
-                    handleMouseOver(place.place_name);
-                  }}
-                  onMouseOut={handleMouseOut}
-                >
-                  {place.place_name}
-                </PlaceName>
-                <Phone>{place.phone}</Phone>
-              </div>
-              <Address>
-                {place.road_address_name
-                  ? place.road_address_name
-                  : place.address_name}
-              </Address>
-            </Li>
-          );
-        })}
-      </Ul>
-    </>
+    <Ul>
+      {places.map((place) => {
+        return (
+          <Li key={place.id}>
+            <div>
+              <PlaceName
+                href={place.place_url}
+                target="_blank"
+                onMouseOver={() => {
+                  handleMouseOver(place.place_name);
+                }}
+                onMouseOut={handleMouseOut}
+              >
+                {place.place_name}
+              </PlaceName>
+              <Phone>{place.phone}</Phone>
+            </div>
+            <Address>
+              {place.road_address_name
+                ? place.road_address_name
+                : place.address_name}
+            </Address>
+          </Li>
+        );
+      })}
+    </Ul>
   );
 };
 

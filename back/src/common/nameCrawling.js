@@ -4,7 +4,7 @@ import cheerio from "cheerio";
 const getHtml = async () => {
   try {
     return await axios.get(
-      "https://www.google.com/search?q=Australian+terrier&oq=Australian+terrier"
+      "https://www.google.com/search?q=Australian+terrier"
     );
   } catch (error) {
     console.error(error);
@@ -14,9 +14,7 @@ const getHtml = async () => {
 getHtml()
   .then((html) => {
     const $ = cheerio.load(html.data);
-    const data = $(
-      "body > div.main > div.e9EfHf > div.GyAeWb > div.TQc1id > div.I6TXqe > div.osrp-blk > div.SzZmKb > div.SPZz6b > h2 > span"
-    ).text();
+    const data = $(".Gx5Zad .kCrYT span h3 div").text();
 
     console.log(data);
 

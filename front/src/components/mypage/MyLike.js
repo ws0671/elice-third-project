@@ -16,7 +16,7 @@ const MyLike = () => {
   const [map, setMap] = useState();
   const [currentPos, setCurrentPos] = useState();
   const [markers, setMarkers] = useState([]);
-  const [places, setPlaces] = useState();
+  const [places, setPlaces] = useState([]);
   const [info, setInfo] = useState();
 
   const handleTabChange = (event, newValue) => {

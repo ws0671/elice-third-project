@@ -15,14 +15,15 @@ class likeService {
     return createdNewLikeInfo;
   };
 
-  // userId에 해당하는 likeInfo 찾기
-  static findLikeInfo = async ({ userId }) => {
+  // userId에 해당하는 likeInfo를 찾고, boardIdArray를 반환
+  static findLikedBoardIdArray = async ({ userId }) => {
     const likeInfo = await LikeModel.findOne({ userId });
-    return likeInfo;
+    const likedBoardIdArray = likeInfo.boardIdArray;
+    return likedBoardIdArray;
   };
 
   // userId에 해당하는 likeInfo에서 toUpdate 적용
-  static setLikeInfo = async ({ userId, toUpdate }) => {
+  static setLikedBoardIdArray = async ({ userId, toUpdate }) => {
     const likeInfo = await LikeModel.findOne({ userId });
     if (!likeInfo) {
       const errorMessage = "해당 userId에 대한 likeInfo가 존재하지 않습니다.";
@@ -64,7 +65,8 @@ class likeService {
       { returnOriginal: false }
     );
 
-    return updatedLikeInfo;
+    const updatedLikedBoardIdArray = updatedLikeInfo.boardIdArray;
+    return updatedLikedBoardIdArray;
   };
 }
 

@@ -22,28 +22,33 @@ class likeController {
     }
   };
 
-  // 해당 유저의 좋아요 정보 조회
-  static getLikeInfo = async (req, res, next) => {
+  // 해당 유저가 좋아요한 게시글의 id 배열 조회
+  static getLikedBoardIdArray = async (req, res, next) => {
     try {
       const userId = req.currentUserId;
-      const LikeInfo = await likeService.findLikeInfo({ userId });
+      const likedBoardIdArray = await likeService.findLikedBoardIdArray({
+        userId,
+      });
 
-      res.status(200).json(LikeInfo);
+      res.status(200).json(likedBoardIdArray);
     } catch (error) {
       next(error);
     }
   };
 
-  // 좋아요 상태 수정
-  static editLikeInfo = async (req, res, next) => {
+  // 게시글 좋아요 상태 수정
+  static editLikedBoardIdArray = async (req, res, next) => {
     try {
       const userId = req.currentUserId;
       const boardId = req.body.boardId;
 
       const toUpdate = { boardId };
-      const LikeInfo = await likeService.setLikeInfo({ userId, toUpdate });
+      const likedBoardIdArray = await likeService.setLikedBoardIdArray({
+        userId,
+        toUpdate,
+      });
 
-      res.status(200).json(LikeInfo);
+      res.status(200).json(likedBoardIdArray);
     } catch (error) {
       next(error);
     }

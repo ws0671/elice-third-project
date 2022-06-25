@@ -11,15 +11,18 @@ import DaumPostcode from "../components/map/DaumPostcode";
 import { Container, Box, Tab, Grid } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
+import * as Api from "../api";
+
 const MapPage = () => {
   const [value, setValue] = useState("1");
   const [places, setPlaces] = useState([]);
   const [info, setInfo] = useState();
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState();
-  const [currentPos, setCurrentPos] = useState();
+  const [currentPos, setCurrentPos] = useState(); // 위도, 경도
   const [pagination, setPagination] = useState();
-  const [address, setAddress] = useState();
+  const [address, setAddress] = useState(); // 사용자가 입력(변경)한 주소
+  const [likedPlaceIdArray, setLikedPlaceIdArray] = useState([]);
 
   const { kakao } = window;
   const keywords = {
@@ -83,8 +86,18 @@ const MapPage = () => {
     }
   }
 
+  const getUserLike = async () => {
+    const res = await Api.get("likes");
+    const likedPlaceIdArray = res.data.placeArray?.map((place) => {
+      return place.id;
+    });
+    setLikedPlaceIdArray(likedPlaceIdArray);
+  };
+
   useEffect(() => {
     getMyLocation();
+
+    getUserLike();
   }, []);
 
   useEffect(() => {
@@ -221,6 +234,9 @@ const MapPage = () => {
               </Grid>
               <Grid item md={6} sm={12} xs={12} sx={{ minHeight: "600px" }}>
                 <List
+                  category={value}
+                  likedPlaceArray={likedPlaceIdArray}
+                  setLikedPlaceArray={setLikedPlaceIdArray}
                   places={places}
                   handleMouseOver={handleMouseOver}
                   handleMouseOut={handleMouseOut}

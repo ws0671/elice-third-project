@@ -27,24 +27,46 @@ const AiContainer = styled.div`
 const imgDefault = 'pug25.jpg'
 const serverUrl = 'http://localhost:8080'
 
-async function post(endpoint, data) {
-  // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
-  // 예시: {name: "Kim"} => {"name": "Kim"}
-  const bodyData = JSON.stringify(data);
 
-  return axios
-      .post(serverUrl + endpoint, bodyData, {
-          headers: {
-            // "Content-Type": "application/json",  
-            'Content-Type': 'multipart/form-data',  
-          },
-      })
-      .then((res) => res)
-      .catch((error) => error.response);
+
+const dataURLToFile = (dataURL, fileName) => {
+  const arr = dataURL.split(",");
+  console.log(arr);
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], fileName, { type: mime });
+};
+
+
+async function post(endpoint, previewImg) {
+  
+  const file = dataURLToFile(previewImg.src, previewImg.name);
+  const formData = new FormData();
+  formData.append("image", file);
+  return axios.post(
+
+    serverUrl + endpoint,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then((res) => res)
+  .catch((error) => error.response);
 }
+  
+
 
 const FindBreed = () => {
     const [isClassified, setIsClassified] = useState(false);
+    const [data, setData] = useState({});
+
 
     // 프로필 이미지 미리보기
     const [previewImg, setPreviewImg] = useState({
@@ -52,64 +74,76 @@ const FindBreed = () => {
         name: "",
     });
 
-    const [result, setResult] = useState({
-        breed: "",
-        prob: "",
-    });
+  
+    const [result, setResult] = useState([]);
 
+    // 결과 값 출력 부분
+    // predictions 안에 길이 3의 배열로 저장
+    // label : label의 인덱스값
+    // probability : 예측 확률
     const ResultMsg = () => {
+      let lists = [];
+      let i = 0;
+      console.log('predictions length: ', data['predictions'].length);
+
+      while(i<data['predictions'].length){
+        lists.push(<li key={i}>품종 : {data['predictions'][i]['label']} ({(data['predictions'][i]['probability'] * 100).toFixed(3) + '%'})</li>);
+        i++;
+      }
         return(
             <>
                 <br/>
                 <h2>분석결과</h2>
-                <h3>품종 : {result.breed} ({result.prob})</h3>
+                {lists}    
             </>
         )
     }
 
-    const handleOnClickPredict = async () => {
-        // const mobilenet = require('@tensorflow-models/mobilenet');
-        // const img = document.getElementById('img');
-        const im = new Image();
-        
+    const handleOnClickPredictDOG = async () => {
+
         if (previewImg.src == "") {
-
+          return 
         }
-        im.src = (previewImg.src !== "") ? previewImg.src: imgDefault;
-        im.crossOrigin = "Anonymous";
-        //이미지 전처리 모델 서버에서 하기때문에 안해도 됨
-        //큰 사이즈 이미지 일까봐 사이즈 줄임
-        im.width =300;
-        im.height=300;
-        // Load the model.
-        //const model = await mobilenet.load();
 
-        // Classify the image.
-        //const predictions = await model.classify(im);
+        await post('/predictdog', previewImg).then((res) => {
+          console.log(res);
+          setData(res.data);
+        }).catch((err) => setData({}));
 
-        // const payload = {"image":im};
-        const formData = new FormData();
-        formData.append('image',im);
-
-        const predictions = await post('/predictdog', formData);
-        //response 내부에 success 키가 있음 True / false
-        console.log('Predictions: ');
-        console.log(predictions);
+        console.log('get response');
+        console.log(data);
         
-        if (predictions['success']) {
+        if (data['success']) {
           console.log('success');
+          setIsClassified(true);
+        }else {
+          setIsClassified(false);
         }
-
-        setIsClassified(true);
-        const newResult = {};
-        newResult.breed = predictions[0].className;
-        newResult.prob = '' + (predictions[0].probability * 100.0).toFixed(2) + '%';
-        setResult(newResult);
-        
-        
 
     }
    
+    const handleOnClickPredictCAT = async () => {
+
+      if (previewImg.src == "") {
+        return 
+      }
+
+      await post('/predictcat', previewImg).then((res) => {
+        console.log(res);
+        setData(res.data);
+      }).catch((err) => setData({}));
+
+      console.log('get response');
+      console.log(data);
+      
+      if (data['success']) {
+        console.log('success');
+        setIsClassified(true);
+      }else {
+        setIsClassified(false);
+      }
+
+  }
 
       // 미리보기에 필요
       const fileToDataURL = (file) => {
@@ -164,15 +198,15 @@ const FindBreed = () => {
                       color="primary"
                       aria-label="upload picture"
                       component="span"
-                      onClick={handleOnClickPredict}>품종 확인하기</Button>
+                      onClick={handleOnClickPredictDOG}>개 품종 확인하기</Button>
 
                 <br />
-                {/* <Button 
+                <Button 
                       variant="contained"
                       color="primary"
                       aria-label="upload picture"
                       component="span"
-                      onClick={modelLoadTest}>모델로딩 테스트</Button> */}
+                      onClick={handleOnClickPredictCAT}>고양이 품종 확인하기</Button>
    
               {isClassified && <ResultMsg />}   
             

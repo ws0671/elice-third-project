@@ -34,7 +34,7 @@ const Post = () => {
     const user = useSelector((state) => state.auth.value);
     const params = useParams();
     const [post, setPost] = useState("");
-    const [allComment, setAllComment] = useState(undefined);
+    const [allComment, setAllComment] = useState(null);
     const [WriteComment, setWriteComment] = useState("");
     const [postEdit, setPostEdit] = useState(false);
     const [like, setLike] = useState([]);
@@ -47,27 +47,23 @@ const Post = () => {
 
     useEffect(() => {
         fetchData();
+        fetchCommentData();
     }, []);
 
     // 댓글 데이터 들고오기
     const fetchCommentData = async () => {
-        await Api.get(`comments/${params.boardId}`)
-            .then((res) => {
-                setAllComment(res.data);
-            })
-            .then(() => {
-                if (allComment) {
-                    messagesEndRef.current.scrollIntoView({
-                        behavior: "smooth",
-                    });
-                }
-            });
+        await Api.get(`comments/${params.boardId}`).then((res) => {
+            setAllComment(res.data);
+        });
     };
 
     useEffect(() => {
-        fetchCommentData();
-        console.log("여기 왜 안나옴?", allComment);
-    }, []);
+        if (allComment != null && allComment?.length >= 6) {
+            messagesEndRef?.current?.scrollIntoView({
+                behavior: "smooth",
+            });
+        }
+    }, [allComment]);
 
     const messagesEndRef = useRef(null);
 

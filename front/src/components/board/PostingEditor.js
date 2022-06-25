@@ -1,8 +1,7 @@
 import { Container, Grid, Button, ButtonBase } from "@mui/material";
 import {
-    PageTitle,
-    TitleWrite,
-    Write,
+    TitleInput,
+    ContentInput,
     TagInput,
     Tag,
     EditPageTitle,
@@ -24,9 +23,10 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const [hashTagArray, setHashTagArray] = useState(post.hashTagArray);
     const onKeyPress = (e) => {
         if (e.target.value.length !== 0 && e.key === "Enter") {
-            let updatedTagList = [...hashTagArray];
-            updatedTagList.push(hashTag);
-            setHashTagArray(updatedTagList);
+            setHashTagArray((currentHashTagArray) => [
+                ...currentHashTagArray,
+                hashTag,
+            ]);
             setHashTag("");
         }
     };
@@ -102,7 +102,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     return (
         <Container maxWidth="lg">
             <EditPageTitle>게시글 수정</EditPageTitle>
-            <TitleWrite
+            <TitleInput
                 required
                 maxRows={1}
                 placeholder="제목을 입력하세요"
@@ -110,7 +110,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                 name="title"
                 onChange={(e) => setTitle(e.target.value)}
             />
-            <Write
+            <ContentInput
                 required
                 minRows={15}
                 maxRows={15}

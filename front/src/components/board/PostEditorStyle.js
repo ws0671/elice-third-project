@@ -4,43 +4,78 @@ import styled from "styled-components";
 const PageTitle = styled(Grid)`
     font-size: 20px;
     font-weight: bold;
-    margin: 3% 0;
+    margin: 30px 0;
+`;
+
+const EditPageTitle = styled(Grid)`
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 30px 0;
 `;
 
 const TitleWrite = styled(TextareaAutosize)`
     border-radius: 10px;
-    border: solid 1px #dcdcdc;
+    border: solid 1px #EAE0CC;
     font-size:18px;
-    width: 99%;
+    width: 96%;
     resize: none;
     padding: 2%;
     &: hover {
-      background-color: #F7F7F7;
+      background-color: #fdf6f0;
     }
 
     &: focus {
-      border-bottom:solid 1px #D6CCC2;
-        outline:none;
+      background-color: #fdf6f0;
+      outline:none;
       },
 `;
 
 const Write = styled(TextareaAutosize)`
-    font-size: 15px;
-    border: solid 1px #dcdcdc;
+    font-size: 16px;
+    border: solid 1px #EAE0CC;
     border-radius: 10px;
-    width: 99%;
+    width: 96%;
     resize: none;
     padding: 2%;
-    margin : 1% 0;
+    margin : 10px 0;
 
     &: hover {
-      background-color: #F7F7F7;
+      background-color: #fdf6f0;
+      
     }
 
     &: focus {
-      border:solid 1px #D6CCC2;
+      border:solid 1px #EAE0CC;
+      background-color: #fdf6f0;
       outline:none;
     },
 `;
 
-export { PageTitle, TitleWrite, Write };
+const TagInput = styled("input")`
+    font-size: 15px;
+    width: 96%;
+    resize: none;
+    padding: 2%;
+    margin: 10px 0;
+    border: solid 1px #eae0cc;
+    border-radius: 10px;
+    &: hover {
+        background-color: #fdf6f0;
+    }
+    &: focus {
+        background-color: #fdf6f0;
+        outline: none;
+    }
+`;
+
+const Tag = styled(Grid)`
+    font-size: 17px;
+    padding: 5px 30px 5px 10px;
+    margin: 0 6px 0 0;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    background-color: #c9ada1;
+    position: relative;
+`;
+export { PageTitle, TitleWrite, Write, TagInput, Tag, EditPageTitle };

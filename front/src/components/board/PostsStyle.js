@@ -7,41 +7,44 @@ const PostMenu = styled(Grid)`
 `;
 
 const SelectMenu = styled(Button)`
-    padding: 0px 10px;
-    margin: 10px;
-    color: #386150;
-    font-weight: bold;
+    && {
+        padding: 0px 10px;
+        margin: 10px;
+        color: #386150;
+        font-weight: bold;
+    }
     &:hover {
         color: black;
     }
 `;
 
 const UnSelectMenu = styled(Button)`
-    padding: 0px 10px;
-    margin: 10px;
-    color: #818479;
-    font-weight: bold;
-
+    && {
+        padding: 0px 10px;
+        margin: 10px;
+        color: #818479;
+        font-weight: bold;
+    }
     &:hover {
         color: black;
     }
 `;
 const Tag = styled(Grid)`
     color: #818479;
-    font-size: 0.5rem;
-    border-radius: 100px;
-    background-color: #ffffff;
-    border: solid 1px #eae0cc;
-    margin: 10px 7px 0 0;
-    padding: 5px 10px;
-    font-family: "NanumSquareRound";
+    font-size: 13px;
+    border-radius: 10px;
+    background-color: #c9ada1;
+    margin: 7px 7px 0 0;
+    padding: 4px 10px;
+    font-weight: bold;
+    color: white;
 `;
 
 const PostList = styled(Grid)`
     background-color: #f6f5ef;
     border-radius: 20px;
     height: 100px;
-    margin: 25px 0;
+    margin-bottom: 25px;
     justify-content: space-between;
     width: 100%;
     overflow: hidden;
@@ -68,6 +71,7 @@ const PostInfo = styled(Grid)`
     max-width: 600px;
     height: 70px;
     margin: 20px;
+    padding: 0.4rem 0;
 `;
 
 const PostSubInfo = styled(Grid)`
@@ -81,6 +85,7 @@ const PostSubInfo = styled(Grid)`
 const ListName = styled(Grid)`
     font-size: 16px;
     font-family: "NanumSquareRound";
+    padding: 0.3rem 0;
 `;
 
 const ListDate = styled(Grid)`
@@ -90,18 +95,22 @@ const ListDate = styled(Grid)`
 const ListTitle = styled(Grid)`
     font-weight: bold;
     font-family: "NanumSquareRound";
-    font-size: 16px;
+    font-size: 1rem;
 `;
 
 const WritePost = styled(Button)`
-    background-color: #ffffff;
-    color: black;
-    border: solid 3px white;
-    border-radius: 10px;
-    padding: 0px 20px;
-    &:hover {
-        background-color: white;
+    && {
+        font-size: 14px;
         font-weight: bold;
+        color: white;
+        border: solid 1px;
+        padding: 0;
+        margin: 8px 0;
+
+        &:hover {
+            background-color: #ffffff;
+            color: #386150;
+        }
     }
 `;
 
@@ -109,6 +118,25 @@ const Count = styled(Grid)`
     font-size: 15px;
     font-color: gray;
     margin: 0 10%;
+`;
+
+const SortGrid = styled(Grid)`
+    display: flex;
+    justify-content: end;
+    margin: 5px 0;
+`;
+
+const SortButton = styled(Button)`
+    && {
+        font-size: 12px;
+        color: gray;
+        margin: 0 5px;
+        padding: 3px;
+
+        &:hover {
+            font-weight: bold;
+        }
+    }
 `;
 export {
     PostList,
@@ -125,4 +153,6 @@ export {
     UnSelectMenu,
     Tag,
     Count,
+    SortGrid,
+    SortButton,
 };

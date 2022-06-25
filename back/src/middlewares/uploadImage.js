@@ -2,6 +2,7 @@ import "dotenv/config";
 const { format } = require("util");
 const Multer = require("multer");
 const { Storage } = require("@google-cloud/storage");
+import { v4 as uuidv4 } from "uuid";
 
 const storage = new Storage();
 
@@ -25,9 +26,12 @@ const uploadImage = (req, res, next) => {
     return;
   }
 
+  // 파일 형식 지정을 위해 저장 (ex: .png / .jpg 등등)
+  const fileFormat = req.file.originalname.split(".").at(-1);
+
   // 버킷에 새로운 blob을 생성하고 파일 데이터를 업로드
-  // 중복된 이미지를 방지하여 Date.now() 추가
-  const blob = bucket.file(`${Date.now()}_` + req.file.originalname);
+  // 중복된 이미지를 방지하여 uuidv4를 파일명으로 저장
+  const blob = bucket.file(`${uuidv4()}.${fileFormat}`);
   const blobStream = blob.createWriteStream({
     resumable: false,
   });

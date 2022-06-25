@@ -1,10 +1,9 @@
-import Newposts from "../components/board/NewPosts";
+import Posts from "../components/board/Posts";
 import BestPosts from "../components/board/BestPosts";
 import Header from "../components/common/Header";
 import { Container, Grid, Button } from "@mui/material";
 import styled from "styled-components";
 import { useState } from "react";
-import { StylesProvider } from "@material-ui/core";
 
 const PostMenu = styled(Grid)`
     margin: 10px 0;
@@ -14,9 +13,6 @@ const PostMenu = styled(Grid)`
 const SelectMenu = styled(Button)`
     padding: 0px 10px;
     margin: 10px;
-    color: #386150;
-    font-weight: bold;
-    font-family: "GyeonggiTitleM";
     &:hover {
         color: black;
     }
@@ -39,39 +35,61 @@ const BoardPage = () => {
     return (
         <>
             <Header />
-            <Container maxWidth="lg" style={{ paddingTop: "65px" }}>
+            <Container maxWidth="lg" style={{ paddingTop: "4rem" }}>
                 <PostMenu>
-                    <StylesProvider injectFirst>
-                        {menu ? (
-                            <>
-                                <SelectMenu style={{ fontSize: "22px" }}>
-                                    New Post
-                                </SelectMenu>
-                                <span style={{ color: "#D9D9D9" }}>|</span>
-                                <UnSelectMenu
-                                    style={{ fontSize: "22px" }}
-                                    onClick={() => setMenu(false)}
-                                >
-                                    Best Post
-                                </UnSelectMenu>
-                            </>
-                        ) : (
-                            <>
-                                <UnSelectMenu
-                                    style={{ fontSize: "22px" }}
-                                    onClick={() => setMenu(true)}
-                                >
-                                    New Post
-                                </UnSelectMenu>
-                                <span style={{ color: "#D9D9D9" }}>|</span>
-                                <SelectMenu style={{ fontSize: "22px" }}>
-                                    Best Post
-                                </SelectMenu>
-                            </>
-                        )}
-                    </StylesProvider>
+                    {menu ? (
+                        <>
+                            <SelectMenu
+                                sx={{
+                                    fontSize: "1.5rem",
+                                    color: "#386150",
+                                    fontWeight: "bold",
+                                    fontFamily: "GyeonggiTitleM",
+                                }}
+                            >
+                                New Post
+                            </SelectMenu>
+                            <span style={{ color: "#D9D9D9" }}>|</span>
+                            <UnSelectMenu
+                                sx={{
+                                    fontSize: "1.5rem",
+                                    color: "#818479",
+                                    fontWeight: "bold",
+                                    fontFamily: "GyeonggiTitleM",
+                                }}
+                                onClick={() => setMenu(false)}
+                            >
+                                Best Post
+                            </UnSelectMenu>
+                        </>
+                    ) : (
+                        <>
+                            <UnSelectMenu
+                                sx={{
+                                    fontSize: "1.5rem",
+                                    color: "#818479",
+                                    fontWeight: "bold",
+                                    fontFamily: "GyeonggiTitleM",
+                                }}
+                                onClick={() => setMenu(true)}
+                            >
+                                New Post
+                            </UnSelectMenu>
+                            <span style={{ color: "#D9D9D9" }}>|</span>
+                            <SelectMenu
+                                sx={{
+                                    fontSize: "1.5rem",
+                                    color: "#386150",
+                                    fontWeight: "bold",
+                                    fontFamily: "GyeonggiTitleM",
+                                }}
+                            >
+                                Best Post
+                            </SelectMenu>
+                        </>
+                    )}
                 </PostMenu>
-                {menu ? <Newposts /> : <BestPosts />}
+                {menu ? <Posts /> : <BestPosts />}
             </Container>
         </>
     );

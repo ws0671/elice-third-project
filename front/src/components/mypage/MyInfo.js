@@ -1,50 +1,46 @@
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+
 import EditIcon from "@mui/icons-material/Edit";
 
 import {
-  UserImgWrapper,
-  UserImg,
-  UserName,
-  Info,
-  InfoTitle,
-  InfoContent,
-  Species,
+  Wrapper,
+  ImgWrapper,
+  Img,
+  InfoWrapper,
+  Name,
+  Email,
+  Desc,
+  Animals,
+  Animal,
 } from "./styledCP";
 
 const MyInfo = ({ setIsEditing, myInfo }) => {
   return (
-    <>
-      <UserImgWrapper>
-        <UserImg src={myInfo.imageUrl} alt="프로필 사진" />
-      </UserImgWrapper>
-      <UserName>{myInfo.name}</UserName>
-      <Info>
-        <InfoTitle>이메일</InfoTitle>
-        <InfoContent>{myInfo.email}</InfoContent>
-      </Info>
-      <Info>
-        <InfoTitle>소개</InfoTitle>
-        <InfoContent>{myInfo.description}</InfoContent>
-      </Info>
-      <Info>
-        <InfoTitle>반려동물</InfoTitle>
-        <InfoContent>
-          {myInfo.speciesArray.map((item, idx) => {
-            return <Species key={idx}>{item}</Species>;
+    <Wrapper>
+      <ImgWrapper>
+        <Img src={myInfo.imageUrl} alt="프로필 사진"></Img>
+      </ImgWrapper>
+      <InfoWrapper>
+        <IconButton
+          aria-label="edit myInfo"
+          component="span"
+          sx={{ position: "absolute", right: "25px", top: "20px" }}
+          onClick={() => {
+            setIsEditing(true);
+          }}
+        >
+          <EditIcon />
+        </IconButton>
+        <Name>{myInfo.name}</Name>
+        <Email>{myInfo.email}</Email>
+        <Desc>{myInfo.description}</Desc>
+        <Animals>
+          {myInfo.speciesArray?.map((item) => {
+            return <Animal key={item}>{item}</Animal>;
           })}
-        </InfoContent>
-      </Info>
-      <Button
-        variant="contained"
-        size="medium"
-        onClick={() => {
-          setIsEditing(true);
-        }}
-      >
-        <EditIcon sx={{ marginRight: "5px" }} />
-        수정하기
-      </Button>
-    </>
+        </Animals>
+      </InfoWrapper>
+    </Wrapper>
   );
 };
 

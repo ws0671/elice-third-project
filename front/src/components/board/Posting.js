@@ -1,5 +1,11 @@
 import { Container, Grid, Button } from "@mui/material";
-import { PageTitle, TitleWrite, Write, TagInput, Tag } from "./PostEditorStyle";
+import {
+    PageTitle,
+    TitleInput,
+    ContentInput,
+    TagInput,
+    Tag,
+} from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import { useState } from "react";
@@ -19,9 +25,10 @@ const Posting = () => {
 
     const onKeyPress = (e) => {
         if (e.target.value.length !== 0 && e.key === "Enter") {
-            let updatedTagList = [...hashTagArray];
-            updatedTagList.push(hashTag);
-            setHashTagArray(updatedTagList);
+            setHashTagArray((currentHashTagArray) => [
+                ...currentHashTagArray,
+                hashTag,
+            ]);
             setHashTag("");
         }
     };
@@ -93,14 +100,14 @@ const Posting = () => {
         <>
             <Container maxWidth="lg" style={{ paddingTop: "70px" }}>
                 <PageTitle>새 글 작성</PageTitle>
-                <TitleWrite
+                <TitleInput
                     required
                     maxRows={1}
                     placeholder="제목을 입력하세요"
                     name="title"
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <Write
+                <ContentInput
                     required
                     minRows={15}
                     maxRows={15}

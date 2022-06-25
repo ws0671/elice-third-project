@@ -11,10 +11,10 @@ const Newposts = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.value);
 
-    const [allContents, setAllContents] = useState(undefined);
+    const [allContents, setAllContents] = useState(null);
     const [search, setSearch] = useState("");
-    const [searchData, setSearchData] = useState(undefined);
-    const [finalPage, setFinalPage] = useState(undefined);
+    const [searchData, setSearchData] = useState(null);
+    const [finalPage, setFinalPage] = useState(null);
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState("date");
 
@@ -57,26 +57,6 @@ const Newposts = () => {
             setFinalPage(res.data.finalPage);
         });
     };
-
-    // 페이지네이션 핸들러
-    // const paginationHandler = async () => {
-    //     await Api.getQuery(
-    //         "boards/search",
-    //         {
-    //             params: {
-    //                 title: search,
-    //                 page: page,
-    //                 perPage: 10,
-    //                 sort: sort,
-    //                 direction: -1,
-    //             },
-    //         },
-    //         { withCredentials: true }
-    //     ).then((res) => {
-    //         setSearchData([...res.data.searchList]);
-    //         setFinalPage(res.data.finalPage);
-    //     });
-    // };
 
     // 전체 게시물 조회 (query 사용)
     const fetchData = async () => {

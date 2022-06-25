@@ -34,7 +34,7 @@ const Post = () => {
     const user = useSelector((state) => state.auth.value);
     const params = useParams();
     const [post, setPost] = useState("");
-    const [allComment, setAllComment] = useState([]);
+    const [allComment, setAllComment] = useState(null);
     const [WriteComment, setWriteComment] = useState("");
     const [postEdit, setPostEdit] = useState(false);
     const [like, setLike] = useState([]);
@@ -42,43 +42,43 @@ const Post = () => {
     const fetchData = async () => {
         const res = await Api.get(`boards/${params.boardId}`);
         setPost(res.data);
-        console.log(post);
+        console.log("게시글 데이터", res.data);
     };
 
     useEffect(() => {
         fetchData();
+        fetchCommentData();
     }, []);
 
     // 댓글 데이터 들고오기
     const fetchCommentData = async () => {
-        await Api.get(`comments/${params.boardId}`)
-            .then((res) => {
-                setAllComment(res.data);
-            })
-            .then(() => {
-                if (allComment) {
-                    messagesEndRef.current.scrollIntoView({
-                        behavior: "smooth",
-                    });
-                }
-            });
+        await Api.get(`comments/${params.boardId}`).then((res) => {
+            setAllComment(res.data);
+        });
     };
 
     useEffect(() => {
-        fetchCommentData();
-    }, []);
+        if (allComment != null && allComment?.length >= 6) {
+            messagesEndRef?.current?.scrollIntoView({
+                behavior: "smooth",
+            });
+        }
+    }, [allComment]);
 
     const messagesEndRef = useRef(null);
 
     // 댓글 제출 post
     const submitComment = async (e) => {
         e.preventDefault();
-        Api.post("comments", {
+        await Api.post("comments", {
             boardId: params.boardId,
             authorId: user.userId,
             content: WriteComment,
         })
-            .then(fetchCommentData)
+            .then(() => {
+                fetchCommentData();
+                console.log("댓글 입력");
+            })
             .then(setWriteComment(""));
     };
 

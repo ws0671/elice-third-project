@@ -24,11 +24,7 @@ const MypagePage = () => {
     const res = await Api.get("users/current");
     const currentUser = res.data;
     setMyInfo({
-      name: currentUser.name,
-      email: currentUser.email,
-      description: currentUser.description,
-      imageUrl: currentUser.imageUrl,
-      speciesArray: currentUser.speciesArray,
+      ...currentUser,
     });
   };
 

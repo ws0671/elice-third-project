@@ -67,11 +67,11 @@ const Home = () => {
                     <ImageWrap />
                     <RightContent>
                         <RightContentWrap>
-                            <RightContentTitle>
-                                우리 동네 산책로
-                            </RightContentTitle>
-                            우리 동네에 있는 산책로를 <br />
+                            <RightContentTitle>우리 동네 MAP</RightContentTitle>
+                            우리 동네에 있는 반려동물 관련 장소를 <br />
                             간편하고 쉽게 찾아보세요!
+                            <br />
+                            자주 가는 곳을 찜하여 쉽고 편리하게!
                             <RightContentButton>바로가기</RightContentButton>
                         </RightContentWrap>
                     </RightContent>
@@ -82,10 +82,10 @@ const Home = () => {
                     <LeftContent>
                         <LeftContentWrap>
                             <LeftContentTitle>
-                                우리 동네 동물병원
+                                품종 분석 서비스
                             </LeftContentTitle>
-                            우리 동네에 있는 동물 병원을 <br />
-                            간편하고 쉽게 찾아보세요!
+                            반려동물의 품종을 알아보세요! <br />
+                            쉽고 간편하게 사진으로 확인 가능
                             <LeftContentButton>바로가기</LeftContentButton>
                         </LeftContentWrap>
                     </LeftContent>
@@ -127,18 +127,9 @@ const Home = () => {
                 </ServiceContent>
             </ServiceWrap>
             {/* 회원가입및 로그인 권유 */}
-            <ReadyWrap>
-                <ReadyContent>
-                    <ReadySlogan>Ready to get started?</ReadySlogan>
-                    <Grid>
-                        <JoinButton>Login</JoinButton>
-                        <JoinButton>Sign Up</JoinButton>
-                    </Grid>
-                </ReadyContent>
-            </ReadyWrap>
 
             {/* footer */}
-            <Footer />
+            <Footer></Footer>
         </>
     );
 };

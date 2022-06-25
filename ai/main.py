@@ -1,3 +1,4 @@
+from requests import request
 from tensorflow.keras.utils import img_to_array
 # from keras.applications import imagenet_utils
 from PIL import Image
@@ -38,6 +39,8 @@ def prepare_image(image, target):
     image = np.expand_dims(image, axis=0)
     image = image/255.0
 
+    print('image change complete====')
+
     # 처리된 이미지를 반환합니다.
     return image
 
@@ -55,14 +58,25 @@ def predictdog():
 
     print('='*20)
     print("get predict DOG request")
+    
+    #제대로 들어왔나 확인
+    # print(flask.request.method)
+    # print(flask.request.files.get("image"))
+    # print('request : ')
+    # print(request)
 
+    # image = flask.request.files["image"].read()
+    # print(image)
     # view로부터 반환될 데이터 딕셔너리를 초기화합니다.
     data = {"success": False}
 
     # 이미지가 엔트포인트에 올바르게 업로드 되었는디 확인하세요
     if flask.request.method == "POST":
+        print('inside method POST')
+      
         if flask.request.files.get("image"):
             # PIL 형식으로 이미지를 읽어옵니다.
+            print('inside get image')
             image = flask.request.files["image"].read()
             image = Image.open(io.BytesIO(image))
 

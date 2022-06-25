@@ -12,6 +12,8 @@ import { commentRouter } from "./routes/commentRouter";
 import { likeRouter } from "./routes/likeRouter";
 import { shoppingRouter } from "./routes/shoppingRouter";
 import { scrapeShopItemsRouter } from "./routes/scrapeShopItemsRouter";
+import { dogsRouter } from "./routes/dogsRouter";
+import { catsRouter } from "./routes/catsRouter";
 
 const storage = new Storage();
 const app = express();
@@ -36,6 +38,8 @@ app.use(commentRouter);
 app.use(likeRouter);
 app.use(shoppingRouter);
 app.use(scrapeShopItemsRouter);
+app.use(dogsRouter);
+app.use(catsRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);

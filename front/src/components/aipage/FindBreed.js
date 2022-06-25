@@ -1,11 +1,6 @@
 import {useState} from "react";
 
 import styled from "styled-components";
-import * as tf from '@tensorflow/tfjs';
-import {loadGraphModel} from '@tensorflow/tfjs-converter';
-
-import * as mobilenet from '@tensorflow-models/mobilenet'; 
-//const mobilenet = require('@tensorflow-models/mobilenet');
 
 
 import axios from "axios";
@@ -30,15 +25,48 @@ const AiContainer = styled.div`
 `;
 
 const imgDefault = 'pug25.jpg'
-// const myModel = require('./models/model.json');
+const serverUrl = 'http://localhost:8080'
 
+
+
+const dataURLToFile = (dataURL, fileName) => {
+  const arr = dataURL.split(",");
+  console.log(arr);
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], fileName, { type: mime });
+};
+
+
+async function post(endpoint, previewImg) {
+  
+  const file = dataURLToFile(previewImg.src, previewImg.name);
+  const formData = new FormData();
+  formData.append("image", file);
+  return axios.post(
+
+    serverUrl + endpoint,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then((res) => res)
+  .catch((error) => error.response);
+}
+  
 
 
 const FindBreed = () => {
     const [isClassified, setIsClassified] = useState(false);
-    // const [isModelLoaded, setIsModelLoaded] = useState(false);
-    // const [model, setModel] = useState(null);
-    // const [imgSrc, setImgSrc] = useState(imgDefault);
+    const [data, setData] = useState({});
+
 
     // 프로필 이미지 미리보기
     const [previewImg, setPreviewImg] = useState({
@@ -46,111 +74,76 @@ const FindBreed = () => {
         name: "",
     });
 
-    const [result, setResult] = useState({
-        breed: "",
-        prob: "",
-    });
+  
+    const [result, setResult] = useState([]);
 
-    // const dogImgUrl = 'https://media.healthday.com/Images/icimages/pug25.jpg';
-    // const dogImgUrl = 'pug25.jpg';
-    // const modelPath = 'models/model.json'
-
-
-    /*
-import * as tf from '@tensorflow/tfjs';
-import {loadGraphModel} from '@tensorflow/tfjs-converter';
-
-const MODEL_URL = 'model_directory/model.json';
-
-const model = await loadGraphModel(MODEL_URL);
-const cat = document.getElementById('cat');
-model.execute(tf.browser.fromPixels(cat));
-    */
-   /*
-    const modelLoadTest = async () => {
-      // try {
-      const realModel = await loadGraphModel('models/model.json');  
-      // } catch(e) {
-        // console.error(e);
-      // }
-      // const realModel = await loadGraphModel('models/model.json');
-      console.log('load success?')
-
-      const im = new Image();
-        
-      if (previewImg.src == "") {
-
-      }
-      im.src = (previewImg.src !== "") ? previewImg.src: imgDefault;
-      im.crossOrigin = "Anonymous";
-      im.width =128;
-      im.height=128;
-      // Load the model.
-      // const model = await mobilenet.load();
-
-      // Classify the image.
-      // const predictions = await realModel.predict(im);
-      // const predictions = realModel.execute(tf.browser.fromPixels(im));
-      // const predictions = realModel.predict(im);
-      
-      const zeros = tf.zeros([1, 128, 128, 3]);
-      const predictions= realModel.predict(tf.browser.fromPixels([im]))
-
-      setIsClassified(true);
-      const newResult = {};
-      newResult.breed = predictions[0].className;
-      newResult.prob = '' + (predictions[0].probability * 100.0).toFixed(2) + '%';
-      setResult(newResult);
-      
-      console.log('Predictions with REALMODEL: ');
-      console.log(predictions);
-
-    }
-    */
+    // 결과 값 출력 부분
+    // predictions 안에 길이 3의 배열로 저장
+    // label : label의 인덱스값
+    // probability : 예측 확률
     const ResultMsg = () => {
+      let lists = [];
+      let i = 0;
+      console.log('predictions length: ', data['predictions'].length);
+
+      while(i<data['predictions'].length){
+        lists.push(<li key={i}>품종 : {data['predictions'][i]['label']} ({(data['predictions'][i]['probability'] * 100).toFixed(3) + '%'})</li>);
+        i++;
+      }
         return(
             <>
                 <br/>
                 <h2>분석결과</h2>
-                <h3>품종 : {result.breed} ({result.prob})</h3>
+                {lists}    
             </>
         )
     }
 
-    const handleOnClickPredict = async () => {
-        // const mobilenet = require('@tensorflow-models/mobilenet');
-        // const img = document.getElementById('img');
-        const im = new Image();
-        
+    const handleOnClickPredictDOG = async () => {
+
         if (previewImg.src == "") {
-
+          return 
         }
-        im.src = (previewImg.src !== "") ? previewImg.src: imgDefault;
-        im.crossOrigin = "Anonymous";
-        im.width =224;
-        im.height=224;
-        // Load the model.
-        const model = await mobilenet.load();
 
-        // Classify the image.
-        const predictions = await model.classify(im);
-        setIsClassified(true);
-        const newResult = {};
-        newResult.breed = predictions[0].className;
-        newResult.prob = '' + (predictions[0].probability * 100.0).toFixed(2) + '%';
-        setResult(newResult);
+        await post('/predictdog', previewImg).then((res) => {
+          console.log(res);
+          setData(res.data);
+        }).catch((err) => setData({}));
+
+        console.log('get response');
+        console.log(data);
         
-        console.log('Predictions: ');
-        console.log(predictions);
-        
-        /**
-         var img = new Image();
-            img.src = "http://other-domain.com/image.jpg";
-            img.crossOrigin = "Anonymous";
-         */
+        if (data['success']) {
+          console.log('success');
+          setIsClassified(true);
+        }else {
+          setIsClassified(false);
+        }
 
     }
    
+    const handleOnClickPredictCAT = async () => {
+
+      if (previewImg.src == "") {
+        return 
+      }
+
+      await post('/predictcat', previewImg).then((res) => {
+        console.log(res);
+        setData(res.data);
+      }).catch((err) => setData({}));
+
+      console.log('get response');
+      console.log(data);
+      
+      if (data['success']) {
+        console.log('success');
+        setIsClassified(true);
+      }else {
+        setIsClassified(false);
+      }
+
+  }
 
       // 미리보기에 필요
       const fileToDataURL = (file) => {
@@ -205,15 +198,15 @@ model.execute(tf.browser.fromPixels(cat));
                       color="primary"
                       aria-label="upload picture"
                       component="span"
-                      onClick={handleOnClickPredict}>품종 확인하기</Button>
+                      onClick={handleOnClickPredictDOG}>개 품종 확인하기</Button>
 
                 <br />
-                {/* <Button 
+                <Button 
                       variant="contained"
                       color="primary"
                       aria-label="upload picture"
                       component="span"
-                      onClick={modelLoadTest}>모델로딩 테스트</Button> */}
+                      onClick={handleOnClickPredictCAT}>고양이 품종 확인하기</Button>
    
               {isClassified && <ResultMsg />}   
             

@@ -60,17 +60,10 @@ const Header = () => {
           <Grid style={{ display: "flex" }}>
             <Menu
               onClick={() => {
-                navigate("/walk");
+                navigate("/map");
               }}
             >
-              산책길
-            </Menu>
-            <Menu
-              onClick={() => {
-                navigate("/hospital");
-              }}
-            >
-              병원
+              Map
             </Menu>
             <Menu
               onClick={() => {

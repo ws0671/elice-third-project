@@ -9,8 +9,7 @@ import * as Api from "./api";
 import PostEditorPage from "./pages/PostEditorPage";
 import PostPage from "./pages/PostPage";
 import HomePage from "./pages/HomePage";
-import WalkPage from "./pages/WalkPage";
-import HospitalPage from "./pages/HospitalPage";
+import MapPage from "./pages/MapPage";
 import BoardPage from "./pages/BoardPage";
 import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
@@ -28,7 +27,6 @@ function App() {
                 // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
                 const res = await Api.get("users/current");
                 const currentUser = res.data;
-
                 // dispatch 함수를 통해 로그인 성공 상태로 만듦.
                 dispatch(LOGIN_SUCCESS(currentUser));
             } catch {
@@ -56,8 +54,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" exact element={<HomePage />} />
-                <Route path="/walk" exact element={<WalkPage />} />
-                <Route path="/hospital" exact element={<HospitalPage />} />
+                <Route path="/map" exact element={<MapPage />} />
                 <Route path="/board" exact element={<BoardPage />} />
                 <Route path="/ai" exact element={<AiPage />} />
                 <Route path="/login" exact element={<LoginPage />} />

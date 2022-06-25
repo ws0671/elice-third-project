@@ -11,8 +11,8 @@ const PostAuthor = ({ post, setPostEdit }) => {
 
     const postDelete = () => {
         if (window.confirm("정말 삭제합니까?")) {
-            alert("삭제되었습니다.");
             Api.delete("boards", post.boardId);
+            alert("삭제되었습니다.");
             navigate("/board");
         } else {
             alert("취소합니다.");

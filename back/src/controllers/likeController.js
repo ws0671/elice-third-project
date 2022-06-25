@@ -36,6 +36,23 @@ class likeController {
     }
   };
 
+  // 해당 유저가 좋아요한 장소 정보 조회
+  static getLikedPlaceInfo = async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const category = req.params.category;
+
+      const likedPlaceInfo = await likeService.findLikedPlaceInfo({
+        userId,
+        category,
+      });
+
+      res.status(200).json(likedPlaceInfo);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   // 게시글 좋아요 상태 수정
   static editLikedBoardIdArray = async (req, res, next) => {
     try {
@@ -43,6 +60,24 @@ class likeController {
       const boardId = req.body.boardId;
 
       const toUpdate = { boardId };
+      const likedBoardIdArray = await likeService.setLikedBoardIdArray({
+        userId,
+        toUpdate,
+      });
+
+      res.status(200).json(likedBoardIdArray);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  // 장소 좋아요 상태 수정
+  static editLikedPlaceArray = async (req, res, next) => {
+    try {
+      const userId = req.currentUserId;
+      const placeCategory = req.body.placeCategory;
+
+      const toUpdate = { placeCategory };
       const likedBoardIdArray = await likeService.setLikedBoardIdArray({
         userId,
         toUpdate,

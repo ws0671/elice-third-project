@@ -14,8 +14,12 @@ likeRouter.get(
   likeController.getLikedBoardIdArray
 );
 
-// 해당 유저의 좋아요한 Map 정보 조회 (현재는 게시글 좋아요 기능만 있음)
-// likeRouter.get("/likes/:category", loginRequired, likeController.getLikeInfo);
+// 해당 유저의 좋아요한 장소 정보 조회
+likeRouter.get(
+  "/likes/places/:category",
+  loginRequired,
+  likeController.getLikedPlaceInfo
+);
 
 // 게시글 좋아요 상태 수정 (추가 혹은 취소)
 likeRouter.put(
@@ -24,7 +28,11 @@ likeRouter.put(
   likeController.editLikedBoardIdArray
 );
 
-// Map 좋아요 상태 수정 (추가 혹은 취소)
-// likeRouter.put("/likes/:category", loginRequired, likeController.editLikeInfo);
+// 장소 좋아요 상태 수정 (추가 혹은 취소)
+likeRouter.put(
+  "/likes/places",
+  loginRequired,
+  likeController.editLikedPlaceArray
+);
 
 export { likeRouter };

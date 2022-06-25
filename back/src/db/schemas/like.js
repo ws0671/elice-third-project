@@ -8,6 +8,9 @@ const LikeSchema = new Schema({
   boardIdArray: {
     type: [String],
   },
+  placeArray: {
+    type: Schema.Types.Mixed,
+  },
 });
 
 const LikeModel = model("Like", LikeSchema);

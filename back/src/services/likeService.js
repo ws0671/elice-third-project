@@ -1,4 +1,4 @@
-import { LikeModel, BoardModel } from "../db";
+import { LikeModel, BoardModel, PlaceModel } from "../db";
 
 class likeService {
   // likeInfo를 담을 json 생성
@@ -19,6 +19,28 @@ class likeService {
   static findLikedBoardIdArray = async ({ userId }) => {
     const likeInfo = await LikeModel.findOne({ userId });
     const likedBoardIdArray = likeInfo.boardIdArray;
+    return likedBoardIdArray;
+  };
+
+  // userId에 해당하는 likeInfo를 찾고, boardIdArray를 반환
+  static findLikedPlaceInfo = async ({ userId, category }) => {
+    const likeInfo = await LikeModel.findOne({ userId });
+    const likedPlaceArray = likeInfo.placeArray;
+
+    // 카테고리 일치하는 것만 장소 필터링
+    const categoryPlaceArray = likedPlaceArray.filter(
+      (place) => place.category === category
+    );
+
+    // 카테고리가 일치하는 것만 가져옴
+    const categoryPlaceInfo = await PlaceModel.find({ category });
+
+    let likedPlaceInfo = [];
+    for (const place in categoryPlaceArray) {
+      const categoryPlaceInfo = await PlaceModel.find({ category });
+      likedPlaceInfo.push();
+    }
+
     return likedBoardIdArray;
   };
 

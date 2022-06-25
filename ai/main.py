@@ -1,17 +1,18 @@
 from tensorflow.keras.utils import img_to_array
 # from keras.applications import imagenet_utils
 from PIL import Image
-
 # import matplotlib.pyplot as plt
-
 from tensorflow.keras import models
 import numpy as np
 import flask
+from flask_cors import CORS
 import io
 import os
 
 # Flask 애플리케이션과 Keras 모델을 초기화합니다.
 app = flask.Flask(__name__)
+CORS(app)
+
 model = None
 
 #개 모델 불러오기
@@ -47,13 +48,8 @@ def decode_predictions(arr, n=1):
     largest_indices = ranked[::-1][:n]
    
     return largest_indices
-'''
-@app.route("/", method=["GET"])
-def index():
-    return {"message":"Hellow World"}
-'''
 
-
+#개품종 분석 라우팅
 @app.route("/predictdog", methods=["POST"])
 def predictdog():
 
@@ -100,7 +96,7 @@ def predictdog():
     return flask.jsonify(data)
 
 
-
+#고양이 분석
 @app.route("/predictcat", methods=["POST"])
 def predictcat():
 
@@ -164,7 +160,7 @@ if __name__ == "__main__":
     cat_modelPath = os.path.join(os.getcwd(), 'models', 'EfficientNetV2Sall_cat.h5')
     print(cat_modelPath)
     cat_model = load_model(cat_modelPath)
-    
+    print('==SERVER READY==')
     app.run(host='0.0.0.0', port=8080)
-    
+
 

@@ -1,11 +1,6 @@
 import {useState} from "react";
 
 import styled from "styled-components";
-import * as tf from '@tensorflow/tfjs';
-import {loadGraphModel} from '@tensorflow/tfjs-converter';
-
-import * as mobilenet from '@tensorflow-models/mobilenet'; 
-//const mobilenet = require('@tensorflow-models/mobilenet');
 
 
 import axios from "axios";
@@ -30,15 +25,26 @@ const AiContainer = styled.div`
 `;
 
 const imgDefault = 'pug25.jpg'
-// const myModel = require('./models/model.json');
+const serverUrl = 'http://localhost:8080'
 
+async function post(endpoint, data) {
+  // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
+  // 예시: {name: "Kim"} => {"name": "Kim"}
+  const bodyData = JSON.stringify(data);
 
+  return axios
+      .post(serverUrl + endpoint, bodyData, {
+          headers: {
+            // "Content-Type": "application/json",  
+            'Content-Type': 'multipart/form-data',  
+          },
+      })
+      .then((res) => res)
+      .catch((error) => error.response);
+}
 
 const FindBreed = () => {
     const [isClassified, setIsClassified] = useState(false);
-    // const [isModelLoaded, setIsModelLoaded] = useState(false);
-    // const [model, setModel] = useState(null);
-    // const [imgSrc, setImgSrc] = useState(imgDefault);
 
     // 프로필 이미지 미리보기
     const [previewImg, setPreviewImg] = useState({
@@ -51,62 +57,6 @@ const FindBreed = () => {
         prob: "",
     });
 
-    // const dogImgUrl = 'https://media.healthday.com/Images/icimages/pug25.jpg';
-    // const dogImgUrl = 'pug25.jpg';
-    // const modelPath = 'models/model.json'
-
-
-    /*
-import * as tf from '@tensorflow/tfjs';
-import {loadGraphModel} from '@tensorflow/tfjs-converter';
-
-const MODEL_URL = 'model_directory/model.json';
-
-const model = await loadGraphModel(MODEL_URL);
-const cat = document.getElementById('cat');
-model.execute(tf.browser.fromPixels(cat));
-    */
-   /*
-    const modelLoadTest = async () => {
-      // try {
-      const realModel = await loadGraphModel('models/model.json');  
-      // } catch(e) {
-        // console.error(e);
-      // }
-      // const realModel = await loadGraphModel('models/model.json');
-      console.log('load success?')
-
-      const im = new Image();
-        
-      if (previewImg.src == "") {
-
-      }
-      im.src = (previewImg.src !== "") ? previewImg.src: imgDefault;
-      im.crossOrigin = "Anonymous";
-      im.width =128;
-      im.height=128;
-      // Load the model.
-      // const model = await mobilenet.load();
-
-      // Classify the image.
-      // const predictions = await realModel.predict(im);
-      // const predictions = realModel.execute(tf.browser.fromPixels(im));
-      // const predictions = realModel.predict(im);
-      
-      const zeros = tf.zeros([1, 128, 128, 3]);
-      const predictions= realModel.predict(tf.browser.fromPixels([im]))
-
-      setIsClassified(true);
-      const newResult = {};
-      newResult.breed = predictions[0].className;
-      newResult.prob = '' + (predictions[0].probability * 100.0).toFixed(2) + '%';
-      setResult(newResult);
-      
-      console.log('Predictions with REALMODEL: ');
-      console.log(predictions);
-
-    }
-    */
     const ResultMsg = () => {
         return(
             <>
@@ -127,27 +77,36 @@ model.execute(tf.browser.fromPixels(cat));
         }
         im.src = (previewImg.src !== "") ? previewImg.src: imgDefault;
         im.crossOrigin = "Anonymous";
-        im.width =224;
-        im.height=224;
+        //이미지 전처리 모델 서버에서 하기때문에 안해도 됨
+        //큰 사이즈 이미지 일까봐 사이즈 줄임
+        im.width =300;
+        im.height=300;
         // Load the model.
-        const model = await mobilenet.load();
+        //const model = await mobilenet.load();
 
         // Classify the image.
-        const predictions = await model.classify(im);
+        //const predictions = await model.classify(im);
+
+        // const payload = {"image":im};
+        const formData = new FormData();
+        formData.append('image',im);
+
+        const predictions = await post('/predictdog', formData);
+        //response 내부에 success 키가 있음 True / false
+        console.log('Predictions: ');
+        console.log(predictions);
+        
+        if (predictions['success']) {
+          console.log('success');
+        }
+
         setIsClassified(true);
         const newResult = {};
         newResult.breed = predictions[0].className;
         newResult.prob = '' + (predictions[0].probability * 100.0).toFixed(2) + '%';
         setResult(newResult);
         
-        console.log('Predictions: ');
-        console.log(predictions);
         
-        /**
-         var img = new Image();
-            img.src = "http://other-domain.com/image.jpg";
-            img.crossOrigin = "Anonymous";
-         */
 
     }
    

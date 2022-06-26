@@ -17,7 +17,7 @@ const Header = () => {
       <Container
         sx={{
           display: "flex",
-          height: "140px",
+          height: "120px",
           justifyContent: "space-between",
           alignItems: "center",
         }}
@@ -129,7 +129,7 @@ const Logo = styled(Grid)`
 `;
 
 const LogoImg = styled.img`
-  height: 100px;
+  height: 80px;
 `;
 
 const SvcName = styled.div`

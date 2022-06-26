@@ -4,11 +4,12 @@ import styled from "styled-components";
 
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
+import Layout from "../components/common/Layout";
 import Header from "../components/common/Header";
 import List from "../components/map/List";
 import DaumPostcode from "../components/map/DaumPostcode";
 
-import { Container, Box, Tab, Grid } from "@mui/material";
+import { Box, Tab, Grid } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import * as Api from "../api";
@@ -180,7 +181,7 @@ const MapPage = () => {
   return (
     <>
       <Header />
-      <Container maxWidth="lg" sx={{ paddingTop: "100px" }}>
+      <Layout>
         <TabContext value={value}>
           <Box
             sx={{
@@ -194,16 +195,16 @@ const MapPage = () => {
               <CategoryTab label="산책길" value="1" />
               <CategoryTab label="카페" value="2" />
               <CategoryTab label="미용" value="3" />
-              <CategoryTab label="병원" value="4" className="hos" />
+              <CategoryTab label="병원" value="4" />
             </CategoryTabList>
             <DaumPostcode setAddress={setAddress} />
           </Box>
           <TabPanel
             value={value}
             sx={{
-              backgroundColor: "#F6F5EF",
-              border: "solid 5px #798478",
-              borderRadius: "3px",
+              backgroundColor: "white",
+              borderRadius: "0px 10px 10px 10px",
+              boxShadow: "2px 2px 10px #d9d9d9",
             }}
           >
             <Grid container>
@@ -225,7 +226,9 @@ const MapPage = () => {
                         onMouseOut={handleMouseOut}
                       >
                         {info && info.content === marker.content && (
-                          <div style={{ color: "#000" }}>{marker.content}</div>
+                          <div style={{ color: "#000", padding: "5px" }}>
+                            {marker.content}
+                          </div>
                         )}
                       </MapMarker>
                     ))}
@@ -246,36 +249,12 @@ const MapPage = () => {
             </Grid>
           </TabPanel>
         </TabContext>
-      </Container>
+      </Layout>
     </>
   );
 };
 
 export default MapPage;
-
-const PageNumber = styled.a`
-  text-decoration: none;
-  color: #798478;
-  padding: 10px;
-  width: 15px;
-  height: 15px;
-  line-height: 15px;
-  text-align: center;
-
-  &.on {
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: white;
-    background-color: #798478;
-    border-radius: 50%;
-  }
-`;
-
-const PageNumberWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const CategoryTabList = styled(TabList)`
   && .MuiTabs-indicator {
@@ -285,23 +264,40 @@ const CategoryTabList = styled(TabList)`
 
 const CategoryTab = styled(Tab)`
   && {
-    background-color: #c9ada1;
-    color: black;
-    border-radius: 15px 15px 0px 0px;
-    margin-right: 5px;
-    font-size: 1rem;
-    font-weight: bold;
+    background-color: #65949e;
     color: white;
-  }
-
-  &.hos {
-    background-color: #a0a083;
+    border-radius: 10px 10px 0px 0px;
+    margin-right: 5px;
+    font-size: 20px;
+    font-family: "GangwonEdu_OTFBoldA";
   }
 
   &&.Mui-selected {
-    color: white;
-    background-color: #798478;
-    border: solid #798478;
-    border-width: 5px 5px 0px 5px;
+    color: black;
+    background-color: white;
   }
+`;
+
+const PageNumber = styled.a`
+  font-size: 20px;
+  text-decoration: none;
+  color: #c2937e;
+  padding: 10px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+
+  &.on {
+    font-size: 20px;
+    color: white;
+    background-color: #c2937e;
+    border-radius: 50%;
+  }
+`;
+
+const PageNumberWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

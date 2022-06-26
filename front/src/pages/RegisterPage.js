@@ -1,21 +1,13 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Typography,
-  Grid,
-  Box,
-  TextField,
-  Link,
-  Button,
-  Container,
-  CssBaseline,
-} from "@mui/material";
+import { Typography, Grid, Box, Link } from "@mui/material";
+import { Input, AuthButton } from "../components/Auth/StyledCP";
 
 import * as Api from "../api";
 
 import Header from "../components/common/Header";
-import AuthLogo from "../components/Auth/AuthLogo";
+import Layout from "../components/common/Layout";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -138,18 +130,23 @@ const RegisterPage = () => {
   return (
     <>
       <Header />
-      <Container component="main" maxWidth="xs" sx={{ paddingTop: "65px" }}>
-        <CssBaseline />
+      <Layout maxWidth="sm">
         <Box
           sx={{
-            marginTop: 8,
+            padding: "80px 40px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "white",
+            borderRadius: "10px",
+            boxShadow: "2px 2px 10px #d9d9d9",
           }}
         >
-          <AuthLogo />
-          <Typography component="h5" variant="h5">
+          <Typography
+            component="h4"
+            variant="h4"
+            sx={{ fontFamily: "GangwonEdu_OTFBoldA" }}
+          >
             회원가입
           </Typography>
           <Box
@@ -161,7 +158,7 @@ const RegisterPage = () => {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <Input
                   required
                   fullWidth
                   id="nickname"
@@ -173,10 +170,11 @@ const RegisterPage = () => {
                   error={errorMessage.nicknameError !== ""}
                   helperText={errorMessage.nicknameError}
                   autoFocus
+                  autoComplete="off"
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <Input
                   required
                   fullWidth
                   id="email"
@@ -187,10 +185,11 @@ const RegisterPage = () => {
                   onBlur={handleBlur}
                   error={errorMessage.emailError !== ""}
                   helperText={errorMessage.emailError}
+                  autoComplete="off"
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <Input
                   required
                   fullWidth
                   id="password"
@@ -205,7 +204,7 @@ const RegisterPage = () => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <Input
                   required
                   fullWidth
                   id="passwordConfirm"
@@ -223,19 +222,20 @@ const RegisterPage = () => {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <AuthButton type="submit" fullWidth variant="contained">
               회원가입
-            </Button>
+            </AuthButton>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link
                   onClick={() => {
                     navigate("../login");
+                  }}
+                  sx={{
+                    color: "#C2937E",
+                    textDecoration: "none",
+                    cursor: "pointer",
+                    fontSize: "16px",
                   }}
                 >
                   이미 계정이 있다면? 로그인
@@ -244,7 +244,7 @@ const RegisterPage = () => {
             </Grid>
           </Box>
         </Box>
-      </Container>
+      </Layout>
     </>
   );
 };

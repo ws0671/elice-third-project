@@ -1,31 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Grid, Container } from "@mui/material";
 import styled from "styled-components";
-import Image from "../../assets/images/pet-house.png";
+import Image from "../../assets/images/logo.png";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../store/slices/authSlice";
-
-const Menu = styled(Grid)`
-  padding: 22px 0;
-  font-size: 15px;
-  cursor: pointer;
-  color: #444444;
-  display: flex;
-  font-family: "GyeonggiTitleM";
-  ::after {
-    content: "|";
-    padding: 2px 12px;
-    color: gray;
-    font-size: 10px;
-  }
-`;
-
-const Logo = styled(Grid)`
-  padding: 12px 0;
-  cursor: pointer;
-`;
 
 const Header = () => {
   const navigate = useNavigate();
@@ -33,98 +13,148 @@ const Header = () => {
   const user = useSelector((state) => state.auth.value);
 
   return (
-    <>
-      <Grid
-        style={{
-          width: "100%",
-          backgroundColor: "#F6F5EF",
-          marginBottom: "20px",
-          position: "fixed",
-          zIndex: "100",
+    <Wrapper>
+      <Container
+        sx={{
+          display: "flex",
+          height: "140px",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <Container
-          style={{
-            display: "flex",
-            height: "65px",
-            justifyContent: "space-between",
+        <Logo
+          onClick={() => {
+            navigate("/");
           }}
         >
-          <Logo
-            onClick={() => {
-              navigate("/");
+          <LogoImg src={Image} alt="logo" />
+          <SvcName>궁금하냥?</SvcName>
+        </Logo>
+        <Nav>
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/map");
             }}
           >
-            <img src={Image} style={{ height: "45px" }} alt="logo" />
-          </Logo>
-          <Grid style={{ display: "flex" }}>
-            <Menu
-              onClick={() => {
-                navigate("/map");
-              }}
-            >
-              Map
-            </Menu>
-            <Menu
-              onClick={() => {
-                navigate("/board");
-              }}
-            >
-              소통 공간
-            </Menu>
-            <Menu
-              onClick={() => {
-                navigate("/ai");
-              }}
-            >
-              AI 종 분석
-            </Menu>
-            {!user && (
-              <>
-                <Menu
-                  onClick={() => {
-                    navigate("/register");
-                  }}
-                >
-                  회원가입
-                </Menu>
-                <Menu
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  로그인
-                </Menu>
-              </>
-            )}
-            {user && (
-              <>
-                <Menu
-                  onClick={() => {
-                    navigate("/mypage");
-                  }}
-                >
-                  마이 페이지
-                </Menu>
-                <Menu
-                  onClick={() => {
-                    // sessionStorage에 저장했던 JWT 토큰 삭제
-                    sessionStorage.removeItem("userToken");
-                    // dispatch 함수를 이용해 로그아웃함.
-                    dispatch(LOGOUT());
-                    // 메인 화면으로 돌아감. (뒤로가기 불가능)
-                    navigate("/", { replace: true });
-                  }}
-                >
-                  로그아웃
-                </Menu>
-              </>
-            )}
-          </Grid>
-        </Container>
-      </Grid>
-    </>
+            우리동네 지도
+          </a>
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/ai");
+            }}
+          >
+            AI 종 분석
+          </a>
+          <a
+            href="/"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/board");
+            }}
+          >
+            소통 공간
+          </a>
+          {!user && (
+            <>
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/register");
+                }}
+              >
+                회원가입
+              </a>
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/login");
+                }}
+              >
+                로그인
+              </a>
+            </>
+          )}
+          {user && (
+            <>
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/mypage");
+                }}
+              >
+                마이페이지
+              </a>
+              <a
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // sessionStorage에 저장했던 JWT 토큰 삭제
+                  sessionStorage.removeItem("userToken");
+                  // dispatch 함수를 이용해 로그아웃함.
+                  dispatch(LOGOUT());
+                  // 메인 화면으로 돌아감. (뒤로가기 불가능)
+                  navigate("/", { replace: true });
+                }}
+              >
+                로그아웃
+              </a>
+            </>
+          )}
+        </Nav>
+      </Container>
+    </Wrapper>
   );
 };
 
 export default Header;
+
+const Wrapper = styled.header`
+  width: 100%;
+  position: fixed;
+  zindex: 100;
+`;
+
+const Logo = styled(Grid)`
+  padding: 0px 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`;
+
+const LogoImg = styled.img`
+  height: 100px;
+`;
+
+const SvcName = styled.div`
+  margin-left: 10px;
+  font-size: 36px;
+`;
+
+const Nav = styled.nav`
+  a {
+    font-size: 25px;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+
+    ::after {
+      content: "|";
+      padding: 0px 20px;
+      color: #c2937e;
+      font-size: 25px;
+    }
+
+    &:last-child {
+      ::after {
+        content: none;
+      }
+    }
+  }
+`;

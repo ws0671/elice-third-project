@@ -1,5 +1,6 @@
 import { ButtonBase } from "@mui/material";
 import * as Api from "../../api";
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 
 const CommentButton = ({ commentData, setCommentEdit, fetchCommentData }) => {
     const handleCommentDelete = () => {
@@ -14,31 +15,12 @@ const CommentButton = ({ commentData, setCommentEdit, fetchCommentData }) => {
     };
     return (
         <>
-            <ButtonBase
-                style={{
-                    padding: "3px 10px",
-                    fontSize: "16px",
-                    color: "#ffffff",
-                    backgroundColor: "#C2937E",
-                    borderRadius: "10px",
-                    margin: " 5px",
-                }}
-                onClick={(e) => setCommentEdit(true)}
-            >
-                수정
-            </ButtonBase>
-            <ButtonBase
-                sx={{
-                    padding: "3px 10px",
-                    color: "#ffffff",
-                    backgroundColor: "#FE6C63",
-                    fontSize: "16px",
-                    borderRadius: "10px",
-                }}
-                onClick={handleCommentDelete}
-            >
-                삭제
-            </ButtonBase>
+            <DefaultBtn sx={{ m: "7px" }} onClick={(e) => setCommentEdit(true)}>
+                <div className="btnText">수정</div>
+            </DefaultBtn>
+            <NegativeBtn onClick={handleCommentDelete}>
+                <div className="btnText">삭제</div>
+            </NegativeBtn>
         </>
     );
 };

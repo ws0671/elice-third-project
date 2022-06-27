@@ -54,7 +54,7 @@ const UserDate = styled(Grid)`
 const Title = styled(Grid)`
     font-size: 25px;
     color: #464646;
-    margin: 3% 5%;
+    margin: 3%;
 `;
 const PostImg = styled(Grid)`
     margin: 2% auto;
@@ -66,11 +66,11 @@ const PostImg = styled(Grid)`
 const Content = styled(Grid)`
     font-size: 20px;
     color: #464646;
-    margin: 3% 5%;
+    margin: 3%;
 `;
 
 const PostTag = styled(Grid)`
-    padding: 2% 5%;
+    padding: 2% 3%;
     display: flex;
 `;
 
@@ -124,10 +124,10 @@ const Tag = styled(Grid)`
     color: white;
     border-radius: 10px;
     background-color #65949E;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0 7px 0 0;
-    padding: 6px 12px;
+    padding: 6px 12px 5px 12px;
 `;
 
 const EditButton = styled(ButtonBase)`

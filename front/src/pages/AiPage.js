@@ -6,8 +6,8 @@ import Camera from "../assets/images/camera.png";
 import CatButton from "../assets/images/CATBUTTON.jpg";
 import DogButton from "../assets/images/DOGBUTTON.jpg";
 
-import CatBreeds from "../components/aipage/CatBreeds";
-import DogBreeds from "../components/aipage/DogBreeds";
+import { CatBreeds, DogBreeds } from "../components/aipage/FindBreeds";
+import Layout from "../components/common/Layout";
 
 const AiPage = () => {
     const [CatBreed, setCatBreed] = useState(false);
@@ -16,11 +16,8 @@ const AiPage = () => {
     return (
         <>
             <Header />
-            <Container
-                maxWidth="lg"
-                sx={{ paddingTop: "65px", border: "solid 1px" }}
-            >
-                {CatBreed || DogBreed ? (
+            <Layout>
+                {CatBreed | DogBreed ? (
                     <>
                         {CatBreed && <CatBreeds setCatBreed={setCatBreed} />}
                         {DogBreed && <DogBreeds setDogBreed={setDogBreed} />}
@@ -30,7 +27,6 @@ const AiPage = () => {
                         <Grid
                             style={{
                                 textAlign: "center",
-                                padding: "30px",
                             }}
                         >
                             <CameraImg />
@@ -71,7 +67,7 @@ const AiPage = () => {
                         </Box>
                     </Grid>
                 )}
-            </Container>
+            </Layout>
         </>
     );
 };
@@ -95,30 +91,28 @@ const CameraImg = styled(Box)`
         background-size: cover;
         background-repeat: no-repeat;
         margin: 10px auto;
-
-        animation: ${boxFade} 1s 0s infinite linear alternate;
     }
 `;
 const BoldFont = styled(Box)`
     && {
         display: inline;
         font-weight: bold;
-        color: #d2bba0;
-        font-size: 21px;
+        color: #c2937e;
+        font-size: 36px;
     }
 `;
 
 const DescriptionFont = styled(Box)`
     && {
         display: inline;
-        font-size: 21px;
+        font-size: 36px;
     }
 `;
 
 const DetailFont = styled(Box)`
     && {
-        font-size: 15px;
-        margin: 5px;
+        font-size: 25px;
+        margin: 15px;
     }
 `;
 

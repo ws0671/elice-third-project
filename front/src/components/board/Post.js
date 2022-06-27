@@ -4,12 +4,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PostingEditor from "./PostingEditor";
-import CommentDetail from "./CommentData";
+import CommentData from "./CommentData";
 import PostAuthor from "./PostAuthor";
 
 import * as Api from "../../api";
@@ -26,7 +26,6 @@ import {
     CommentWrite,
     Tag,
     Comments,
-    EditButton,
 } from "./PostStyle";
 
 const Post = () => {
@@ -123,30 +122,24 @@ const Post = () => {
                 <>
                     {user?.userId === post.author.userId && !postEdit && (
                         <>
-                            <EditButton
+                            <DefaultBtn
                                 style={{
-                                    background: "#C2937E",
                                     marginLeft: "20px",
+                                    marginRight: "10px",
                                 }}
                                 onClick={() => setPostEdit(true)}
                             >
-                                수정
-                            </EditButton>
-                            <EditButton
-                                sx={{
-                                    background: "#FE6C63",
-                                }}
-                                onClick={() => postDelete()}
-                            >
-                                삭제
-                            </EditButton>
+                                <div className="btnText">수정</div>
+                            </DefaultBtn>
+                            <NegativeBtn onClick={() => postDelete()}>
+                                <div className="btnText">삭제</div>
+                            </NegativeBtn>
                         </>
                     )}
 
                     {!postEdit && (
-                        <EditButton
+                        <DefaultBtn
                             style={{
-                                background: "#C2937E",
                                 float: "right",
                                 marginRight: "20px",
                             }}
@@ -154,8 +147,8 @@ const Post = () => {
                                 navigate("/board");
                             }}
                         >
-                            뒤로가기
-                        </EditButton>
+                            <div className="btnText">뒤로가기</div>
+                        </DefaultBtn>
                     )}
                     <Grid container>
                         {!postEdit ? (
@@ -248,7 +241,7 @@ const Post = () => {
                                     <Comments>
                                         {allComment?.map((commentData, idx) => (
                                             <Comment key={idx}>
-                                                <CommentDetail
+                                                <CommentData
                                                     commentData={commentData}
                                                     fetchCommentData={
                                                         fetchCommentData
@@ -272,20 +265,11 @@ const Post = () => {
                                                 }}
                                             />
 
-                                            <Button
-                                                type="submit"
-                                                size="small"
-                                                sx={{
-                                                    color: "white",
-                                                    backgroundColor: "#C2937E",
-                                                    borderRadius: "10px",
-                                                    fontSize: "16px",
-                                                    cursor: "pointer",
-                                                    width: "45px",
-                                                }}
-                                            >
-                                                입력
-                                            </Button>
+                                            <DefaultBtn type="submit">
+                                                <div className="btnText">
+                                                    입력
+                                                </div>
+                                            </DefaultBtn>
                                         </CommentWrite>
                                     </form>
                                 </Right>

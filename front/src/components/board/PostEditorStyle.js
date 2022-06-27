@@ -72,7 +72,7 @@ const TagInput = styled("input")`
 
 const Tag = styled(Grid)`
     font-size: 20px;
-    padding: 9px 30px 5px 10px;
+    padding: 8px 30px 5px 10px;
     margin: 0 6px 0 0;
     border-radius: 10px;
     font-weight: bold;

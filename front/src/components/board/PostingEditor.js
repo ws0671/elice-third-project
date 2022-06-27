@@ -13,6 +13,8 @@ import { useState } from "react";
 import * as Api from "../../api";
 import axios from "axios";
 import React from "react";
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
+
 const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const navigate = useNavigate();
 
@@ -172,38 +174,24 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                             style={{ display: "none" }}
                             onChange={(e) => setFile(e.target.files[0])}
                         />
-                        <EditButton
-                            component="span"
-                            style={{
-                                background: "#C2937E",
-                                marginRight: "10px",
-                                fontSize: "20px",
-                                padding: "7px 10px 3px 10px",
-                            }}
-                        >
-                            업로드
-                        </EditButton>
+                        <DefaultBtn component="span">
+                            <div className="btnText">이미지 업로드</div>
+                        </DefaultBtn>
                     </label>
                 </Grid>
                 <Grid>
-                    <EditButton
-                        style={{
-                            background: "#C2937E",
-                            marginRight: "10px",
-                        }}
-                        onClick={stopEvent}
-                    >
-                        수정 완료
-                    </EditButton>
+                    <DefaultBtn onClick={stopEvent}>
+                        <div className="btnText">수정 완료</div>
+                    </DefaultBtn>
                     {"  "}
-                    <EditButton
+                    <NegativeBtn
                         sx={{
                             background: "#FE6C63",
                         }}
                         onClick={() => navigate("/board")}
                     >
-                        취소
-                    </EditButton>
+                        <div className="btnText">취소</div>
+                    </NegativeBtn>
                 </Grid>
             </Grid>
         </Container>

@@ -1,15 +1,14 @@
-import { Grid, Button, Typography } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import styled from "styled-components";
 
 const Tag = styled(Grid)`
-    color: #818479;
     font-size: 16px;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #65949e;
     margin: 5px 7px 0 0;
     padding: 6px 10px 2px 10px;
     font-weight: bold;
-    color: white;
+    color: #ffffff;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -36,13 +35,13 @@ const PostUserImg = styled(Grid)`
 
 const PostUserInfo = styled(Grid)`
     width: 25%;
-    max-width: 250px;
+    max-width: 180px;
     padding: 30px 10px 0 3px;
     margin: 0 15px;
 `;
 
 const PostInfo = styled(Grid)`
-    width: 50%;
+    width: 55%;
     max-width: 600px;
     padding: 25px 0px 0 0;
 `;

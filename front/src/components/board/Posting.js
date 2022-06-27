@@ -13,6 +13,7 @@ import { useState } from "react";
 import * as Api from "../../api";
 import React from "react";
 import axios from "axios";
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 
 const Posting = () => {
     const navigate = useNavigate();
@@ -167,38 +168,24 @@ const Posting = () => {
                             style={{ display: "none" }}
                             onChange={(e) => setFile(e.target.files[0])}
                         />
-                        <EditButton
-                            component="span"
-                            style={{
-                                background: "#C2937E",
-                                marginRight: "10px",
-                                fontSize: "20px",
-                                padding: "7px 10px 3px 10px",
-                            }}
-                        >
-                            업로드
-                        </EditButton>
+                        <DefaultBtn component="span">
+                            <div className="btnText">이미지 업로드</div>
+                        </DefaultBtn>
                     </label>
                 </Grid>
                 <Grid>
-                    <EditButton
+                    <DefaultBtn
                         style={{
-                            background: "#C2937E",
                             marginRight: "10px",
                         }}
                         onClick={stopEvent}
                     >
-                        작성 완료
-                    </EditButton>
+                        <div className="btnText">작성 완료</div>
+                    </DefaultBtn>
                     {"  "}
-                    <EditButton
-                        sx={{
-                            background: "#FE6C63",
-                        }}
-                        onClick={() => navigate("/board")}
-                    >
-                        취소
-                    </EditButton>
+                    <NegativeBtn onClick={() => navigate("/board")}>
+                        <div className="btnText">취소</div>
+                    </NegativeBtn>
                 </Grid>
             </Grid>
         </>

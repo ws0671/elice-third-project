@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import PostListData from "./PostListData";
 import * as Api from "../../api";
 import { SortGrid, WritePost, SortButton } from "./PostsStyle";
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 
 const Newposts = () => {
     const navigate = useNavigate();
@@ -122,7 +123,7 @@ const Newposts = () => {
                     }}
                     style={
                         selectedSort === 4
-                            ? { borderBottom: "solid 2px #65949E" }
+                            ? { borderBottom: "solid 3px #65949E" }
                             : {}
                     }
                 >
@@ -157,13 +158,13 @@ const Newposts = () => {
 
                 <Grid>
                     {user && (
-                        <WritePost
+                        <DefaultBtn
                             onClick={() => {
                                 navigate("/postEditor");
                             }}
                         >
-                            글쓰기
-                        </WritePost>
+                            <div className="btnText">글쓰기</div>
+                        </DefaultBtn>
                     )}
                 </Grid>
             </Grid>

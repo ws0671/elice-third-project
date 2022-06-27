@@ -9,16 +9,6 @@ const PostAuthor = ({ post, setPostEdit }) => {
     const user = useSelector((state) => state.auth.value);
     const [author, setAuthor] = useState(post.author);
 
-    const postDelete = () => {
-        if (window.confirm("정말 삭제합니까?")) {
-            Api.delete("boards", post.boardId);
-            alert("삭제되었습니다.");
-            navigate("/board");
-        } else {
-            alert("취소합니다.");
-        }
-    };
-
     return (
         <User>
             {author?.imageUrl && (

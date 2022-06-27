@@ -42,7 +42,7 @@ const PostData = ({ content }) => {
                         }
                     }}
                 >
-                    <Grid container maxWidth="800px">
+                    <Grid container width={"80%"} minWidth="500px">
                         <PostUserImg
                             style={{
                                 backgroundImage: `url(${author?.imageUrl})`,

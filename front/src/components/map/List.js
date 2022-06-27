@@ -61,9 +61,9 @@ const List = ({
             </InfoWrapper>
             <LikeWrapper onClick={() => handleLikeClick(place)}>
               {likedPlaceIdArray?.includes(place.id) ? (
-                <FavoriteIcon sx={{ color: "red" }} />
+                <FavoriteIcon sx={{ color: "#c2937e" }} />
               ) : (
-                <FavoriteBorderIcon sx={{ color: "#798478" }} />
+                <FavoriteBorderIcon sx={{ color: "rgb(232, 212, 203)" }} />
               )}
             </LikeWrapper>
           </Li>
@@ -88,7 +88,7 @@ const Li = styled.li`
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
-  background-color: rgba(121, 132, 120, 0.1);
+  background-color: rgba(232, 212, 203, 0.5);
   padding: 10px;
   border-radius: 10px;
 `;
@@ -96,18 +96,18 @@ const Li = styled.li`
 const PlaceName = styled.a`
   text-decoration: none;
   color: black;
-  font-size: 1.3rem;
+  font-size: 20px;
   font-weight: bold;
   margin-right: 10px;
 `;
 
 const Phone = styled.span`
-  color: gray;
+  color: #c2937e;
 `;
 
 const Address = styled.div`
   margin-top: 5px;
-  font-size: 1rem;
+  font-size: 16px;
 `;
 
 const InfoWrapper = styled.div`

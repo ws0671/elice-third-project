@@ -8,19 +8,16 @@ import {
   Typography,
   Grid,
   Box,
-  TextField,
   Link,
-  Button,
-  Container,
   FormControlLabel,
   Checkbox,
-  CssBaseline,
 } from "@mui/material";
+import { Input, AuthButton } from "../components/Auth/StyledCP";
 
 import * as Api from "../api";
 
 import Header from "../components/common/Header";
-import AuthLogo from "../components/Auth/AuthLogo";
+import Layout from "../components/common/Layout";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -82,18 +79,23 @@ const LoginPage = () => {
   return (
     <>
       <Header />
-      <Container component="main" maxWidth="xs" sx={{ paddingTop: "65px" }}>
-        <CssBaseline />
+      <Layout maxWidth="sm">
         <Box
           sx={{
-            marginTop: 8,
+            padding: "80px 40px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            backgroundColor: "white",
+            borderRadius: "10px",
+            boxShadow: "2px 2px 10px #d9d9d9",
           }}
         >
-          <AuthLogo />
-          <Typography component="h5" variant="h5">
+          <Typography
+            component="h4"
+            variant="h4"
+            sx={{ fontFamily: "GangwonEdu_OTFBoldA" }}
+          >
             로그인
           </Typography>
           <Box
@@ -103,7 +105,7 @@ const LoginPage = () => {
             sx={{ mt: 1 }}
             ref={formRef}
           >
-            <TextField
+            <Input
               margin="normal"
               required
               fullWidth
@@ -115,8 +117,9 @@ const LoginPage = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
+              autoComplete="off"
             />
-            <TextField
+            <Input
               margin="normal"
               required
               fullWidth
@@ -138,23 +141,29 @@ const LoginPage = () => {
                   onChange={() => {
                     setIsRemember(!isRemember);
                   }}
+                  sx={{
+                    "&.Mui-checked": {
+                      color: "#C2937E",
+                    },
+                  }}
                 />
               }
               label="이메일 기억하기"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
+            <AuthButton type="submit" fullWidth variant="contained">
               로그인
-            </Button>
+            </AuthButton>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link
                   onClick={() => {
                     navigate("../register");
+                  }}
+                  sx={{
+                    color: "#C2937E",
+                    textDecoration: "none",
+                    cursor: "pointer",
+                    fontSize: "16px",
                   }}
                 >
                   {"아직 계정이 없다면? 회원가입"}
@@ -163,7 +172,7 @@ const LoginPage = () => {
             </Grid>
           </Box>
         </Box>
-      </Container>
+      </Layout>
     </>
   );
 };

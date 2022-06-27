@@ -42,25 +42,29 @@ const PostData = ({ content }) => {
                         }
                     }}
                 >
-                    <PostUserImg
-                        style={{
-                            backgroundImage: `url(${author?.imageUrl})`,
-                            backgroundSize: "100% 100%",
-                            backgroundRepeat: "no-repeat",
-                        }}
-                    />
-                    <PostUserInfo>
-                        <ListName>{author.name}</ListName>
-                        <ListDate>{content.createdAt.slice(0, 10)}</ListDate>
-                    </PostUserInfo>
-                    <PostInfo>
-                        <ListTitle>{content.title}</ListTitle>
-                        <Grid style={{ display: "flex" }}>
-                            {content.hashTagArray?.map((tag, index) => (
-                                <Tag key={index}>{tag}</Tag>
-                            ))}
-                        </Grid>
-                    </PostInfo>
+                    <Grid container maxWidth="800px">
+                        <PostUserImg
+                            style={{
+                                backgroundImage: `url(${author?.imageUrl})`,
+                                backgroundSize: "100% 100%",
+                                backgroundRepeat: "no-repeat",
+                            }}
+                        />
+                        <PostUserInfo>
+                            <ListName>{author.name}</ListName>
+                            <ListDate>
+                                {content.createdAt.slice(0, 10)}
+                            </ListDate>
+                        </PostUserInfo>
+                        <PostInfo>
+                            <ListTitle>{content.title}</ListTitle>
+                            <Grid style={{ display: "flex" }}>
+                                {content.hashTagArray?.map((tag, index) => (
+                                    <Tag key={index}>{tag}</Tag>
+                                ))}
+                            </Grid>
+                        </PostInfo>
+                    </Grid>
                     <PostSubInfo>
                         <VisibilityIcon />
                         <Count> {content.viewCount} </Count>

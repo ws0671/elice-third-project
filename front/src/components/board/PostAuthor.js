@@ -33,26 +33,6 @@ const PostAuthor = ({ post, setPostEdit }) => {
 
             <UserName>{author.name}</UserName>
             <UserDate>{post.createdAt.slice(0, 10)}</UserDate>
-            {user.userId === author.userId && (
-                <>
-                    <EditButton
-                        sx={{
-                            color: "#FAC213",
-                        }}
-                        onClick={() => setPostEdit(true)}
-                    >
-                        수정
-                    </EditButton>
-                    <EditButton
-                        sx={{
-                            color: "#F77E21",
-                        }}
-                        onClick={() => postDelete()}
-                    >
-                        삭제
-                    </EditButton>
-                </>
-            )}
         </User>
     );
 };

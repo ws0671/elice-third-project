@@ -25,9 +25,9 @@ const AiContainer = styled.div`
 `;
 
 const imgDefault = 'pug25.jpg'
-const serverUrl = 'http://localhost:8080'
-
-
+// const serverUrl = 'http://localhost:8080'
+//transfer to backend
+const serverUrl = 'http://localhost:5000'
 
 const dataURLToFile = (dataURL, fileName) => {
   const arr = dataURL.split(",");
@@ -75,7 +75,7 @@ const FindBreed = () => {
     });
 
   
-    const [result, setResult] = useState([]);
+    // const [result, setResult] = useState([]);
 
     // 결과 값 출력 부분
     // predictions 안에 길이 3의 배열로 저장

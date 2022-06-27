@@ -86,6 +86,10 @@ const ListName = styled(Grid)`
     font-size: 16px;
     font-family: "NanumSquareRound";
     padding: 0.3rem 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 80%;
 `;
 
 const ListDate = styled(Grid)`
@@ -96,6 +100,10 @@ const ListTitle = styled(Grid)`
     font-weight: bold;
     font-family: "NanumSquareRound";
     font-size: 1rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 80%;
 `;
 
 const WritePost = styled(Button)`

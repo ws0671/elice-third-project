@@ -1,81 +1,104 @@
-import { Grid, TextareaAutosize } from "@mui/material";
+import { Grid, TextareaAutosize, ButtonBase } from "@mui/material";
 import styled from "styled-components";
 
 const PageTitle = styled(Grid)`
-    font-size: 20px;
+    font-size: 36px;
     font-weight: bold;
-    margin: 30px 0;
+    margin-bottom: 10px;
 `;
 
 const EditPageTitle = styled(Grid)`
-    font-size: 20px;
+    font-size: 36px;
     font-weight: bold;
-    margin: 0 0 30px 0;
+    margin-bottom: 10px;
 `;
 
-const TitleWrite = styled(TextareaAutosize)`
+const TitleInput = styled(TextareaAutosize)`
     border-radius: 10px;
-    border: solid 1px #EAE0CC;
-    font-size:18px;
+    font-size:20px;
     width: 96%;
     resize: none;
+    border: solid 1px #d9d9d9;
     padding: 2%;
+    box-shadow :  2px 2px 10px #d9d9d9;
     &: hover {
-      background-color: #fdf6f0;
+      background-color: #ffffff;
     }
 
     &: focus {
-      background-color: #fdf6f0;
+        background-color: #ffffff;
       outline:none;
       },
 `;
 
-const Write = styled(TextareaAutosize)`
-    font-size: 16px;
-    border: solid 1px #EAE0CC;
+const ContentInput = styled(TextareaAutosize)`
+    font-size: 20px;
+    border: solid 1px #d9d9d9;
     border-radius: 10px;
     width: 96%;
     resize: none;
     padding: 2%;
+    box-shadow :  2px 2px 10px #d9d9d9;
     margin : 10px 0;
 
     &: hover {
-      background-color: #fdf6f0;
+      background-color: #ffffff;
       
     }
 
     &: focus {
-      border:solid 1px #EAE0CC;
-      background-color: #fdf6f0;
+        border: solid 1px #d9d9d9;
+        background-color: #ffffff;
       outline:none;
     },
 `;
 
 const TagInput = styled("input")`
-    font-size: 15px;
+    font-size: 20px;
     width: 96%;
     resize: none;
     padding: 2%;
     margin: 10px 0;
-    border: solid 1px #eae0cc;
+    border: solid 1px #d9d9d9;
     border-radius: 10px;
+    box-shadow: 2px 2px 10px #d9d9d9;
     &: hover {
-        background-color: #fdf6f0;
+        background-color: #ffffff;
     }
     &: focus {
-        background-color: #fdf6f0;
         outline: none;
     }
 `;
 
 const Tag = styled(Grid)`
-    font-size: 17px;
-    padding: 5px 30px 5px 10px;
+    font-size: 20px;
+    padding: 9px 30px 5px 10px;
     margin: 0 6px 0 0;
     border-radius: 10px;
     font-weight: bold;
-    color: white;
-    background-color: #c9ada1;
+    color: #ffffff;
+    background-color: #65949e;
     position: relative;
+    box-shadow: 2px 2px 10px #d9d9d9;
 `;
-export { PageTitle, TitleWrite, Write, TagInput, Tag, EditPageTitle };
+
+const EditButton = styled(ButtonBase)`
+    && {
+        padding: 5px 10px;
+        font-size: 16px;
+        font-weight :bold;
+        color : #ffffff;
+        margin : 0 5px;
+        border-radius : 10px;
+        box-shadow :  2px 2px 10px #d9d9d9
+
+`;
+export {
+    PageTitle,
+    TitleInput,
+    ContentInput,
+    TagInput,
+    Tag,
+    EditPageTitle,
+    EditButton,
+};

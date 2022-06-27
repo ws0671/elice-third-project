@@ -1,11 +1,11 @@
-import { Container, Grid, Button, ButtonBase } from "@mui/material";
+import { Container, Grid, Button, ButtonBase, Input } from "@mui/material";
 import {
-    PageTitle,
-    TitleWrite,
-    Write,
+    TitleInput,
+    ContentInput,
     TagInput,
     Tag,
     EditPageTitle,
+    EditButton,
 } from "./PostEditorStyle";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import { useNavigate } from "react-router-dom";
@@ -24,9 +24,10 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const [hashTagArray, setHashTagArray] = useState(post.hashTagArray);
     const onKeyPress = (e) => {
         if (e.target.value.length !== 0 && e.key === "Enter") {
-            let updatedTagList = [...hashTagArray];
-            updatedTagList.push(hashTag);
-            setHashTagArray(updatedTagList);
+            setHashTagArray((currentHashTagArray) => [
+                ...currentHashTagArray,
+                hashTag,
+            ]);
             setHashTag("");
         }
     };
@@ -102,7 +103,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     return (
         <Container maxWidth="lg">
             <EditPageTitle>게시글 수정</EditPageTitle>
-            <TitleWrite
+            <TitleInput
                 required
                 maxRows={1}
                 placeholder="제목을 입력하세요"
@@ -110,7 +111,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                 name="title"
                 onChange={(e) => setTitle(e.target.value)}
             />
-            <Write
+            <ContentInput
                 required
                 minRows={15}
                 maxRows={15}
@@ -162,33 +163,47 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                 }}
             >
                 <Grid>
-                    <input
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        placeholder="이미지 첨부"
-                        onChange={(e) => setFile(e.target.files[0])}
-                    />
+                    <label htmlFor="ex_file">
+                        <Input
+                            type="file"
+                            accept="image/*"
+                            placeholder="이미지 첨부"
+                            id="ex_file"
+                            style={{ display: "none" }}
+                            onChange={(e) => setFile(e.target.files[0])}
+                        />
+                        <EditButton
+                            component="span"
+                            style={{
+                                background: "#C2937E",
+                                marginRight: "10px",
+                                fontSize: "20px",
+                                padding: "7px 10px 3px 10px",
+                            }}
+                        >
+                            업로드
+                        </EditButton>
+                    </label>
                 </Grid>
                 <Grid>
-                    <Button
-                        sx={{
-                            color: "#187498",
-                            border: "solid 1px #187498",
+                    <EditButton
+                        style={{
+                            background: "#C2937E",
+                            marginRight: "10px",
                         }}
                         onClick={stopEvent}
                     >
                         수정 완료
-                    </Button>
+                    </EditButton>
                     {"  "}
-                    <Button
+                    <EditButton
                         sx={{
-                            color: "#FF4949",
-                            border: "solid 1px #FF4949",
+                            background: "#FE6C63",
                         }}
                         onClick={() => navigate("/board")}
                     >
                         취소
-                    </Button>
+                    </EditButton>
                 </Grid>
             </Grid>
         </Container>

@@ -11,8 +11,8 @@ const PostAuthor = ({ post, setPostEdit }) => {
 
     const postDelete = () => {
         if (window.confirm("정말 삭제합니까?")) {
-            alert("삭제되었습니다.");
             Api.delete("boards", post.boardId);
+            alert("삭제되었습니다.");
             navigate("/board");
         } else {
             alert("취소합니다.");
@@ -33,26 +33,6 @@ const PostAuthor = ({ post, setPostEdit }) => {
 
             <UserName>{author.name}</UserName>
             <UserDate>{post.createdAt.slice(0, 10)}</UserDate>
-            {user.userId === author.userId && (
-                <>
-                    <EditButton
-                        sx={{
-                            color: "#FAC213",
-                        }}
-                        onClick={() => setPostEdit(true)}
-                    >
-                        수정
-                    </EditButton>
-                    <EditButton
-                        sx={{
-                            color: "#F77E21",
-                        }}
-                        onClick={() => postDelete()}
-                    >
-                        삭제
-                    </EditButton>
-                </>
-            )}
         </User>
     );
 };

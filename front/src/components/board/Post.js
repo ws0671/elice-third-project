@@ -1,4 +1,4 @@
-import { Grid, ButtonBase, InputBase } from "@mui/material";
+import { Grid, ButtonBase, InputBase, Button } from "@mui/material";
 import { Container } from "@mui/system";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
@@ -8,7 +8,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import PostingEditor from "./PostingEditor";
 import CommentDetail from "./CommentData";
 import PostAuthor from "./PostAuthor";
@@ -27,6 +26,7 @@ import {
     CommentWrite,
     Tag,
     Comments,
+    EditButton,
 } from "./PostStyle";
 
 const Post = () => {
@@ -34,7 +34,7 @@ const Post = () => {
     const user = useSelector((state) => state.auth.value);
     const params = useParams();
     const [post, setPost] = useState("");
-    const [allComment, setAllComment] = useState(undefined);
+    const [allComment, setAllComment] = useState(null);
     const [WriteComment, setWriteComment] = useState("");
     const [postEdit, setPostEdit] = useState(false);
     const [like, setLike] = useState([]);
@@ -47,27 +47,33 @@ const Post = () => {
 
     useEffect(() => {
         fetchData();
+        fetchCommentData();
     }, []);
 
     // 댓글 데이터 들고오기
     const fetchCommentData = async () => {
-        await Api.get(`comments/${params.boardId}`)
-            .then((res) => {
-                setAllComment(res.data);
-            })
-            .then(() => {
-                if (allComment) {
-                    messagesEndRef.current.scrollIntoView({
-                        behavior: "smooth",
-                    });
-                }
-            });
+        await Api.get(`comments/${params.boardId}`).then((res) => {
+            setAllComment(res.data);
+        });
     };
 
     useEffect(() => {
-        fetchCommentData();
-        console.log("여기 왜 안나옴?", allComment);
-    }, []);
+        if (allComment != null && allComment?.length >= 6) {
+            messagesEndRef?.current?.scrollIntoView({
+                behavior: "smooth",
+            });
+        }
+    }, [allComment]);
+
+    const postDelete = () => {
+        if (window.confirm("정말 삭제합니까?")) {
+            Api.delete("boards", post.boardId);
+            alert("삭제되었습니다.");
+            navigate("/board");
+        } else {
+            alert("취소합니다.");
+        }
+    };
 
     const messagesEndRef = useRef(null);
 
@@ -114,149 +120,187 @@ const Post = () => {
     return (
         <>
             {post && like && allComment && (
-                <Container
-                    max-width="lg"
-                    style={{
-                        display: "flex",
-                        paddingTop: "105px",
-                        justifyContent: "space-between",
-                        paddingBottom: "50px",
-                    }}
-                >
-                    {!postEdit ? (
+                <>
+                    {user?.userId === post.author.userId && !postEdit && (
                         <>
-                            <Left>
-                                <PostAuthor
-                                    post={post}
-                                    setPostEdit={setPostEdit}
-                                />
-                                <Grid
-                                    style={{
-                                        display: "flex",
-                                        minHeight: "550px",
-                                        flexDirection: "column",
-                                        justifyContent: "space-between",
-                                        padding: "1% 3%",
-                                    }}
-                                >
-                                    <Grid>
-                                        <Title>{post.title}</Title>
-                                        {post?.imageUrl && (
-                                            <PostImg>
-                                                <img
-                                                    src={post.imageUrl}
-                                                    alt="이미지 없음"
-                                                    style={{
-                                                        width: "100%",
-                                                        borderRadius: "10px",
-                                                    }}
-                                                />
-                                            </PostImg>
-                                        )}
-                                        <Content>{post.content}</Content>
-                                    </Grid>
-                                    <Grid>
-                                        <PostTag>
-                                            {post?.hashTagArray.map((tag) => (
-                                                <Tag key={tag}>{tag}</Tag>
-                                            ))}
-                                        </PostTag>
-                                    </Grid>
-                                </Grid>
-                            </Left>
-                            <Right>
-                                <PostInfo>
-                                    <Grid>
-                                        <IconButton
-                                            onClick={() => {
-                                                handleLikeClick();
-                                            }}
-                                        >
-                                            {like?.includes(post.boardId) ? (
-                                                <FavoriteIcon
-                                                    sx={{
-                                                        margin: "0 5%",
-                                                        color: "white",
-                                                    }}
-                                                />
-                                            ) : (
-                                                <FavoriteBorderIcon
-                                                    sx={{
-                                                        margin: "0 5%",
-                                                        color: "white",
-                                                    }}
-                                                />
-                                            )}
-                                        </IconButton>
-                                        {post.likeCount}
-                                    </Grid>
-                                    <Grid>
-                                        <IconButton
-                                            onClick={() => {
-                                                navigate("/board");
-                                            }}
-                                        >
-                                            <CloseIcon
-                                                sx={{
-                                                    margin: "0 5%",
-                                                    color: "#EC9B3B",
-                                                }}
-                                            />
-                                        </IconButton>
-                                    </Grid>
-                                </PostInfo>
-                                <Comments>
-                                    {allComment?.map((commentData, idx) => (
-                                        <Comment key={idx}>
-                                            <CommentDetail
-                                                commentData={commentData}
-                                                fetchCommentData={
-                                                    fetchCommentData
-                                                }
-                                            />
-                                        </Comment>
-                                    ))}
-                                    <div ref={messagesEndRef} />
-                                </Comments>
-                                <form onSubmit={submitComment}>
-                                    <CommentWrite>
-                                        <InputBase
-                                            variant="standard"
-                                            placeholder="댓글을 입력해 주세요."
-                                            width="100%"
-                                            value={WriteComment}
-                                            onChange={(e) => {
-                                                setWriteComment(e.target.value);
-                                            }}
-                                        />
-
-                                        <ButtonBase
-                                            type="submit"
-                                            size="small"
-                                            sx={{
-                                                width: "45px",
-                                                fontWeight: "bold",
-                                                color: "white",
-                                                backgroundColor: "#A0A083",
-                                                borderRadius: "10px",
-                                            }}
-                                        >
-                                            입력
-                                        </ButtonBase>
-                                    </CommentWrite>
-                                </form>
-                            </Right>
-                        </>
-                    ) : (
-                        <>
-                            <PostingEditor
-                                post={post}
-                                setPostEdit={setPostEdit}
-                                fetchData={fetchData}
-                            />
+                            <EditButton
+                                style={{
+                                    background: "#C2937E",
+                                    marginLeft: "20px",
+                                }}
+                                onClick={() => setPostEdit(true)}
+                            >
+                                수정
+                            </EditButton>
+                            <EditButton
+                                sx={{
+                                    background: "#FE6C63",
+                                }}
+                                onClick={() => postDelete()}
+                            >
+                                삭제
+                            </EditButton>
                         </>
                     )}
-                </Container>
+
+                    {!postEdit && (
+                        <EditButton
+                            style={{
+                                background: "#C2937E",
+                                float: "right",
+                                marginRight: "20px",
+                            }}
+                            onClick={() => {
+                                navigate("/board");
+                            }}
+                        >
+                            뒤로가기
+                        </EditButton>
+                    )}
+                    <Grid container>
+                        {!postEdit ? (
+                            <>
+                                <Left
+                                    item
+                                    lg={7}
+                                    md={7}
+                                    sm={11}
+                                    xs={12}
+                                    style={{ margin: "10px auto" }}
+                                >
+                                    <PostAuthor
+                                        post={post}
+                                        setPostEdit={setPostEdit}
+                                    />
+                                    <Grid
+                                        style={{
+                                            display: "flex",
+                                            minHeight: "550px",
+                                            flexDirection: "column",
+                                            justifyContent: "space-between",
+                                            padding: "1% 3%",
+                                        }}
+                                    >
+                                        <Grid>
+                                            <Title>{post.title}</Title>
+                                            {post?.imageUrl && (
+                                                <PostImg>
+                                                    <img
+                                                        src={post.imageUrl}
+                                                        alt="이미지 없음"
+                                                        style={{
+                                                            width: "100%",
+                                                            borderRadius:
+                                                                "10px",
+                                                        }}
+                                                    />
+                                                </PostImg>
+                                            )}
+                                            <Content>{post.content}</Content>
+                                        </Grid>
+                                        <Grid>
+                                            <PostTag>
+                                                {post?.hashTagArray.map(
+                                                    (tag) => (
+                                                        <Tag key={tag}>
+                                                            {tag}
+                                                        </Tag>
+                                                    )
+                                                )}
+                                            </PostTag>
+                                        </Grid>
+                                    </Grid>
+                                </Left>
+                                <Right
+                                    item
+                                    lg={4}
+                                    md={4}
+                                    sm={11}
+                                    xs={12}
+                                    style={{ margin: "10px auto" }}
+                                >
+                                    <PostInfo>
+                                        <Grid>
+                                            <IconButton
+                                                onClick={() => {
+                                                    handleLikeClick();
+                                                }}
+                                            >
+                                                {like?.includes(
+                                                    post.boardId
+                                                ) ? (
+                                                    <FavoriteIcon
+                                                        sx={{
+                                                            margin: "0 5px 0 0",
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <FavoriteBorderIcon
+                                                        sx={{
+                                                            margin: "0 5px 0 0",
+                                                        }}
+                                                    />
+                                                )}
+                                            </IconButton>
+                                            {post.likeCount}
+                                        </Grid>
+                                    </PostInfo>
+                                    <Comments>
+                                        {allComment?.map((commentData, idx) => (
+                                            <Comment key={idx}>
+                                                <CommentDetail
+                                                    commentData={commentData}
+                                                    fetchCommentData={
+                                                        fetchCommentData
+                                                    }
+                                                />
+                                            </Comment>
+                                        ))}
+                                        <div ref={messagesEndRef} />
+                                    </Comments>
+                                    <form onSubmit={submitComment}>
+                                        <CommentWrite>
+                                            <InputBase
+                                                variant="standard"
+                                                placeholder="댓글을 입력해 주세요."
+                                                sx={{ ml: 1, flex: 1 }}
+                                                value={WriteComment}
+                                                onChange={(e) => {
+                                                    setWriteComment(
+                                                        e.target.value
+                                                    );
+                                                }}
+                                            />
+
+                                            <Button
+                                                type="submit"
+                                                size="small"
+                                                sx={{
+                                                    color: "white",
+                                                    backgroundColor: "#C2937E",
+                                                    borderRadius: "10px",
+                                                    fontSize: "16px",
+                                                    cursor: "pointer",
+                                                    width: "45px",
+                                                }}
+                                            >
+                                                입력
+                                            </Button>
+                                        </CommentWrite>
+                                    </form>
+                                </Right>
+                            </>
+                        ) : (
+                            <>
+                                <PostingEditor
+                                    post={post}
+                                    setPostEdit={setPostEdit}
+                                    fetchData={fetchData}
+                                />
+                            </>
+                        )}
+                    </Grid>
+                </>
             )}
         </>
     );

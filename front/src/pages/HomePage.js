@@ -1,12 +1,13 @@
 import Header from "../components/common/Header";
-import Home from "../components/home/Home";
+import HomeTemp from "../components/home/HomeTemp";
+
 const HomePage = () => {
-    return (
-        <>
-            <Header />
-            <Home />
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <HomeTemp />
+    </>
+  );
 };
 
 export default HomePage;

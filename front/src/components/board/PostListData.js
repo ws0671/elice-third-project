@@ -22,7 +22,7 @@ import {
 const PostData = ({ content }) => {
     const user = useSelector((state) => state.auth.value);
     const navigate = useNavigate();
-    const [author, setAuthor] = useState(undefined);
+    const [author, setAuthor] = useState(null);
 
     useEffect(() => {
         setAuthor(content.author);
@@ -42,37 +42,29 @@ const PostData = ({ content }) => {
                         }
                     }}
                 >
-                    <PostUserImg
-                        style={{
-                            backgroundImage: `url(${author?.imageUrl})`,
-                            backgroundSize: "100% 100%",
-                            backgroundRepeat: "no-repeat",
-                        }}
-                    />
-                    <PostUserInfo>
-                        <ListName>
-                            {author.name.length > 10 ? (
-                                <>{author.name.slice(0, 10) + "..."}</>
-                            ) : (
-                                <>{author.name}</>
-                            )}
-                        </ListName>
-                        <ListDate>{content.createdAt.slice(0, 10)}</ListDate>
-                    </PostUserInfo>
-                    <PostInfo>
-                        <ListTitle>
-                            {content.title.length > 25 ? (
-                                <>{content.title.substr(0, 25) + "..."}</>
-                            ) : (
-                                <>{content.title}</>
-                            )}
-                        </ListTitle>
-                        <Grid style={{ display: "flex" }}>
-                            {content.hashTagArray?.map((tag, index) => (
-                                <Tag key={index}>{tag}</Tag>
-                            ))}
-                        </Grid>
-                    </PostInfo>
+                    <Grid container maxWidth="800px">
+                        <PostUserImg
+                            style={{
+                                backgroundImage: `url(${author?.imageUrl})`,
+                                backgroundSize: "100% 100%",
+                                backgroundRepeat: "no-repeat",
+                            }}
+                        />
+                        <PostUserInfo>
+                            <ListName>{author.name}</ListName>
+                            <ListDate>
+                                {content.createdAt.slice(0, 10)}
+                            </ListDate>
+                        </PostUserInfo>
+                        <PostInfo>
+                            <ListTitle>{content.title}</ListTitle>
+                            <Grid style={{ display: "flex" }}>
+                                {content.hashTagArray?.map((tag, index) => (
+                                    <Tag key={index}>{tag}</Tag>
+                                ))}
+                            </Grid>
+                        </PostInfo>
+                    </Grid>
                     <PostSubInfo>
                         <VisibilityIcon />
                         <Count> {content.viewCount} </Count>

@@ -1,35 +1,44 @@
-import { Grid, Button, InputBase } from "@mui/material";
+import { ButtonBase } from "@mui/material";
 import * as Api from "../../api";
 
 const CommentButton = ({ commentData, setCommentEdit, fetchCommentData }) => {
     const handleCommentDelete = () => {
-        Api.delete("comments", commentData.commentId).then(() =>
-            fetchCommentData()
-        );
-        alert("삭제하였습니다.");
+        try {
+            Api.delete("comments", commentData.commentId).then(() =>
+                fetchCommentData()
+            );
+            alert("삭제하였습니다.");
+        } catch (err) {
+            alert("삭제를 실패하였습니다.");
+        }
     };
     return (
         <>
-            <Button
-                size="small"
-                sx={{
-                    padding: "0",
-                    width: "15px",
+            <ButtonBase
+                style={{
+                    padding: "3px 10px",
+                    fontSize: "16px",
+                    color: "#ffffff",
+                    backgroundColor: "#C2937E",
+                    borderRadius: "10px",
+                    margin: " 5px",
                 }}
                 onClick={(e) => setCommentEdit(true)}
             >
                 수정
-            </Button>
-            <Button
-                size="small"
+            </ButtonBase>
+            <ButtonBase
                 sx={{
-                    padding: "0",
-                    color: "Red",
+                    padding: "3px 10px",
+                    color: "#ffffff",
+                    backgroundColor: "#FE6C63",
+                    fontSize: "16px",
+                    borderRadius: "10px",
                 }}
                 onClick={handleCommentDelete}
             >
                 삭제
-            </Button>
+            </ButtonBase>
         </>
     );
 };

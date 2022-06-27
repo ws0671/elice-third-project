@@ -5,7 +5,6 @@
   font-style: normal;
 }
 
-body {
-  font-family: "GangwonEdu_OTFBoldA";
-  background-color: #E6E9E4;
+main {
+  flex: 1;
 }

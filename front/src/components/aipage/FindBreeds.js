@@ -1,22 +1,124 @@
 import { Button, Input, Grid } from "@mui/material";
-import { useState } from "react";
-import CatDefaultImg from "../../assets/images/CATBUTTON.jpg";
-import DogDefaultImg from "../../assets/images/DOGBUTTON.jpg";
+import { useEffect, useState } from "react";
+import defaultImg from "../../assets/images/v878-mind-64.jpg";
 import styled from "styled-components";
 import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 import ShowResult from "./ShowResult";
+import axios from "axios";
+import * as Api from "../../api";
 
+const dataURLToFile = (dataURL, fileName) => {
+    const arr = dataURL.split(",");
+    console.log(arr);
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
 
-//dummy data
-const labels = ['치와와', '진돗개', '요크셔 테리어',];
-const probabilities = [67.234, 44.222, 34.11];
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], fileName, { type: mime });
+};
 
 //품종 찾기 레이아웃
 const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
+    const [data, setData] = useState(null);
+    const [result, setResult] = useState(null);
+    const [resultImg, setResultImg] = useState("");
     const [previewImg, setPreviewImg] = useState({
         src: "",
         name: "",
     });
+
+    const getDescription = async (PredictResult) => {
+        console.log("품종 분석 결과", PredictResult);
+        if (type === "강아지") {
+            console.log("강아지");
+            await Api.getQuery("dogs", {
+                params: {
+                    id1: PredictResult[0].label,
+                    id2: PredictResult[1].label,
+                    id3: PredictResult[2].label,
+                },
+            }).then((res) => setData(res.data));
+        } else {
+            console.log("cat");
+            await Api.getQuery("cats", {
+                params: {
+                    id1: PredictResult[0].label,
+                    id2: PredictResult[1].label,
+                    id3: PredictResult[2].label,
+                },
+            }).then((res) => setData(res.data));
+        }
+    };
+
+    // 강아지 분석
+    const handleOnClickPredictDOG = async () => {
+        setResultImg(previewImg);
+        const file = dataURLToFile(previewImg.src, previewImg.name);
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const res = await axios.post(
+            "http://localhost:8080/predictdog",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        const PredictResult = res.data.predictions;
+        setResult(PredictResult);
+        return PredictResult;
+    };
+
+    const PredictBreed = async () => {
+        if (previewImg.src) {
+            if (type === "강아지") {
+                await handleOnClickPredictDOG().then((PredictResult) => {
+                    getDescription(PredictResult);
+                });
+            } else {
+                await handleOnClickPredictCAT().then((PredictResult) => {
+                    getDescription(PredictResult);
+                });
+            }
+        } else {
+            alert("사진을 넣어주세요!");
+        }
+    };
+    useEffect(() => {
+        console.log("data", data);
+        console.log("result", result);
+        console.log(resultImg);
+        setPreviewImg(() => {
+            return { src: "", name: "" };
+        });
+    }, [data]);
+
+    const handleOnClickPredictCAT = async () => {
+        const file = dataURLToFile(previewImg.src, previewImg.name);
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const res = await axios.post(
+            "http://localhost:8080//predictcat",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+
+        const PredictResult = res.data.predictions;
+        setResult(PredictResult);
+        return PredictResult;
+    };
 
     const fileToDataURL = (file) => {
         const reader = new FileReader();
@@ -51,11 +153,19 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     sx={{ margin: "10px auto" }}
                 >
                     {previewImg.src ? (
-                        <PetImage src={previewImg.src} alt="기본사진" />
+                        <PetImage
+                            style={{
+                                backgroundImage: `url(${previewImg.src})`,
+                            }}
+                        />
                     ) : (
-                        <PetImage src={defaultImg} alt="기본사진" />
+                        <PetImage
+                            style={{
+                                backgroundImage: `url(${defaultImg})`,
+                            }}
+                        />
                     )}
-                    <label for="ex_file">
+                    <label htmlFor="ex_file">
                         <Input
                             sx={{ display: "none" }}
                             accept="image/*"
@@ -70,7 +180,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                         </DefaultBtn>
                         <br />
                     </label>
-                    <DefaultBtn sx={{ margin: "7px" }}>
+                    <DefaultBtn sx={{ margin: "7px" }} onClick={PredictBreed}>
                         <div className="btnText">품종 분석하기</div>
                     </DefaultBtn>
                 </PhotoCard>
@@ -83,23 +193,44 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     sx={{ margin: "10px auto" }}
                 >
                     <Type>{type}</Type>
-                    <ShowResult labels={labels} probabilities={probabilities} />
-                    <KoreaName>품종이름</KoreaName>
-                    <ContentTitle>영어이름</ContentTitle>
-                    <DescriptionFont>포메라니언</DescriptionFont>
-                    <ContentTitle>수명 범위</ContentTitle>
-                    <DescriptionFont>12-14년</DescriptionFont>
-                    <ContentTitle>체중 범위</ContentTitle>
-                    <DescriptionFont>6-9kg</DescriptionFont>
-                    <ContentTitle>특징</ContentTitle>
-                    <DescriptionFont>이중 털, 직모</DescriptionFont>
-                    <ContentTitle>성격</ContentTitle>
-                    <DescriptionFont>
-                        셰틀랜드 쉽독은 온화하고 다정하며 호감가는 성격으로
-                        알려져 있습니다. 또한 장난기가 많고 애정이 많으며, 이
-                        모든 특성들은 때문에 셰틀랜드 쉽독은 인기있는 가족
-                        반려동물입니다
-                    </DescriptionFont>
+                    {data && (
+                        <>
+                            <ResultImgCard
+                                style={{
+                                    backgroundImage: `url(${resultImg.src})`,
+                                }}
+                            />
+                            <ShowResult
+                                labels={[
+                                    data[0]?.nameKor,
+                                    data[1]?.nameKor,
+                                    data[2]?.nameKor,
+                                ]}
+                                probabilities={[
+                                    Math.round(result[0]?.probability * 100),
+                                    Math.round(result[1]?.probability * 100),
+                                    Math.round(result[1]?.probability * 100),
+                                ]}
+                            />
+                            <KoreaName>{data[0]?.nameKor}</KoreaName>
+                            <ContentTitle>영어이름</ContentTitle>
+                            <DescriptionFont>
+                                {data[0]?.nameEng}
+                            </DescriptionFont>
+                            <ContentTitle>수명 범위</ContentTitle>
+                            <DescriptionFont>{data[0]?.age}</DescriptionFont>
+                            <ContentTitle>체중 범위</ContentTitle>
+                            <DescriptionFont>{data[0]?.weight}</DescriptionFont>
+                            <ContentTitle>특징</ContentTitle>
+                            <DescriptionFont>
+                                {data[0]?.feature}
+                            </DescriptionFont>
+                            <ContentTitle>성격</ContentTitle>
+                            <DescriptionFont>
+                                {data[0]?.personality}
+                            </DescriptionFont>
+                        </>
+                    )}
                 </ResultCard>
             </Grid>
         </>
@@ -110,7 +241,7 @@ const CatBreeds = ({ setCatBreed }) => {
     return (
         <FindBreeds
             type={"고양이"}
-            defaultImg={CatDefaultImg}
+            defaultImg={defaultImg}
             setFindBreed={setCatBreed}
         />
     );
@@ -120,7 +251,7 @@ const DogBreeds = ({ setDogBreed }) => {
     return (
         <FindBreeds
             type={"강아지"}
-            defaultImg={DogDefaultImg}
+            defaultImg={defaultImg}
             setFindBreed={setDogBreed}
         />
     );
@@ -139,10 +270,12 @@ const PhotoCard = styled(Grid)`
     max-height: 400px;
 `;
 
-const PetImage = styled.img`
+const PetImage = styled(Grid)`
     border-radius: 100%;
     width: 80%;
+    background-size: cover;
     margin: 10px;
+    padding-bottom: 80%;
     max-width: 250px;
 `;
 
@@ -175,4 +308,12 @@ const DescriptionFont = styled(Grid)`
     font-size: 20px;
     color: gray;
     margin: 10px;
+`;
+
+const ResultImgCard = styled(Grid)`
+    width: 80%;
+    padding-top: 40%;
+    border-radius: 10px;
+    margin: 20px auto;
+    background-size: cover;
 `;

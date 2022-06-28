@@ -7,32 +7,28 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const List = ({
+  loginAt,
   category,
-  likedPlaceIdArray,
-  setLikedPlaceIdArray,
+  likedPlaceArray,
+  setLikedPlaceArray,
   places,
   handleMouseOver,
   handleMouseOut,
 }) => {
+  const likedPlaceIdArray = likedPlaceArray.map((place) => place.id);
+
   const handleLikeClick = async (place) => {
     try {
       const data = {
         ...place,
         category,
       };
-      const res = await Api.put("likes", data);
-
-      if (res.status !== 200) {
-        console.log(res);
-      }
+      const res = await Api.put("likes?scope=places", data);
+      setLikedPlaceArray(res.data);
     } catch (err) {
-      // alert(err)
+      alert("장소 찜에 실패하였습니다", err);
     }
   };
-
-  useEffect(() => {
-    console.log(likedPlaceIdArray);
-  }, []);
 
   return (
     <Ul>
@@ -59,13 +55,15 @@ const List = ({
                   : place.address_name}
               </Address>
             </InfoWrapper>
-            <LikeWrapper onClick={() => handleLikeClick(place)}>
-              {likedPlaceIdArray?.includes(place.id) ? (
-                <FavoriteIcon sx={{ color: "#c2937e" }} />
-              ) : (
-                <FavoriteBorderIcon sx={{ color: "rgb(232, 212, 203)" }} />
-              )}
-            </LikeWrapper>
+            {loginAt && (
+              <LikeWrapper onClick={() => handleLikeClick(place)}>
+                {likedPlaceIdArray?.includes(place.id) ? (
+                  <FavoriteIcon sx={{ color: "#c2937e" }} />
+                ) : (
+                  <FavoriteBorderIcon sx={{ color: "rgb(232, 212, 203)" }} />
+                )}
+              </LikeWrapper>
+            )}
           </Li>
         );
       })}

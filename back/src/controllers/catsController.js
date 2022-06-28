@@ -4,9 +4,11 @@ import { catsService } from "../services/catsService";
 class catsController {
   static getCats = async (req, res, next) => {
     try {
-      const { catId } = req.query;
+      const { id1, id2, id3 } = req.query;
       const findCat = await catsService.findCats({
-        catId,
+        id1,
+        id2,
+        id3,
       });
 
       res.status(201).json(findCat);

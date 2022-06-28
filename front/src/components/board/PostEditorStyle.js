@@ -13,7 +13,7 @@ const EditPageTitle = styled(Grid)`
     margin: 0 0 30px 0;
 `;
 
-const TitleWrite = styled(TextareaAutosize)`
+const TitleInput = styled(TextareaAutosize)`
     border-radius: 10px;
     border: solid 1px #EAE0CC;
     font-size:18px;
@@ -30,7 +30,7 @@ const TitleWrite = styled(TextareaAutosize)`
       },
 `;
 
-const Write = styled(TextareaAutosize)`
+const ContentInput = styled(TextareaAutosize)`
     font-size: 16px;
     border: solid 1px #EAE0CC;
     border-radius: 10px;
@@ -78,4 +78,4 @@ const Tag = styled(Grid)`
     background-color: #c9ada1;
     position: relative;
 `;
-export { PageTitle, TitleWrite, Write, TagInput, Tag, EditPageTitle };
+export { PageTitle, TitleInput, ContentInput, TagInput, Tag, EditPageTitle };

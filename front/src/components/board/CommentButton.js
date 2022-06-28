@@ -3,10 +3,14 @@ import * as Api from "../../api";
 
 const CommentButton = ({ commentData, setCommentEdit, fetchCommentData }) => {
     const handleCommentDelete = () => {
-        Api.delete("comments", commentData.commentId).then(() =>
-            fetchCommentData()
-        );
-        alert("삭제하였습니다.");
+        try {
+            Api.delete("comments", commentData.commentId).then(() =>
+                fetchCommentData()
+            );
+            alert("삭제하였습니다.");
+        } catch (err) {
+            alert("삭제를 실패하였습니다.");
+        }
     };
     return (
         <>

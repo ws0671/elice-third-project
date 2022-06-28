@@ -1,5 +1,11 @@
 import { Container, Grid, Button } from "@mui/material";
-import { PageTitle, TitleWrite, Write, TagInput, Tag } from "./PostEditorStyle";
+import {
+    PageTitle,
+    TitleInput,
+    ContentInput,
+    TagInput,
+    Tag,
+} from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import { useState } from "react";
@@ -19,9 +25,10 @@ const Posting = () => {
 
     const onKeyPress = (e) => {
         if (e.target.value.length !== 0 && e.key === "Enter") {
-            let updatedTagList = [...hashTagArray];
-            updatedTagList.push(hashTag);
-            setHashTagArray(updatedTagList);
+            setHashTagArray((currentHashTagArray) => [
+                ...currentHashTagArray,
+                hashTag,
+            ]);
             setHashTag("");
         }
     };
@@ -37,26 +44,49 @@ const Posting = () => {
     const onUploadImg = async () => {
         const formData = new FormData();
         formData.append("image", file);
-        // const res = await axios.post("boards/images", formData, {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data",
-        //         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-        //     },
-        // });
-        // setImage(res.data);
-        console.log(image);
+        const res = await axios.post(
+            "http://localhost:5000/boards/images",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
+                },
+            }
+        );
+        const imageUrl = res.data.imageUrl;
+        setImage(imageUrl);
+        return imageUrl;
     };
 
     const handleSubmit = async () => {
-        await Api.post("boards", {
-            title,
-            content,
-            imageUrl: image,
-            hashTagArray,
-        });
-        alert("게시글 등록을 성공하였습니다.");
-        navigate(`/board`);
+        if (file) {
+            await onUploadImg().then((imageUrl) => {
+                updatePost(imageUrl);
+            });
+        } else {
+            updatePost();
+        }
     };
+
+    const updatePost = async (imageUrl) => {
+        try {
+            await Api.post("boards", {
+                title,
+                content,
+                imageUrl: imageUrl ? imageUrl : image,
+                hashTagArray,
+            });
+            console.log("이미지", image, imageUrl);
+            alert("게시글 등록을 성공하였습니다.");
+            navigate(`/board`);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
     const stopEvent = (e) => {
         if ((title.length > 0) & (content.length > 0)) {
             e.preventDefault();
@@ -70,14 +100,14 @@ const Posting = () => {
         <>
             <Container maxWidth="lg" style={{ paddingTop: "70px" }}>
                 <PageTitle>새 글 작성</PageTitle>
-                <TitleWrite
+                <TitleInput
                     required
                     maxRows={1}
                     placeholder="제목을 입력하세요"
                     name="title"
                     onChange={(e) => setTitle(e.target.value)}
                 />
-                <Write
+                <ContentInput
                     required
                     minRows={15}
                     maxRows={15}
@@ -132,9 +162,7 @@ const Posting = () => {
                             type="file"
                             accept="image/png, image/jpeg"
                             placeholder="이미지 첨부"
-                            onChange={(e) =>
-                                console.log("here", e.target.files)
-                            }
+                            onChange={(e) => setFile(e.target.files[0])}
                         />
                     </Grid>
                     <Grid>

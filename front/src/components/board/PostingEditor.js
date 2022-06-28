@@ -1,8 +1,7 @@
 import { Container, Grid, Button, ButtonBase } from "@mui/material";
 import {
-    PageTitle,
-    TitleWrite,
-    Write,
+    TitleInput,
+    ContentInput,
     TagInput,
     Tag,
     EditPageTitle,
@@ -11,6 +10,7 @@ import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlin
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import * as Api from "../../api";
+import axios from "axios";
 import React from "react";
 const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const navigate = useNavigate();
@@ -18,13 +18,15 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
     const [image, setImage] = useState(post.imageUrl);
+    const [file, setFile] = useState("");
     const [hashTag, setHashTag] = useState("");
     const [hashTagArray, setHashTagArray] = useState(post.hashTagArray);
     const onKeyPress = (e) => {
         if (e.target.value.length !== 0 && e.key === "Enter") {
-            let updatedTagList = [...hashTagArray];
-            updatedTagList.push(hashTag);
-            setHashTagArray(updatedTagList);
+            setHashTagArray((currentHashTagArray) => [
+                ...currentHashTagArray,
+                hashTag,
+            ]);
             setHashTag("");
         }
     };
@@ -37,30 +39,56 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
         setHashTagArray(filteredTagList);
     };
 
-    const onUploadImg = (value) => {
+    const onUploadImg = async () => {
         const formData = new FormData();
-        formData.append("image", value);
-        // const res = Api.post("boards/images", formData, {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data",
-        //     },
-        // });
-        // setImage(res.data);
+        formData.append("image", file);
+        const res = await axios.post(
+            "http://localhost:5000/boards/images",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${sessionStorage.getItem(
+                        "userToken"
+                    )}`,
+                },
+            }
+        );
+        const imageUrl = res.data.imageUrl;
+        setImage(imageUrl);
+        return imageUrl;
     };
 
     const handleSubmit = async () => {
         try {
-            await Api.put(`boards/${post.boardId}`, {
-                title,
-                content,
-                imageUrl: image,
-                hashTagArray,
-            }).then(fetchData);
+            if (file) {
+                await onUploadImg().then((imageUrl) => {
+                    updatePost(imageUrl);
+                });
+            } else {
+                updatePost();
+            }
+
             alert("게시글 수정을 성공하였습니다.");
         } catch (error) {
             alert("게시글 수정에 실패하였습니다.", error);
         }
     };
+
+    const updatePost = async (imageUrl) => {
+        try {
+            await Api.put(`boards/${post.boardId}`, {
+                title,
+                content,
+                imageUrl: imageUrl ? imageUrl : image,
+                hashTagArray,
+            }).then(fetchData);
+            console.log("이미지", image, imageUrl);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
     const stopEvent = (e) => {
         if ((title.length > 0) & (content.length > 0)) {
             e.preventDefault();
@@ -74,7 +102,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     return (
         <Container maxWidth="lg">
             <EditPageTitle>게시글 수정</EditPageTitle>
-            <TitleWrite
+            <TitleInput
                 required
                 maxRows={1}
                 placeholder="제목을 입력하세요"
@@ -82,7 +110,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                 name="title"
                 onChange={(e) => setTitle(e.target.value)}
             />
-            <Write
+            <ContentInput
                 required
                 minRows={15}
                 maxRows={15}
@@ -138,7 +166,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                         type="file"
                         accept="image/png, image/jpeg"
                         placeholder="이미지 첨부"
-                        onChange={(e) => onUploadImg(e.target.files[0])}
+                        onChange={(e) => setFile(e.target.files[0])}
                     />
                 </Grid>
                 <Grid>

@@ -22,7 +22,7 @@ import {
 const PostData = ({ content }) => {
     const user = useSelector((state) => state.auth.value);
     const navigate = useNavigate();
-    const [author, setAuthor] = useState(undefined);
+    const [author, setAuthor] = useState(null);
 
     useEffect(() => {
         setAuthor(content.author);
@@ -50,23 +50,11 @@ const PostData = ({ content }) => {
                         }}
                     />
                     <PostUserInfo>
-                        <ListName>
-                            {author.name.length > 10 ? (
-                                <>{author.name.slice(0, 10) + "..."}</>
-                            ) : (
-                                <>{author.name}</>
-                            )}
-                        </ListName>
+                        <ListName>{author.name}</ListName>
                         <ListDate>{content.createdAt.slice(0, 10)}</ListDate>
                     </PostUserInfo>
                     <PostInfo>
-                        <ListTitle>
-                            {content.title.length > 25 ? (
-                                <>{content.title.substr(0, 25) + "..."}</>
-                            ) : (
-                                <>{content.title}</>
-                            )}
-                        </ListTitle>
+                        <ListTitle>{content.title}</ListTitle>
                         <Grid style={{ display: "flex" }}>
                             {content.hashTagArray?.map((tag, index) => (
                                 <Tag key={index}>{tag}</Tag>

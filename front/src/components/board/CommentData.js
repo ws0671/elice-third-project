@@ -12,10 +12,14 @@ const CommentDetail = ({ commentData, fetchCommentData }) => {
 
     const submitCommentEdit = (e) => {
         e.preventDefault();
-        Api.put(`comments/${commentData.commentId}`, {
-            content: currentComment,
-        }).then(fetchCommentData);
-        setCommentEdit(false);
+        try {
+            Api.put(`comments/${commentData.commentId}`, {
+                content: currentComment,
+            }).then(fetchCommentData);
+            setCommentEdit(false);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (

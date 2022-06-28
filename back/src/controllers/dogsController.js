@@ -5,9 +5,11 @@ import axios from "axios";
 class dogsController {
   static getDogs = async (req, res, next) => {
     try {
-      const { dogId } = req.query;
+      const { id1, id2, id3 } = req.query;
       const findDog = await dogsService.findDogs({
-        dogId,
+        id1,
+        id2,
+        id3,
       });
 
       res.status(201).json(findDog);

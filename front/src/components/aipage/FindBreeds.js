@@ -4,6 +4,12 @@ import CatDefaultImg from "../../assets/images/CATBUTTON.jpg";
 import DogDefaultImg from "../../assets/images/DOGBUTTON.jpg";
 import styled from "styled-components";
 import { DefaultBtn, NegativeBtn } from "../common/Buttons";
+import ShowResult from "./ShowResult";
+
+
+//dummy data
+const labels = ['치와와', '진돗개', '요크셔 테리어',];
+const probabilities = [67.234, 44.222, 34.11];
 
 //품종 찾기 레이아웃
 const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
@@ -77,6 +83,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     sx={{ margin: "10px auto" }}
                 >
                     <Type>{type}</Type>
+                    <ShowResult labels={labels} probabilities={probabilities} />
                     <KoreaName>품종이름</KoreaName>
                     <ContentTitle>영어이름</ContentTitle>
                     <DescriptionFont>포메라니언</DescriptionFont>

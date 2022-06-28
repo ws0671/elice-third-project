@@ -24,7 +24,7 @@ const PlaceSchema = new Schema({
     type: String,
     required: true,
   },
-  road_address_name: {
+  road_adress_name: {
     type: String,
   },
   category: {
@@ -37,19 +37,5 @@ const PlaceSchema = new Schema({
   },
 });
 
-const LikeSchema = new Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
-  boardIdArray: {
-    type: [String],
-  },
-  placeArray: {
-    type: [PlaceSchema],
-  },
-});
-
-const LikeModel = model("Like", LikeSchema);
-
-export { LikeModel };
+const PlaceModel = model("Place", PlaceSchema);
+export { PlaceModel };

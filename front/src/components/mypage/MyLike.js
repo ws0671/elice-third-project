@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
 import styled from "styled-components";
-import { InfoTitle, MapInfo } from "./styledCP";
-import { Box, Tab } from "@mui/material";
+import { Box, Tab, Grid } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 import * as Api from "../../api";
+import List from "../map/List";
 
 const MyLike = () => {
   const { kakao } = window;
@@ -106,9 +106,6 @@ const MyLike = () => {
 
   return (
     <>
-      <MapInfo>
-        <InfoTitle>내가 찜한 장소</InfoTitle>
-      </MapInfo>
       <TabContext value={value}>
         <Box
           sx={{
@@ -125,67 +122,57 @@ const MyLike = () => {
         <TabPanel
           value={value}
           sx={{
-            backgroundColor: "#F6F5EF",
-            border: "solid 5px #798478",
-            borderRadius: "0px 3px 3px 3px",
+            backgroundColor: "white",
+            borderRadius: "0px 10px 10px 10px",
+            boxShadow: "2px 2px 10px #d9d9d9",
           }}
         >
-          {currentPos?.lat && currentPos?.lng && places.length !== 0 ? (
-            <Map
-              center={{ lat: currentPos.lat, lng: currentPos.lng }}
-              style={{ width: "100%", height: "300px" }}
-              onCreate={setMap}
-              isPanto={true}
-            >
-              {markers.map((marker) => (
-                <MapMarker
-                  key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
-                  position={marker.position}
-                  onMouseOver={() => {
-                    handleMouseOver(marker.content);
-                  }}
-                  onMouseOut={handleMouseOut}
+          <Grid container>
+            <Grid item md={6} sm={12} xs={12}>
+              {currentPos?.lat && currentPos?.lng && places.length !== 0 ? (
+                <Map
+                  center={{ lat: currentPos.lat, lng: currentPos.lng }}
+                  style={{ width: "100%", height: "400px" }}
+                  onCreate={setMap}
+                  isPanto={true}
                 >
-                  {info && info.content === marker.content && (
-                    <div style={{ color: "#000" }}>{marker.content}</div>
-                  )}
-                </MapMarker>
-              ))}
-            </Map>
-          ) : (
-            <NoPlace>
-              찜한{" "}
-              {value === "2" ? `${category[value]}가` : `${category[value]}이`}{" "}
-              없습니다!
-            </NoPlace>
-          )}
+                  {markers.map((marker) => (
+                    <MapMarker
+                      key={`marker-${marker.content}-${marker.position.lat},${marker.position.lng}`}
+                      position={marker.position}
+                      onMouseOver={() => {
+                        handleMouseOver(marker.content);
+                      }}
+                      onMouseOut={handleMouseOut}
+                    >
+                      {info && info.content === marker.content && (
+                        <div style={{ color: "#000", padding: "5px" }}>
+                          {marker.content}
+                        </div>
+                      )}
+                    </MapMarker>
+                  ))}
+                </Map>
+              ) : (
+                <NoPlace>
+                  찜한{" "}
+                  {value === "2"
+                    ? `${category[value]}가`
+                    : `${category[value]}이`}{" "}
+                  없습니다!
+                </NoPlace>
+              )}
+            </Grid>
+            <Grid item md={6} sm={12} xs={12} sx={{ minHeight: "400px" }}>
+              <List
+                category={value}
+                places={places}
+                handleMouseOver={handleMouseOver}
+                handleMouseOut={handleMouseOut}
+              />
+            </Grid>
+          </Grid>
         </TabPanel>
-        <Ul>
-          {places?.map((place) => {
-            return (
-              <Li key={place.id}>
-                <div>
-                  <PlaceName
-                    href={place.place_url}
-                    target="_blank"
-                    onMouseOver={() => {
-                      handleMouseOver(place.place_name);
-                    }}
-                    onMouseOut={handleMouseOut}
-                  >
-                    {place.place_name}
-                  </PlaceName>
-                  <Phone>{place.phone}</Phone>
-                </div>
-                <Address>
-                  {place.road_address_name
-                    ? place.road_address_name
-                    : place.address_name}
-                </Address>
-              </Li>
-            );
-          })}
-        </Ul>
       </TabContext>
     </>
   );
@@ -201,24 +188,18 @@ const CategoryTabList = styled(TabList)`
 
 const CategoryTab = styled(Tab)`
   && {
-    background-color: #c9ada1;
-    color: black;
-    border-radius: 15px 15px 0px 0px;
-    margin-right: 5px;
-    font-size: 1rem;
-    font-weight: bold;
+    background-color: #65949e;
     color: white;
-  }
-
-  &.hos {
-    background-color: #a0a083;
+    border-radius: 10px 10px 0px 0px;
+    margin-right: 5px;
+    font-size: 20px;
+    font-family: "GangwonEdu_OTFBoldA";
   }
 
   &&.Mui-selected {
-    color: white;
-    background-color: #798478;
-    border: solid #798478;
-    border-width: 5px 5px 0px 5px;
+    font-size: 25px;
+    color: black;
+    background-color: white;
   }
 `;
 
@@ -226,39 +207,4 @@ const NoPlace = styled.div`
   height: 300px;
   line-height: 300px;
   text-align: center;
-`;
-
-const Ul = styled.ul`
-  list-style: none;
-  padding-left: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Li = styled.li`
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-  background-color: rgba(121, 132, 120, 0.1);
-  padding: 10px;
-  border-radius: 10px;
-`;
-
-const PlaceName = styled.a`
-  text-decoration: none;
-  color: black;
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-right: 10px;
-`;
-
-const Phone = styled.span`
-  color: gray;
-`;
-
-const Address = styled.div`
-  margin-top: 5px;
-  font-size: 1rem;
 `;

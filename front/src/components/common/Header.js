@@ -118,7 +118,8 @@ export default Header;
 const Wrapper = styled.header`
   width: 100%;
   position: fixed;
-  zindex: 100;
+  z-index: 100;
+  background-color: #e6e9e4;
 `;
 
 const Logo = styled(Grid)`

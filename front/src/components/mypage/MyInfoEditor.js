@@ -2,13 +2,8 @@ import { useState } from "react";
 
 import axios from "axios";
 
-import {
-  Button,
-  TextField,
-  Input,
-  IconButton,
-  ButtonGroup,
-} from "@mui/material";
+import { Grid, TextField, Input, IconButton } from "@mui/material";
+
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,15 +11,15 @@ import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
-  UserImgWrapper,
-  UserImg,
-  UserName,
-  Info,
-  InfoTitle,
-  InfoContent,
+  ImgWrapper,
+  Img,
+  InfoWrapper,
+  Email,
   Animals,
   AnimalEdit,
 } from "./styledCP";
+
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 
 import * as Api from "../../api";
 
@@ -157,112 +152,106 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
   };
 
   return (
-    <>
-      <UserImgWrapper>
-        {previewImg.src ? (
-          <UserImg src={previewImg.src} alt="프로필 사진 미리보기" />
-        ) : (
-          <UserImg src={myInfo.imageUrl} alt="프로필 사진" />
-        )}
-        <label
-          htmlFor="icon-button-file"
-          style={{ position: "absolute", right: "25px", top: "20px" }}
-        >
-          <Input
-            sx={{ display: "none" }}
-            accept="image/*"
-            id="icon-button-file"
-            type="file"
-            onChange={(e) => {
-              fileToDataURL(e.target.files[0]);
-            }}
-          />
-          <IconButton
-            color="primary"
-            aria-label="upload picture"
-            component="span"
+    <Grid container>
+      <Grid item lg={5} md={5} sm={12} xs={12}>
+        <ImgWrapper>
+          {previewImg.src ? (
+            <Img src={previewImg.src} alt="프로필 사진 미리보기" />
+          ) : (
+            <Img src={myInfo.imageUrl} alt="프로필 사진" />
+          )}
+          <label
+            htmlFor="icon-button-file"
+            style={{ position: "absolute", right: "20px", top: "0px" }}
           >
-            <PhotoCamera />
-          </IconButton>
-        </label>
-      </UserImgWrapper>
-      <UserName>
-        <TextField
-          size="small"
-          value={myInfo.name}
-          name="name"
-          onChange={handleChange}
-        />
-      </UserName>
-
-      <Info>
-        <InfoTitle>이메일</InfoTitle>
-        <InfoContent>{myInfo.email}</InfoContent>
-      </Info>
-      <Info>
-        <InfoTitle>한 줄 소개</InfoTitle>
-        <TextField
-          fullWidth
-          size="small"
-          value={myInfo.description}
-          name="description"
-          onChange={handleChange}
-        />
-      </Info>
-      <Info>
-        <InfoTitle>반려동물</InfoTitle>
-        <Animals>
-          {myInfo.speciesArray?.map((item, index) => {
-            return (
-              <AnimalEdit key={item}>
-                {item}
-                <RemoveCircleIcon
-                  onClick={() => handleRemoveClick(index)}
-                  sx={{ marginLeft: "5px" }}
-                />
-              </AnimalEdit>
-            );
-          })}
-          {isSpeciesAdding ? (
-            <TextField
-              size="small"
-              onBlur={handleBlur}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
-                  handleEnter(e.target.value);
-                }
+            <Input
+              sx={{ display: "none" }}
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              onChange={(e) => {
+                fileToDataURL(e.target.files[0]);
               }}
             />
-          ) : (
-            <AddIcon onClick={handleAddClick} fontSize="large" />
-          )}
-        </Animals>
-      </Info>
-      <ButtonGroup sx={{ position: "absolute", bottom: "30px" }}>
-        <Button
-          variant="contained"
-          size="medium"
-          color="warning"
-          onClick={() => {
-            setIsEditing(false);
+            <IconButton aria-label="upload picture" component="span">
+              <PhotoCamera />
+            </IconButton>
+          </label>
+        </ImgWrapper>
+      </Grid>
+      <Grid item lg={7} md={7} sm={12} xs={12}>
+        <InfoWrapper>
+          <TextField
+            value={myInfo.name}
+            name="name"
+            onChange={handleChange}
+            size="small"
+            sx={{ width: "200px" }}
+            autoComplete="off"
+          />
+          <Email>{myInfo.email}</Email>
+          <TextField
+            fullWidth
+            value={myInfo.description}
+            name="description"
+            onChange={handleChange}
+            size="small"
+            autoComplete="off"
+          />
+          <Animals>
+            {myInfo.speciesArray?.map((item, index) => {
+              return (
+                <AnimalEdit key={item}>
+                  <span>{item}</span>
+                  <RemoveCircleIcon
+                    onClick={() => handleRemoveClick(index)}
+                    sx={{ ml: "5px" }}
+                  />
+                </AnimalEdit>
+              );
+            })}
+            {isSpeciesAdding ? (
+              <TextField
+                size="small"
+                onBlur={handleBlur}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleEnter(e.target.value);
+                  }
+                }}
+              />
+            ) : (
+              <AddIcon onClick={handleAddClick} fontSize="large" />
+            )}
+          </Animals>
+        </InfoWrapper>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
           }}
-          startIcon={<ArrowBackIcon />}
         >
-          돌아가기
-        </Button>
-        <Button
-          variant="contained"
-          size="medium"
-          onClick={() => {
-            handleSaveClick();
-            setIsEditing(false);
-          }}
-          startIcon={<CheckCircleIcon />}
-        >
-          저장하기
-        </Button>
-      </ButtonGroup>
-    </>
+          <NegativeBtn
+            onClick={() => {
+              setIsEditing(false);
+            }}
+            startIcon={<ArrowBackIcon />}
+          >
+            <div className="btnText">돌아가기</div>
+          </NegativeBtn>
+          <DefaultBtn
+            onClick={() => {
+              handleSaveClick();
+              setIsEditing(false);
+            }}
+            startIcon={<CheckCircleIcon />}
+            sx={{ ml: "10px" }}
+          >
+            <div className="btnText">저장하기</div>
+          </DefaultBtn>
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 

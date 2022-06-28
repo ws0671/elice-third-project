@@ -1,6 +1,7 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
+import fileupload from "express-fileupload";
 const { format } = require("util");
 const Multer = require("multer");
 const { Storage } = require("@google-cloud/storage");
@@ -12,13 +13,15 @@ import { commentRouter } from "./routes/commentRouter";
 import { likeRouter } from "./routes/likeRouter";
 import { shoppingRouter } from "./routes/shoppingRouter";
 import { scrapeShopItemsRouter } from "./routes/scrapeShopItemsRouter";
+import { dogsRouter } from "./routes/dogsRouter";
+import { catsRouter } from "./routes/catsRouter";
 
 const storage = new Storage();
 const app = express();
 
 // CORS 에러 방지
 app.use(cors());
-
+app.use(fileupload());
 // express 기본 제공 middleware
 // express.json(): POST 등의 요청과 함께 오는 json형태의 데이터를 인식하고 핸들링할 수 있게 함.
 // express.urlencoded: 주로 Form submit 에 의해 만들어지는 URL-Encoded 형태의 데이터를 인식하고 핸들링할 수 있게 함.
@@ -36,6 +39,8 @@ app.use(commentRouter);
 app.use(likeRouter);
 app.use(shoppingRouter);
 app.use(scrapeShopItemsRouter);
+app.use(dogsRouter);
+app.use(catsRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);

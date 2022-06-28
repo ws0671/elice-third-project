@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import dog from "../../assets/images/dog.jpg";
+import community from "../../assets/images/computer_and_dog.jpg";
+import map from "../../assets/images/welsh-corgi-dog-performing-during-show-competition.jpg";
 import { Grid } from "@mui/material";
 import { ServiceTitle, ServiceContent, ServiceButton } from "./SliderStyle";
 
@@ -9,17 +11,14 @@ const Slide = ({ src, service }) => {
     const navigate = useNavigate();
 
     return (
-        <Grid container>
-            <Grid item lg={6} sx={{ padding: "10px", margin: "0 auto" }}>
-                <Img src={src} />
-            </Grid>
-            <Grid
+        <Banner sx={{ width: "100%" }} src={src}>
+            <TextBox
                 item
                 lg={6}
                 sx={{
                     padding: "20px",
                     margin: "0 auto",
-                    width: "100%",
+                    width: "50%",
                 }}
             >
                 <ServiceTitle>{service.name}</ServiceTitle>
@@ -31,30 +30,28 @@ const Slide = ({ src, service }) => {
                 >
                     바로 가기
                 </ServiceButton>
-            </Grid>
-        </Grid>
+            </TextBox>
+        </Banner>
     );
 };
 
 const Slide1 = () => {
     return (
-        <Grid
-            style={{
-                backgroundImage: `url(${dog})`,
-                padding: "25% 0",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
+        <Slide
+            src={dog}
+            service={{
+                name: "",
+                content: "",
+                url: "",
             }}
-        >
-            집사야, 우리가 궁금하냥? 반려동물의 모든 것!
-        </Grid>
+        />
     );
 };
 
 const Slide2 = () => {
     return (
         <Slide
-            src="https://cdn.pixabay.com/photo/2022/06/22/06/53/cabinet-7277181_960_720.jpg"
+            src={map}
             service={{
                 name: "우리동네 지도",
                 content:
@@ -84,9 +81,7 @@ const Slide3 = () => {
 const Slide4 = () => {
     return (
         <Slide
-            src={
-                "https://cdn.pixabay.com/photo/2022/06/22/06/53/cabinet-7277181_960_720.jpg"
-            }
+            src={community}
             service={{
                 name: "소통 공간",
                 content:
@@ -101,4 +96,27 @@ export { Slide1, Slide2, Slide3, Slide4 };
 
 const Img = styled.img`
     width: 100%;
+    height: 500px;
+`;
+
+const TextBox = styled(Grid)`
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10% 0;
+`;
+
+const Banner = styled(Grid)`
+    && {
+        width: 100%;
+        &:before {
+            background-image: url(${map});
+            height: 40vw;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            padding: 5% 0;
+            opacity: 0.5;
+            border: solid 1px;
+        }
+    }
 `;

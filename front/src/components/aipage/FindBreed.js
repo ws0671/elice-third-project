@@ -20,35 +20,35 @@ const AiContainer = styled.div`
 `;
 
 const imgDefault = "pug25.jpg";
-// const serverUrl = "http://localhost:8080";
+const serverUrl = "http://localhost:8080";
 
-// const dataURLToFile = (dataURL, fileName) => {
-//   const arr = dataURL.split(",");
-//   console.log(arr);
-//   const mime = arr[0].match(/:(.*?);/)[1];
-//   const bstr = atob(arr[1]);
-//   let n = bstr.length;
-//   const u8arr = new Uint8Array(n);
+const dataURLToFile = (dataURL, fileName) => {
+  const arr = dataURL.split(",");
+  console.log(arr);
+  const mime = arr[0].match(/:(.*?);/)[1];
+  const bstr = atob(arr[1]);
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
 
-//   while (n--) {
-//     u8arr[n] = bstr.charCodeAt(n);
-//   }
-//   return new File([u8arr], fileName, { type: mime });
-// };
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], fileName, { type: mime });
+};
 
-// async function post(endpoint, previewImg) {
-//   const file = dataURLToFile(previewImg.src, previewImg.name);
-//   const formData = new FormData();
-//   formData.append("image", file);
-//   return axios
-//     .post(serverUrl + endpoint, formData, {
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//       },
-//     })
-//     .then((res) => res)
-//     .catch((error) => error.response);
-// }
+async function post(endpoint, previewImg) {
+  const file = dataURLToFile(previewImg.src, previewImg.name);
+  const formData = new FormData();
+  formData.append("image", file);
+  return axios
+    .post(serverUrl + endpoint, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((res) => res)
+    .catch((error) => error.response);
+}
 
 const FindBreed = () => {
   const [isClassified, setIsClassified] = useState(false);
@@ -93,11 +93,16 @@ const FindBreed = () => {
     if (previewImg.src == "") {
       return;
     }
-    await axios
-      .post("http://localhost:5000/dogs", previewImg)
-      .then((res) => {
+    await post("/predictdog", previewImg)
+      .then(async (res) => {
         console.log(res);
         setData(res.data);
+        const id = res.data.predictions[0].label;
+        await axios
+          .get(`http://localhost:5000/dogs?dogId=${id}`)
+          .then((res) => {
+            console.log(res);
+          });
       })
       .catch((err) => setData({}));
 
@@ -117,8 +122,7 @@ const FindBreed = () => {
       return;
     }
 
-    await axios
-      .post("/predictcat", previewImg)
+    await post("/predictcat", previewImg)
       .then((res) => {
         console.log(res);
         setData(res.data);

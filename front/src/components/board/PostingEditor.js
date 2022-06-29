@@ -24,7 +24,9 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const [file, setFile] = useState("");
     const [hashTag, setHashTag] = useState("");
     const [hashTagArray, setHashTagArray] = useState(post.hashTagArray);
+
     const onKeyPress = (e) => {
+        console.log(hashTagArray);
         if (e.target.value.length !== 0 && e.key === "Enter") {
             setHashTagArray((currentHashTagArray) => [
                 ...currentHashTagArray,
@@ -135,7 +137,10 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                     color: "gray",
                     padding: "5px",
                     display: "flex",
-                    height: "45px",
+                    minHeight: "45px",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    overflow: "hidden",
                 }}
             >
                 {hashTagArray?.map((tagItem, idx) => (

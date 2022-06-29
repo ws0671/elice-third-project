@@ -25,28 +25,23 @@ const Newposts = () => {
     }, []);
 
     const pageHandler = (e, value) => {
+        e.preventDefault();
         setPage(value);
-        searchHandler();
     };
 
     useEffect(() => {
         if (search && searchData) {
             searchHandler();
-        }
-    }, [page]);
-
-    useEffect(() => {
-        if (search) {
-            setPage(1);
-            searchHandler();
+            console.log("페이지 바뀔때");
         } else {
             fetchData();
         }
-    }, [sort]);
+    }, [page, sort]);
 
     // 검색어로 게시글 찾기
-    const searchHandler = async () => {
-        await Api.getQuery("boards/search", {
+    const searchHandler = () => {
+        console.log("page, sort", page, sort);
+        Api.getQuery("boards/search", {
             params: {
                 title: search,
                 page: page,
@@ -56,7 +51,8 @@ const Newposts = () => {
             },
         }).then((res) => {
             setSearchData(res.data.searchList);
-            setFinalPage(res.data.finalPage);
+            setFinalPage(res.data.lastPage);
+            console.log(res);
         });
     };
 
@@ -81,6 +77,7 @@ const Newposts = () => {
                         setSearchData(null);
                         setSearch("");
                         setSelectedSort(1);
+                        setPage(1);
                     }}
                     style={
                         selectedSort === 1
@@ -94,6 +91,7 @@ const Newposts = () => {
                     onClick={() => {
                         setSort("date");
                         setSelectedSort(2);
+                        setPage(1);
                     }}
                     style={
                         selectedSort === 2
@@ -107,6 +105,7 @@ const Newposts = () => {
                     onClick={() => {
                         setSort("like");
                         setSelectedSort(3);
+                        setPage(1);
                     }}
                     style={
                         selectedSort === 3
@@ -120,6 +119,7 @@ const Newposts = () => {
                     onClick={() => {
                         setSort("view");
                         setSelectedSort(4);
+                        setPage(1);
                     }}
                     style={
                         selectedSort === 4
@@ -149,6 +149,7 @@ const Newposts = () => {
                                 if (search.length > 0) {
                                     setSort("date");
                                     searchHandler();
+                                    setSelectedSort(2);
                                     setPage(1);
                                 }
                             }
@@ -172,7 +173,10 @@ const Newposts = () => {
                 {searchData ? (
                     <>
                         {searchData?.map((content) => (
-                            <PostListData key={content} content={content} />
+                            <PostListData
+                                key={content.boardId}
+                                content={content}
+                            />
                         ))}
                         <Grid style={{ display: "flex", margin: "10px" }}>
                             <Pagination

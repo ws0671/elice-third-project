@@ -9,7 +9,6 @@ const Footer = () => {
                 style={{ display: "flex", justifyContent: "space-between" }}
             >
                 <LogoWrapper>
-                    {/* <Image src={Image} alt="logo" width={30} height={30} /> */}
                     <Title>궁금하냥?</Title>
                     <span>반려동몰의 모든 것</span>
                 </LogoWrapper>
@@ -19,18 +18,18 @@ const Footer = () => {
                 </ServiceWrapper>
                 <TextWrapper>
                     <LinkWrapper>
-                        <LinkText>FrontEnd</LinkText>
+                        <Position>FrontEnd</Position>
 
                         <span>김애림</span>
                         <span>이정민</span>
                     </LinkWrapper>
                     <LinkWrapper>
-                        <LinkText>BackEnd</LinkText>
+                        <Position>BackEnd</Position>
                         <span>이예원</span>
                         <span>이영민</span>
                     </LinkWrapper>
                     <LinkWrapper>
-                        <LinkText>인공지능</LinkText>
+                        <Position>인공지능</Position>
                         <span>소범기</span>
                         <span>홍일도</span>
                     </LinkWrapper>
@@ -53,6 +52,10 @@ const FooterWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     text-align: center;
+    @media screen and (max-width: 600px) {
+        font-size: 9px;
+        height: 90px;
+    }
 `;
 
 const LogoWrapper = styled.div`
@@ -70,20 +73,29 @@ const ServiceWrapper = styled.div`
     align-items: center;
     justify-content: center;
     width: 15%;
+    color: gray;
 `;
 
 const Title = styled.span`
     font-size: 20px;
     margin-bottom: 5px;
-    color: #65949e; ;
+    color: #65949e;
+    @media screen and (max-width: 600px) {
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
 `;
 
-const LinkText = styled.span`
+const Position = styled.span`
     border-bottom: solid 1px;
     margin: 20px 0;
     font-size: 18px;
     font-weight: bold;
     color: gray;
+    @media screen and (max-width: 600px) {
+        font-size: 10px;
+        margin: 10px 0;
+    }
 `;
 const TextWrapper = styled.div`
     display: flex;

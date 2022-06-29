@@ -130,7 +130,9 @@ const Posting = () => {
                     color: "gray",
                     padding: "5px",
                     display: "flex",
-                    height: "45px",
+                    minHeight: "45px",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
                 }}
             >
                 {hashTagArray?.map((tagItem) => (

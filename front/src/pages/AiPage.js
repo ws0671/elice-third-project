@@ -74,15 +74,6 @@ const AiPage = () => {
 
 export default AiPage;
 
-const boxFade = keyframes`
-from {
-    transform: rotate(-5deg);
-  }
-  to {
-    transform: rotate(10deg);
-  }
-`;
-
 const CameraImg = styled(Box)`
     && {
         background-image: url(${Camera});
@@ -91,6 +82,10 @@ const CameraImg = styled(Box)`
         background-size: cover;
         background-repeat: no-repeat;
         margin: 10px auto;
+        @media screen and (max-width: 600px) {
+            width: 40px;
+            height: 30px;
+        }
     }
 `;
 const BoldFont = styled(Box)`
@@ -99,6 +94,9 @@ const BoldFont = styled(Box)`
         font-weight: bold;
         color: #c2937e;
         font-size: 36px;
+        @media screen and (max-width: 600px) {
+            font-size: 25px;
+        }
     }
 `;
 
@@ -106,6 +104,9 @@ const DescriptionFont = styled(Box)`
     && {
         display: inline;
         font-size: 36px;
+        @media screen and (max-width: 600px) {
+            font-size: 25px;
+        }
     }
 `;
 
@@ -113,6 +114,10 @@ const DetailFont = styled(Box)`
     && {
         font-size: 25px;
         margin: 15px;
+        @media screen and (max-width: 600px) {
+            font-size: 20px;
+            margin: 10px;
+        }
     }
 `;
 

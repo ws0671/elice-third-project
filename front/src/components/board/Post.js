@@ -26,6 +26,7 @@ import {
     CommentWrite,
     Tag,
     Comments,
+    PostMain,
 } from "./PostStyle";
 
 const Post = () => {
@@ -57,11 +58,14 @@ const Post = () => {
     };
 
     useEffect(() => {
-        if (allComment != null && allComment?.length >= 6) {
+        if (WriteComment && allComment != null && allComment?.length >= 6) {
             messagesEndRef?.current?.scrollIntoView({
                 behavior: "smooth",
+                block: "end",
             });
         }
+        setWriteComment("");
+        console.log("here");
     }, [allComment]);
 
     const postDelete = () => {
@@ -83,12 +87,10 @@ const Post = () => {
             boardId: params.boardId,
             authorId: user.userId,
             content: WriteComment,
-        })
-            .then(() => {
-                fetchCommentData();
-                console.log("댓글 입력");
-            })
-            .then(setWriteComment(""));
+        }).then(() => {
+            fetchCommentData();
+            console.log("댓글 입력");
+        });
     };
 
     // 좋아요 데이터 불러오기
@@ -173,15 +175,7 @@ const Post = () => {
                                         post={post}
                                         setPostEdit={setPostEdit}
                                     />
-                                    <Grid
-                                        style={{
-                                            display: "flex",
-                                            minHeight: "550px",
-                                            flexDirection: "column",
-                                            justifyContent: "space-between",
-                                            padding: "1% 3%",
-                                        }}
-                                    >
+                                    <PostMain>
                                         <Grid>
                                             <Title>{post.title}</Title>
                                             {post?.imageUrl && (
@@ -203,14 +197,14 @@ const Post = () => {
                                             <PostTag>
                                                 {post?.hashTagArray.map(
                                                     (tag) => (
-                                                        <Tag key={tag}>
+                                                        <Tag key={tag} item>
                                                             {tag}
                                                         </Tag>
                                                     )
                                                 )}
                                             </PostTag>
                                         </Grid>
-                                    </Grid>
+                                    </PostMain>
                                 </Left>
                                 <Right
                                     item

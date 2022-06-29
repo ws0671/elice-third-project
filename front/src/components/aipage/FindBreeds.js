@@ -316,6 +316,9 @@ const ResultCard = styled(Grid)`
     border-radius: 10px;
     box-shadow: 2px 2px 10px #d9d9d9;
     background-color: #ffffff;
+    @media screen and (max-width: 600px) {
+        padding: 20px;
+    }
 `;
 
 const Type = styled(Grid)`
@@ -328,17 +331,28 @@ const KoreaName = styled(Grid)`
     padding: 10px 0;
     border-bottom: solid 1px #d9d9d9;
     margin: 5px 0 15px 0;
+    @media screen and (max-width: 600px) {
+        font-size: 25px;
+    }
 `;
 
 const ContentTitle = styled(Grid)`
     margin: 10px 0;
     font-size: 25px;
+    @media screen and (max-width: 600px) {
+        font-size: 20px;
+        margin: 5px 0;
+    }
 `;
 
 const DescriptionFont = styled(Grid)`
     font-size: 20px;
     color: gray;
     margin: 10px;
+    @media screen and (max-width: 600px) {
+        font-size: 16px;
+        margin: 5px 10px;
+    }
 `;
 
 const ResultImgCard = styled(Grid)`
@@ -357,6 +371,9 @@ const BeforeResult = styled(Grid)`
     display: grid;
     justify-content: center;
     height: 100%;
+    @media screen and (max-width: 600px) {
+        font-size: 16px;
+    }
 `;
 
 const HowToUse = styled(Grid)`

@@ -42,7 +42,7 @@ const PostData = ({ content }) => {
                         }
                     }}
                 >
-                    <Grid container width={"80%"} minWidth="500px">
+                    <Grid container item lg={10} md={10} sm={12} xs={12}>
                         <PostUserImg
                             style={{
                                 backgroundImage: `url(${author?.imageUrl})`,
@@ -50,22 +50,27 @@ const PostData = ({ content }) => {
                                 backgroundRepeat: "no-repeat",
                             }}
                         />
-                        <PostUserInfo>
+                        <PostUserInfo item lg={3} md={2.5} sm={2.5} xs={9.5}>
                             <ListName>{author.name}</ListName>
                             <ListDate>
                                 {content.createdAt.slice(0, 10)}
                             </ListDate>
                         </PostUserInfo>
-                        <PostInfo>
+                        <PostInfo item lg={8} md={8} sm={8} xs={12}>
                             <ListTitle>{content.title}</ListTitle>
-                            <Grid style={{ display: "flex" }}>
+                            <Grid
+                                style={{
+                                    display: "flex",
+                                    overflow: "hidden",
+                                }}
+                            >
                                 {content.hashTagArray?.map((tag, index) => (
                                     <Tag key={index}>{tag}</Tag>
                                 ))}
                             </Grid>
                         </PostInfo>
                     </Grid>
-                    <PostSubInfo>
+                    <PostSubInfo item lg={2} md={2} sm={3} xs={8}>
                         <VisibilityIcon />
                         <Count> {content.viewCount} </Count>
                         <FavoriteIcon />

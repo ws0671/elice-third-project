@@ -122,8 +122,7 @@ const Slide4 = () => {
             src={banner4}
             service={{
                 name: "소통 공간",
-                content:
-                    "소통 공간을 통해 궁금한 점을 해결해보세요! 거기다 꿀팁까지!",
+                content: "소통 공간을 통해 궁금한 점을 해결해보세요!",
                 url: "/board",
             }}
         />
@@ -137,7 +136,8 @@ const TextBox3 = styled(Grid)`
     text-align: left;
     font-weight: bold;
     position: absolute;
-    right: 60%;
+    right: 40%;
+    width: 50%;
 `;
 
 const TextBox2 = styled(Grid)`
@@ -145,7 +145,13 @@ const TextBox2 = styled(Grid)`
     text-align: right;
     font-weight: bold;
     position: absolute;
-    left: 60%;
+    right: 10%;
+    width: 50%;
+    min-width: 300px;
+
+    @media screen and (max-width: 750px) {
+        right: 0%;
+    }
 `;
 
 const TextBox1 = styled(Grid)`
@@ -164,5 +170,9 @@ const Banner = styled(Grid)`
         background-position: center;
         align-items: center;
         display: grid;
+
+        @media screen and (max-width: 750px) {
+            aspect-ratio: 2 / 1;
+        }
     }
 `;

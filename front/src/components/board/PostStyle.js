@@ -9,6 +9,20 @@ const Left = styled(Grid)`
     box-shadow: 2px 2px 10px #d9d9d9;
 `;
 
+const PostMain = styled(Grid)`
+    && {
+        display: flex;
+        min-height: 550px;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1% 3%;
+        @media screen and (max-width: 600px) {
+            max-height: 500px;
+            overflow: scroll;
+        }
+    }
+`;
+
 const Right = styled(Grid)`
     position: relative;
     background-color: #ffffff;
@@ -41,6 +55,9 @@ const UserName = styled(Grid)`
     font-weight: bold;
     padding: 11px 0 0 0;
     font-size: 20px;
+    @media screen and (max-width: 600px) {
+        font-size: 16px;
+    }
 `;
 
 const UserDate = styled(Grid)`
@@ -49,18 +66,28 @@ const UserDate = styled(Grid)`
     text-align: right;
     padding: 11px 0 0 0;
     margin: 0 10px;
+    @media screen and (max-width: 600px) {
+        font-size: 16px;
+    }
 `;
 
 const Title = styled(Grid)`
     font-size: 25px;
     color: #464646;
     margin: 3%;
+    @media screen and (max-width: 600px) {
+        font-size: 20px;
+        margin: 1%;
+    }
 `;
 const PostImg = styled(Grid)`
     margin: 2% auto;
     width: 90%;
     max-width: 500px;
     max-height: 500px;
+    @media screen and (max-width: 600px) {
+        margin: 1% auto;
+    }
 `;
 
 const Content = styled(Grid)`
@@ -72,6 +99,8 @@ const Content = styled(Grid)`
 const PostTag = styled(Grid)`
     padding: 2% 3%;
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 `;
 
 const PostInfo = styled(Grid)`
@@ -88,6 +117,9 @@ const Comment = styled(Grid)`
     margin: 5%;
     font-size: 16px;
     color: gray;
+    @media screen and (max-width: 600px) {
+        font-size: 14px;
+    }
 `;
 
 const Comments = styled(Grid)`
@@ -110,6 +142,9 @@ const CommentName = styled(Grid)`
     font-weight: bold;
     padding: 1% 0;
     color: #505050;
+    @media screen and (max-width: 600px) {
+        font-size: 16px;
+    }
 `;
 
 const CommentWrite = styled(Grid)`
@@ -121,25 +156,20 @@ const CommentWrite = styled(Grid)`
 `;
 
 const Tag = styled(Grid)`
+&& {
     color: white;
     border-radius: 10px;
     background-color #65949E;
     font-size: 20px;
     font-weight: bold;
-    margin: 0 7px 0 0;
     padding: 6px 12px 5px 12px;
-`;
-
-const EditButton = styled(ButtonBase)`
-    && {
-        padding: 5px 10px;
-        font-size: 16px;
-        font-weight :bold;
-        color : #ffffff;
-        margin : 0 5px;
-        border-radius : 10px;
-        box-shadow :  2px 2px 10px #d9d9d9
-
+    margin : 5px;
+    @media screen and (max-width: 600px) {
+        font-size: 14px;
+        margin : 3px;
+        padding: 8px 12px 5px 12px;
+    }
+}
 `;
 
 export {
@@ -158,6 +188,6 @@ export {
     CommentName,
     CommentWrite,
     Tag,
+    PostMain,
     Comments,
-    EditButton,
 };

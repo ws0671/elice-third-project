@@ -9,6 +9,9 @@ const PostMenuName = styled(Grid)`
     text-align: center;
     font-size: 36px;
     font-weight: bold;
+    @media screen and (max-width: 600px) {
+        font-size: 25px;
+    }
 `;
 
 const BoardPage = () => {

@@ -6,7 +6,6 @@ import { Input, AuthButton } from "../components/Auth/StyledCP";
 
 import * as Api from "../api";
 
-import Header from "../components/common/Header";
 import Layout from "../components/common/Layout";
 
 const RegisterPage = () => {
@@ -130,7 +129,6 @@ const RegisterPage = () => {
 
   return (
     <>
-      <Header />
       <Layout maxWidth="sm">
         <Box
           sx={{

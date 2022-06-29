@@ -6,6 +6,8 @@ import { CommentModel } from "./schemas/comment";
 import { LikeModel } from "./schemas/like";
 import { PetMbtiModel } from "./schemas/petMbti";
 import { UserMbtiModel } from "./schemas/userMbti";
+import { DogsModel } from "./schemas/dogs";
+import { CatsModel } from "./schemas/cats";
 
 dotenv.config();
 const DB_URL =
@@ -29,4 +31,6 @@ export {
   LikeModel,
   PetMbtiModel,
   UserMbtiModel,
+  DogsModel,
+  CatsModel,
 };

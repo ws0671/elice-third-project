@@ -91,9 +91,6 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
       }
     );
     const imageUrl = res.data.imageUrl;
-    setMyInfo((current) => {
-      return { ...current, imageUrl: imageUrl };
-    });
     return imageUrl;
   };
 
@@ -242,7 +239,6 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
           <DefaultBtn
             onClick={() => {
               handleSaveClick();
-              setIsEditing(false);
             }}
             startIcon={<CheckCircleIcon />}
             sx={{ ml: "10px" }}

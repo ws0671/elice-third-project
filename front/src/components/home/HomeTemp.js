@@ -4,7 +4,7 @@ import IntroSlider from "./IntroSlider";
 
 const HomeTemp = () => {
     return (
-        <Grid sx={{ width: "100%", paddingTop: "100px" }}>
+        <Grid sx={{ width: "100%", paddingTop: "80px" }}>
             <IntroSlider />
         </Grid>
     );

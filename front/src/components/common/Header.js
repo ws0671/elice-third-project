@@ -15,7 +15,7 @@ const Header = () => {
             <Container
                 sx={{
                     display: "flex",
-                    height: "90px",
+                    height: "80px",
                     justifyContent: "space-between",
                 }}
             >
@@ -68,15 +68,24 @@ const Logo = styled(Grid)`
     cursor: pointer;
     display: flex;
     align-items: center;
+    @media screen and (max-width: 600px) {
+        padding: 0px;
+    }
 `;
 
 const LogoImg = styled.img`
     height: 60px;
+    @media screen and (max-width: 600px) {
+        height: 40px;
+    }
 `;
 
 const SvcName = styled.div`
     margin-left: 10px;
     font-size: 25px;
+    @media screen and (max-width: 600px) {
+        font-size: 20px;
+    }
 `;
 
 const Nav = styled.nav`
@@ -122,7 +131,7 @@ const Nav = styled.nav`
             width : 100vw;
             display : block;
             position: fixed;
-            top : 70px;
+            top : 60px;
             
             right : 0;
 

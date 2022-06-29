@@ -70,24 +70,19 @@ const InfoContent = styled.div`
 
 // MyInfo
 
-const Wrapper = styled.div`
-  margin: 20px;
-  min-height: 250px;
-  width: 100%;
-  display: flex;
-`;
-
 const ImgWrapper = styled.div`
   padding: 10px;
   display: flex;
+  justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const Img = styled.img`
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  box-shadow: 2px 2px 30px -5px #eae0cc;
+  box-shadow: 2px 2px 10px #d9d9d9;
 `;
 
 const InfoWrapper = styled.div`
@@ -100,55 +95,66 @@ const InfoWrapper = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 2rem;
+  font-size: 36px;
   font-weight: bold;
   margin-bottom: 2px;
 `;
 
 const Email = styled.div`
-  color: gray;
-  font-size: 0.9rem;
+  color: #adadad;
+  font-size: 20px;
   margin-bottom: 15px;
 `;
 
 const Desc = styled.div`
-  font-size: 1rem;
+  font-size: 20px;
   margin-bottom: 15px;
 `;
 
 const Animals = styled.div`
-  min-height: 60px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  min-height: 40px;
 `;
 
 const Animal = styled.div`
-  background-color: #c9ada1;
+  background-color: #65949e;
   padding: 2px 10px;
-  margin: 0px 10px 2px 0px;
+  margin-right: 10px;
   border-radius: 10px;
-  height: 22px;
-  font-size: 1rem;
+  height: 30px;
+
+  font-size: 20px;
   color: white;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-contnt: center;
+
+  span {
+    padding-top: 3px;
+  }
 `;
 
 const AnimalEdit = styled.div`
-  background-color: #c9ada1;
+  background-color: #65949e;
   padding: 2px 10px;
-  margin: 0px 10px 7px 0px;
+  margin-right: 10px;
   border-radius: 10px;
   height: 30px;
-  font-size: 1.1rem;
+
+  font-size: 20px;
   color: white;
   font-weight: bold;
+
   display: flex;
   align-items: center;
   justify-contnt: center;
+
+  span {
+    padding-top: 3px;
+  }
 `;
 
 export {
@@ -160,7 +166,6 @@ export {
   Info,
   InfoTitle,
   InfoContent,
-  Wrapper,
   ImgWrapper,
   Img,
   InfoWrapper,

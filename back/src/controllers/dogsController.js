@@ -17,6 +17,28 @@ class dogsController {
       next(error);
     }
   };
+
+  static dogSearch = async (req, res, next) => {
+    try {
+      const { name } = req.query;
+      const page = req.query.page || 1; //default 1페이지
+      const perPage = req.query.perPage || 10; //default 10페이지
+
+      const lastPage = await dogsService.getLastPage({ name, perPage });
+      const searchList = await dogsService.getSearchList({
+        name,
+        page,
+        perPage,
+      });
+      const listPaged = {
+        lastPage,
+        searchList,
+      };
+      res.status(200).json(listPaged);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export { dogsController };

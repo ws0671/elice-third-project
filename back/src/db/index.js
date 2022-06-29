@@ -4,7 +4,6 @@ import { UserModel } from "./schemas/user";
 import { BoardModel } from "./schemas/board";
 import { CommentModel } from "./schemas/comment";
 import { LikeModel } from "./schemas/like";
-import { PlaceModel } from "./schemas/place";
 
 dotenv.config();
 const DB_URL =
@@ -21,4 +20,4 @@ db.on("error", (error) =>
   console.error("MongoDB 연결에 실패하였습니다...\n" + DB_URL + "\n" + error)
 );
 
-export { UserModel, BoardModel, CommentModel, LikeModel, PlaceModel };
+export { UserModel, BoardModel, CommentModel, LikeModel };

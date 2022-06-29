@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 import Layout from "../components/common/Layout";
-import Header from "../components/common/Header";
 import List from "../components/map/List";
 import DaumPostcode from "../components/map/DaumPostcode";
 
@@ -194,7 +193,6 @@ const MapPage = () => {
 
   return (
     <>
-      <Header />
       <Layout>
         <TabContext value={value}>
           <Box
@@ -211,7 +209,6 @@ const MapPage = () => {
               <CategoryTab label="미용실" value="3" />
               <CategoryTab label="병원" value="4" />
             </CategoryTabList>
-            <DaumPostcode setAddress={setAddress} />
           </Box>
           <TabPanel
             value={value}
@@ -222,7 +219,8 @@ const MapPage = () => {
             }}
           >
             <Grid container>
-              <Grid item md={6} sm={12} xs={12}>
+              <Grid item md={6} sm={12} xs={12} sx={{ position: "relative" }}>
+                <DaumPostcode setAddress={setAddress} />
                 {currentPos?.lat && currentPos?.lng && (
                   <Map
                     center={{ lat: currentPos.lat, lng: currentPos.lng }}
@@ -249,7 +247,17 @@ const MapPage = () => {
                   </Map>
                 )}
               </Grid>
-              <Grid item md={6} sm={12} xs={12} sx={{ minHeight: "600px" }}>
+              <Grid
+                item
+                md={6}
+                sm={12}
+                xs={12}
+                sx={{
+                  minHeight: "605px",
+                  position: "relative",
+                  "@media (max-width: 900px)": { minHeight: 625 },
+                }}
+              >
                 <List
                   loginAt={!!user}
                   category={value}
@@ -317,4 +325,8 @@ const PageNumberWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  left: 50%;
+  bottom: 0px;
+  transform: translateX(-50%);
 `;

@@ -30,7 +30,7 @@ const DaumPostcode = ({ setAddress }) => {
   return (
     <DefaultBtn
       onClick={handleClick}
-      sx={{ position: "absolute", bottom: "10px", right: "0px" }}
+      sx={{ position: "absolute", top: "10px", right: "10px", zIndex: "10" }}
     >
       <div className="btnText">위치 변경</div>
     </DefaultBtn>

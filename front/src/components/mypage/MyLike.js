@@ -173,7 +173,16 @@ const MyLike = () => {
                 </NoPlace>
               )}
             </Grid>
-            <Grid item md={6} sm={12} xs={12} sx={{ minHeight: "400px" }}>
+            <Grid
+              item
+              md={6}
+              sm={12}
+              xs={12}
+              sx={{
+                minHeight: "400px",
+                "@media (max-width: 900px)": { minHeight: 0 },
+              }}
+            >
               <List
                 category={value}
                 places={filterPlaces}
@@ -217,7 +226,8 @@ const CategoryTab = styled(Tab)`
 `;
 
 const NoPlace = styled.div`
-  height: 300px;
-  line-height: 300px;
+  height: 400px;
+  line-height: 400px;
   text-align: center;
+  background-color: rgba(232, 212, 203, 0.5);
 `;

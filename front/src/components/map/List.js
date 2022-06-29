@@ -76,9 +76,14 @@ export default List;
 const Ul = styled.ul`
   list-style: none;
   padding-left: 0px;
+  margin: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (max-width: 900px) {
+    margin-top: 20px;
+  }
 `;
 
 const Li = styled.li`
@@ -89,6 +94,11 @@ const Li = styled.li`
   background-color: rgba(232, 212, 203, 0.5);
   padding: 10px;
   border-radius: 10px;
+
+  @media screen and (max-width: 900px) {
+    padding: 10px 0px;
+    width: 100%;
+  }
 `;
 
 const PlaceName = styled.a`

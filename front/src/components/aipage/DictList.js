@@ -67,38 +67,41 @@ const DictList = () => {
         // });
     };
     return (
-        <ListContainer>
-            사전 리스트입니다.
-             <Grid style={{ position: "relative" }}>
-                 <GridwithUnderline>
-                    <SearchIcon
-                        sx={{
-                            fontSize: "25px",
-                        }}
-                        style={{ position: "absolute", top: "10px" }}
-                    />
+        // <ListContainer item md={3} sm={12} xs={12} style={{marginRight:"24px"}}>
+        <Grid item md={3} sm={12} xs={12}>
+            <ListContainer>
+                {/* 사전 리스트입니다. */}
+                <Grid style={{ position: "relative" }}>
+                    <GridwithUnderline>
+                        <SearchIcon
+                            sx={{
+                                fontSize: "25px",
+                            }}
+                            style={{ position: "absolute", top: "10px" }}
+                        />
 
-                    <InputBase
-                        placeholder="검색어를 입력하세요."
-                        sx={{ margin: "6px 30px" }}
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.keyCode == 13) {
-                                if (search.length > 0) {
-                                    setSort("date");
-                                    searchHandler();
-                                    setPage(1);
+                        <InputBase
+                            placeholder="검색어를 입력하세요."
+                            sx={{ margin: "6px 30px" }}
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.keyCode == 13) {
+                                    if (search.length > 0) {
+                                        setSort("date");
+                                        searchHandler();
+                                        setPage(1);
+                                    }
                                 }
-                            }
-                        }}
-                    />
-                </GridwithUnderline>
-                {/* <DrawList datalist={dummyList} /> */}
-                <DrawList datalist={dummyListCat} />
-            </Grid>
+                            }}
+                        />
+                    </GridwithUnderline>
+                    {/* <DrawList datalist={dummyList} /> */}
+                    <DrawList datalist={dummyListCat} />
+                </Grid>
 
-        </ListContainer>
+            </ListContainer>
+        </Grid>
     );
 }
 
@@ -124,7 +127,7 @@ const ListContainer = styled(Grid)`
 
 const GridwithUnderline = styled(Grid)`
     border-bottom: solid 1px #d9d9d9;
-    width: 90%;
+    width: 100%;
     // padding: 2px;
     margin-bottom: 1rem;
     display: flex;

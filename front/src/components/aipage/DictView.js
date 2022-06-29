@@ -3,9 +3,11 @@ import { Box, Tab, Grid, InputBase, } from "@mui/material";
 
 const DictView = () => {
     return (
-        <ViewContainer container>
-            사전 항목 보기입니다.
-        </ViewContainer>
+        <Grid item md={9} sm={12} xs={12}>
+            <ViewContainer>
+                {/* 사전 항목 보기입니다. */}
+            </ViewContainer>
+        </Grid>
     );
 }
 
@@ -17,6 +19,7 @@ const ViewContainer = styled(Grid)`
     margin-bottom: 25px;
     justify-content: space-between;
     width: 100%;
+    min-height: 640px;
     overflow: hidden;
     padding: 0 15px;
     cursor: pointer;

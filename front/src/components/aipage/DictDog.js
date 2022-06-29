@@ -29,21 +29,24 @@ const DictDog = () => {
     // };
 
     return (
-        <>
+        <Grid container>
+
+            <DictList />
+            <DictView />
             {/* <div>
                 여기는 DictDog 입니다.
             </div> */}
-            <Grid style={{ display: "flex", justifyContent: "space-between" }}>
+            {/* <Grid style={{ display: "flex", justifyContent: "space-between" }}> */}
                 {/* <Grid style={{ position: "relative" }}>                    */}
-                <Grid item md={3} sm={12} xs={12} style={{marginRight:"24px"}}>
-                    <DictList />
-                </Grid>
-                <Grid item md={9} sm={12} xs={12}>
+                {/* <Grid item md={3} sm={12} xs={12} style={{marginRight:"24px"}}> */}
+
+                {/* </Grid> */}
+                {/* <Grid item md={9} sm={12} xs={12}>
 
                     <DictView />
-                </Grid>
-            </Grid>
-            </>
+                </Grid> */}
+            {/* </Grid> */}
+        </Grid>
     );
 }
 

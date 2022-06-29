@@ -14,8 +14,8 @@ export default DictListItem;
 
 const GridwithUnderline = styled(Grid)`
     border-bottom: solid 1px #d9d9d9;
-    width: 90%;
-    // padding: 2px;
+    width: 100%;
+    font-size: 20px;
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;

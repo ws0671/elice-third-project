@@ -4,8 +4,8 @@ import { UserModel } from "./schemas/user";
 import { BoardModel } from "./schemas/board";
 import { CommentModel } from "./schemas/comment";
 import { LikeModel } from "./schemas/like";
-import { PetMBTIModel } from "./schemas/petMBTI";
-import { UserMBTIModel } from "./schemas/userMBTI";
+import { PetMbtiModel } from "./schemas/petMbti";
+import { UserMbtiModel } from "./schemas/userMbti";
 
 dotenv.config();
 const DB_URL =
@@ -27,6 +27,6 @@ export {
   BoardModel,
   CommentModel,
   LikeModel,
-  PetMBTIModel,
-  UserMBTIModel,
+  PetMbtiModel,
+  UserMbtiModel,
 };

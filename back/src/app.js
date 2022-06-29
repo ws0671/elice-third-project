@@ -1,9 +1,6 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
-const { format } = require("util");
-const Multer = require("multer");
-const { Storage } = require("@google-cloud/storage");
 
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { userAuthRouter } from "./routes/userRouter";
@@ -12,8 +9,8 @@ import { commentRouter } from "./routes/commentRouter";
 import { likeRouter } from "./routes/likeRouter";
 import { shoppingRouter } from "./routes/shoppingRouter";
 import { scrapeShopItemsRouter } from "./routes/scrapeShopItemsRouter";
+import { mbtiRouter } from "./routes/mbtiRouter";
 
-const storage = new Storage();
 const app = express();
 
 // CORS 에러 방지
@@ -36,6 +33,7 @@ app.use(commentRouter);
 app.use(likeRouter);
 app.use(shoppingRouter);
 app.use(scrapeShopItemsRouter);
+app.use(mbtiRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);

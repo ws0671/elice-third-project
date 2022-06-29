@@ -5,22 +5,26 @@ import Header from "../components/common/Header";
 import Camera from "../assets/images/camera.png";
 import CatButton from "../assets/images/CATBUTTON.jpg";
 import DogButton from "../assets/images/DOGBUTTON.jpg";
+import DictButton from "../assets/images/DICTBUTTON.jpg";
 
 import { CatBreeds, DogBreeds } from "../components/aipage/FindBreeds";
+import BreedDicts from "../components/aipage/BreedDicts";
 import Layout from "../components/common/Layout";
 
 const AiPage = () => {
     const [CatBreed, setCatBreed] = useState(false);
     const [DogBreed, setDogBreed] = useState(false);
+    const [BreedDict, setBreedDict] = useState(false);
 
     return (
         <>
             <Header />
             <Layout>
-                {CatBreed | DogBreed ? (
+                {CatBreed | DogBreed | BreedDict ? (
                     <>
                         {CatBreed && <CatBreeds setCatBreed={setCatBreed} />}
                         {DogBreed && <DogBreeds setDogBreed={setDogBreed} />}
+                        {BreedDict && <BreedDicts setBreedDict={setBreedDict} />}
                     </>
                 ) : (
                     <Grid>
@@ -63,6 +67,44 @@ const AiPage = () => {
                                 onClick={() => setDogBreed(true)}
                             >
                                 강아지
+                            </PetButton>
+                            
+                        </Box>
+                       
+                        <Box
+                            maxWidth="sm"
+                            style={{
+                                display: "flex",
+                                margin: "20px auto",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            
+                             <Grid
+                            style={{
+                                display:"grid",
+                                textAlign: "center",
+                            }}
+                        >
+                                <br />
+                                <DescriptionFont>
+                                    더 많은 품종이
+                                    <br />
+                                    궁금하시다면
+                                </DescriptionFont>
+                                <DetailFont>
+                                    품종 사전에서 살펴보세요!
+                                </DetailFont>
+                            </Grid>
+
+                            <PetButton
+                                component="button"
+                                style={{
+                                    backgroundImage: `url("${DictButton}")`,
+                                }}
+                                onClick={() => setBreedDict(true)}
+                            >
+                                품종사전
                             </PetButton>
                         </Box>
                     </Grid>

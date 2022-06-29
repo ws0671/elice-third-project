@@ -1,24 +1,34 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-import dog from "../../assets/images/dog.jpg";
-import community from "../../assets/images/computer_and_dog.jpg";
-import map from "../../assets/images/welsh-corgi-dog-performing-during-show-competition.jpg";
-import { Grid } from "@mui/material";
-import { ServiceTitle, ServiceContent, ServiceButton } from "./SliderStyle";
+import banner4 from "../../assets/images/computer_and_dog.jpg";
+import banner1 from "../../assets/images/avi-richards-aYHgchNOsGY-unsplash.jpg";
+import banner5 from "../../assets/images/josh-rakower-zBsXaPEBSeI-unsplash.jpg";
+import banner2 from "../../assets/images/french-bulldog-walking-leash-park.jpg";
+import banner3 from "../../assets/images/mikhail-vasilyev-NodtnCsLdTE-unsplash.jpg";
+import { Container, Grid } from "@mui/material";
+import {
+    ServiceTitle,
+    ServiceContent,
+    ServiceButton,
+    SubDomain,
+    Domain,
+} from "./SliderStyle";
 
 // 서비스 소개 Slide 틀
 const Slide = ({ src, service }) => {
     const navigate = useNavigate();
 
     return (
-        <Banner sx={{ width: "100%" }} src={src}>
-            <TextBox
-                item
-                lg={6}
+        <Banner
+            container
+            style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${src})`,
+            }}
+        >
+            <TextBox2
                 sx={{
                     padding: "20px",
                     margin: "0 auto",
-                    width: "50%",
                 }}
             >
                 <ServiceTitle>{service.name}</ServiceTitle>
@@ -30,32 +40,42 @@ const Slide = ({ src, service }) => {
                 >
                     바로 가기
                 </ServiceButton>
-            </TextBox>
+            </TextBox2>
         </Banner>
     );
 };
 
 const Slide1 = () => {
     return (
-        <Slide
-            src={dog}
-            service={{
-                name: "",
-                content: "",
-                url: "",
+        <Banner
+            container
+            style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${banner1})`,
             }}
-        />
+        >
+            <TextBox1
+                sx={{
+                    padding: "20px",
+                    margin: "0 auto",
+                }}
+            >
+                {" "}
+                <SubDomain>집사야, 우리가</SubDomain>
+                <Domain>궁금하냥</Domain>
+                <SubDomain>반려동물에 관한 모든것</SubDomain>
+            </TextBox1>
+        </Banner>
     );
 };
 
 const Slide2 = () => {
     return (
         <Slide
-            src={map}
+            src={banner2}
             service={{
                 name: "우리동네 지도",
                 content:
-                    "우리 동네에 있는 반려동물 관련 장소를 간편하고 쉽게 찾아보세요!\n반려동물의 산책로,카페,미용실,병원을 클릭 한번으로 찾아보세요\n찜 기능으로 마이페이지에서 나만의 장소를 저장하세요!",
+                    "우리 동네에 있는 반려동물 관련 장소를 \n간편하고 쉽게 찾아보세요!\n산책로,카페,미용실,병원\n찜 기능까지!",
                 url: "/map",
             }}
         />
@@ -63,25 +83,43 @@ const Slide2 = () => {
 };
 
 const Slide3 = () => {
+    const navigate = useNavigate();
     return (
-        <Slide
-            src={
-                "https://cdn.pixabay.com/photo/2022/06/22/06/53/cabinet-7277181_960_720.jpg"
-            }
-            service={{
-                name: "AI 종 분석",
-                content:
-                    "AI로 반려동물의 정확한 종을 알아보세요! 쉽고 간편하게 사진으로 확인해요!",
-                url: "/ai",
+        <Banner
+            container
+            style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${banner5})`,
             }}
-        />
+        >
+            <TextBox3
+                sx={{
+                    padding: "20px",
+                    margin: "0 auto",
+                }}
+            >
+                {" "}
+                <ServiceTitle>AI 종 분석</ServiceTitle>
+                <ServiceContent>
+                    반려동물의 정확한 종이 궁금하지 않으신가요?
+                    <br />
+                    사진으로 간단하게 품종을 확인하세요!
+                </ServiceContent>
+                <ServiceButton
+                    onClick={() => {
+                        navigate("/ai");
+                    }}
+                >
+                    바로 가기
+                </ServiceButton>
+            </TextBox3>
+        </Banner>
     );
 };
 
 const Slide4 = () => {
     return (
         <Slide
-            src={community}
+            src={banner4}
             service={{
                 name: "소통 공간",
                 content:
@@ -94,29 +132,37 @@ const Slide4 = () => {
 
 export { Slide1, Slide2, Slide3, Slide4 };
 
-const Img = styled.img`
-    width: 100%;
-    height: 500px;
+const TextBox3 = styled(Grid)`
+    color: white;
+    text-align: left;
+    font-weight: bold;
+    position: absolute;
+    right: 60%;
 `;
 
-const TextBox = styled(Grid)`
-    font-size: 40px;
+const TextBox2 = styled(Grid)`
+    color: white;
+    text-align: right;
     font-weight: bold;
+    position: absolute;
+    left: 60%;
+`;
+
+const TextBox1 = styled(Grid)`
+    color: white;
     text-align: center;
-    padding: 10% 0;
+    font-weight: bold;
 `;
 
 const Banner = styled(Grid)`
     && {
         width: 100%;
-        &:before {
-            background-image: url(${map});
-            height: 40vw;
-            background-repeat: no-repeat;
-            background-size: 100% auto;
-            padding: 5% 0;
-            opacity: 0.5;
-            border: solid 1px;
-        }
+        aspect-ratio: 22 / 9;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        background-position: center;
+        align-items: center;
+        display: grid;
     }
 `;

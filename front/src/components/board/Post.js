@@ -94,8 +94,12 @@ const Post = () => {
     // 좋아요 데이터 불러오기
     const fetchLikeData = async () => {
         try {
-            await Api.get("likes").then((res) => {
-                setLike(res.data.boardIdArray);
+            await Api.getQuery("likes", {
+                params: {
+                    scope: "boards",
+                },
+            }).then((res) => {
+                setLike(res.data);
                 console.log("여기", res.data);
             });
         } catch (err) {
@@ -105,10 +109,14 @@ const Post = () => {
 
     // 좋아요 클릭 핸들러
     const handleLikeClick = async () => {
-        await Api.put("likes", {
+        console.log(post.boardId);
+        await Api.put("likes?scope=boards", {
             boardId: post.boardId,
         })
-            .then(fetchLikeData)
+            .then(() => {
+                fetchLikeData();
+                console.log("hi");
+            })
             .then(fetchData);
     };
 

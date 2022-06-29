@@ -59,6 +59,7 @@ const Posting = () => {
             }
         );
         const imageUrl = res.data.imageUrl;
+        console.log("ㅇㅅㅇ", imageUrl);
         setImage(imageUrl);
         return imageUrl;
     };

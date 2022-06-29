@@ -1,7 +1,6 @@
 import { useDaumPostcodePopup } from "react-daum-postcode";
 
-import { Button } from "@mui/material";
-import styled from "styled-components";
+import { DefaultBtn } from "../common/Buttons";
 
 const DaumPostcode = ({ setAddress }) => {
   const open = useDaumPostcodePopup();
@@ -28,20 +27,14 @@ const DaumPostcode = ({ setAddress }) => {
     open({ onComplete: handleComplete });
   };
 
-  return <LocChgBtn onClick={handleClick}>위치 변경</LocChgBtn>;
+  return (
+    <DefaultBtn
+      onClick={handleClick}
+      sx={{ position: "absolute", bottom: "10px", right: "0px" }}
+    >
+      <div className="btnText">위치 변경</div>
+    </DefaultBtn>
+  );
 };
 
 export default DaumPostcode;
-
-const LocChgBtn = styled(Button)`
-  && {
-    position: absolute;
-    right: 0px;
-    bottom: 10px;
-    background-color: #c2937e;
-    color: white;
-    font-family: "GangwonEdu_OTFBoldA";
-    font-size: 20px;
-    box-shadow: 1px 1px 5px #d9d9d9;
-  }
-`;

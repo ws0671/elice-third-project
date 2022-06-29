@@ -3,44 +3,44 @@ import { Container } from "@mui/system";
 import styled from "styled-components";
 
 const ServiceTitle = styled(Grid)`
-    font-size: 40px;
+    font-size: 50px;
     font-weight: bold;
-    @media screen and (max-width: 600px) {
-        font-size: 23px;
-    }
 `;
 
 const ServiceContent = styled(Grid)`
-    font-size: 30px;
+    font-size: 25px;
     padding: 10px 0;
-
+    line-height: 30px;
     white-space: pre-wrap;
-    @media screen and (max-width: 600px) {
-        font-size: 15px;
-    }
 `;
 
+const Domain = styled(Grid)`
+    font-size: 85px;
+    font-weight: bold;
+    line-height: 85px;
+    margin: 10px;
+    border-bottom: solid 5px white;
+`;
+
+const SubDomain = styled(Grid)`
+    font-size: 30px;
+    font-weight: bold;
+`;
 const ServiceButton = styled(Button)`
     && {
-        font-size: 20px;
-        padding: 5px 20px;
-        border-radius: 10px;
-        border: solid 2px #c2937e;
-        background-color: #c2937e;
+        font-size: 15px;
+        padding: 4px 15px;
+        border-radius: 2px;
+        border: solid 2px #ffffff;
         font-weight: bold;
         color: white;
 
         &: hover {
-            background-color: #c2937e;
+            background-color: black;
             color: #ffffff;
             border: solid 2px #ffffff;
-        }
-
-        @media screen and (max-width: 600px) {
-            font-size: 12px;
-            padding: 2px 10px;
         }
     }
 `;
 
-export { ServiceTitle, ServiceContent, ServiceButton };
+export { ServiceTitle, ServiceContent, ServiceButton, Domain, SubDomain };

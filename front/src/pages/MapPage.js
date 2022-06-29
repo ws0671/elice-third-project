@@ -194,7 +194,7 @@ const MapPage = () => {
             >
               <CategoryTab label="산책길" value="1" />
               <CategoryTab label="카페" value="2" />
-              <CategoryTab label="미용" value="3" />
+              <CategoryTab label="미용실" value="3" />
               <CategoryTab label="병원" value="4" />
             </CategoryTabList>
             <DaumPostcode setAddress={setAddress} />
@@ -273,6 +273,7 @@ const CategoryTab = styled(Tab)`
   }
 
   &&.Mui-selected {
+    font-size: 25px;
     color: black;
     background-color: white;
   }
@@ -282,14 +283,15 @@ const PageNumber = styled.a`
   font-size: 20px;
   text-decoration: none;
   color: #c2937e;
-  padding: 10px;
+  padding: 15px 10px 10px 10px;
   width: 20px;
   height: 20px;
   line-height: 20px;
   text-align: center;
 
   &.on {
-    font-size: 20px;
+    font-size: 25px;
+    line-height: 25px;
     color: white;
     background-color: #c2937e;
     border-radius: 50%;

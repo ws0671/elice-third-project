@@ -100,6 +100,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
     }, [data]);
 
     const handleOnClickPredictCAT = async () => {
+        setResultImg(previewImg);
         const file = dataURLToFile(previewImg.src, previewImg.name);
 
         const formData = new FormData();
@@ -152,19 +153,21 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     xs={12}
                     sx={{ margin: "10px auto" }}
                 >
-                    {previewImg.src ? (
-                        <PetImage
-                            style={{
-                                backgroundImage: `url(${previewImg.src})`,
-                            }}
-                        />
-                    ) : (
-                        <PetImage
-                            style={{
-                                backgroundImage: `url(${defaultImg})`,
-                            }}
-                        />
-                    )}
+                    <ImgGrid>
+                        {previewImg.src ? (
+                            <PetImage
+                                style={{
+                                    backgroundImage: `url(${previewImg.src})`,
+                                }}
+                            />
+                        ) : (
+                            <PetImage
+                                style={{
+                                    backgroundImage: `url(${defaultImg})`,
+                                }}
+                            />
+                        )}
+                    </ImgGrid>
                     <label htmlFor="ex_file">
                         <Input
                             sx={{ display: "none" }}
@@ -192,9 +195,9 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     xs={12}
                     sx={{ margin: "10px auto" }}
                 >
-                    <Type>{type}</Type>
-                    {data && (
+                    {data ? (
                         <>
+                            <Type>{type}</Type>
                             <ResultImgCard
                                 style={{
                                     backgroundImage: `url(${resultImg.src})`,
@@ -209,7 +212,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                                 probabilities={[
                                     Math.round(result[0]?.probability * 100),
                                     Math.round(result[1]?.probability * 100),
-                                    Math.round(result[1]?.probability * 100),
+                                    Math.round(result[2]?.probability * 100),
                                 ]}
                             />
                             <KoreaName>{data[0]?.nameKor}</KoreaName>
@@ -229,6 +232,26 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                             <DescriptionFont>
                                 {data[0]?.personality}
                             </DescriptionFont>
+                        </>
+                    ) : (
+                        <>
+                            <BeforeResult>
+                                <HowToUse>이용 방법</HowToUse>
+                                <HowToUse>
+                                    1. 사진업로드를 통해 "{type}"사진을
+                                    올려주세요!
+                                </HowToUse>
+                                <HowToUse>
+                                    2. 품종 분석하기 버튼을 누른후 잠시만
+                                    기다려주세요!
+                                </HowToUse>
+                                <HowToUse>
+                                    3. 조금만 기다리면 이곳에 결과가 뜰거에요!
+                                </HowToUse>
+                                <DescriptionFont>
+                                    * 정면을 응시한 사진이 좋은결과가 나와요
+                                </DescriptionFont>
+                            </BeforeResult>
                         </>
                     )}
                 </ResultCard>
@@ -267,16 +290,24 @@ const PhotoCard = styled(Grid)`
     display: grid;
     padding: 20px;
     box-shadow: 2px 2px 10px #d9d9d9;
-    max-height: 400px;
+    max-height: 320px;
+    padding: 10px;
+`;
+
+const ImgGrid = styled(Grid)`
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    max-width: 200px;
+    margin: 10px;
 `;
 
 const PetImage = styled(Grid)`
     border-radius: 100%;
-    width: 80%;
     background-size: cover;
-    margin: 10px;
-    padding-bottom: 80%;
-    max-width: 250px;
+    width: 100%;
+    height: 100%;
+    max-width: 200px;
+    display: table;
 `;
 
 const ResultCard = styled(Grid)`
@@ -315,5 +346,19 @@ const ResultImgCard = styled(Grid)`
     padding-top: 40%;
     border-radius: 10px;
     margin: 20px auto;
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+`;
+
+const BeforeResult = styled(Grid)`
+    font-size: 20px;
+    align-items: center;
+    display: grid;
+    justify-content: center;
+    height: 100%;
+`;
+
+const HowToUse = styled(Grid)`
+    margin: 4px;
 `;

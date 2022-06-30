@@ -7,7 +7,7 @@ class mbtiService {
     const bestCombination = await PetMbtiModel.find({
       petMbti: { $in: bestMbti },
     });
-    bestCombination.flat();
+
     return bestCombination;
   };
 }

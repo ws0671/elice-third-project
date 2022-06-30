@@ -19,6 +19,15 @@ const PostMain = styled(Grid)`
         @media screen and (max-width: 600px) {
             max-height: 500px;
             overflow-y: auto;
+            &::-webkit-scrollbar {
+                border-radius: 10px;
+                background: #e6e9e4;
+                width: 10px;
+            }
+            &::-webkit-scrollbar-thumb {
+                border-radius: 10px;
+                background: #65949e;
+            }
         }
     }
 `;
@@ -94,6 +103,7 @@ const Content = styled(Grid)`
     font-size: 20px;
     color: #464646;
     margin: 3%;
+    white-space: pre-wrap;
 `;
 
 const PostTag = styled(Grid)`

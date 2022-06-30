@@ -5,7 +5,8 @@ import {
     TagInput,
     Tag,
     EditPageTitle,
-    EditButton,
+    Preview,
+    PreviewTitle,
 } from "./PostEditorStyle";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import { useNavigate } from "react-router-dom";
@@ -21,9 +22,42 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const [title, setTitle] = useState(post.title);
     const [content, setContent] = useState(post.content);
     const [image, setImage] = useState(post.imageUrl);
-    const [file, setFile] = useState("");
     const [hashTag, setHashTag] = useState("");
     const [hashTagArray, setHashTagArray] = useState(post.hashTagArray);
+    const [previewImg, setPreviewImg] = useState({
+        src: "",
+        name: "",
+    });
+
+    // 이미지를 다시 파일로
+    const dataURLToFile = (dataURL, fileName) => {
+        const arr = dataURL.split(",");
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], fileName, { type: mime });
+    };
+
+    // 이미지 미리보기
+    const fileToDataURL = (file) => {
+        setImage("");
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        return new Promise((resolve) => {
+            reader.onload = () => {
+                setPreviewImg(() => {
+                    return { src: reader.result, name: file.name };
+                });
+                resolve();
+            };
+        });
+    };
 
     const onKeyPress = (e) => {
         console.log(hashTagArray);
@@ -45,6 +79,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     };
 
     const onUploadImg = async () => {
+        const file = dataURLToFile(previewImg.src, previewImg.name);
         const formData = new FormData();
         formData.append("image", file);
         const res = await axios.post(
@@ -66,17 +101,20 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
 
     const handleSubmit = async () => {
         try {
-            if (file) {
+            if (previewImg.src) {
+                console.log("프리뷰있을때", previewImg);
                 await onUploadImg().then((imageUrl) => {
                     updatePost(imageUrl);
                 });
             } else {
                 updatePost();
+                console.log("프리뷰없을때");
             }
 
             alert("게시글 수정을 성공하였습니다.");
         } catch (error) {
             alert("게시글 수정에 실패하였습니다.", error);
+            console.log(error);
         }
     };
 
@@ -177,7 +215,7 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                             placeholder="이미지 첨부"
                             id="ex_file"
                             style={{ display: "none" }}
-                            onChange={(e) => setFile(e.target.files[0])}
+                            onChange={(e) => fileToDataURL(e.target.files[0])}
                         />
                         <DefaultBtn component="span">
                             <div className="btnText">이미지 업로드</div>
@@ -199,6 +237,57 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                     </NegativeBtn>
                 </Grid>
             </Grid>
+            {!image && previewImg?.src && (
+                <>
+                    <PreviewTitle>
+                        이미지 미리보기
+                        <NegativeBtn
+                            style={{ margin: "5px" }}
+                            onClick={() => {
+                                setPreviewImg({ src: "", name: "" });
+                            }}
+                        >
+                            사진 취소
+                        </NegativeBtn>
+                    </PreviewTitle>
+                    <Preview>
+                        <img
+                            src={previewImg.src}
+                            alt="이미지 없음"
+                            style={{
+                                width: "100%",
+                                borderRadius: "10px",
+                            }}
+                        />
+                    </Preview>
+                </>
+            )}
+
+            {image && (
+                <>
+                    <PreviewTitle>
+                        이미지 미리보기
+                        <NegativeBtn
+                            style={{ margin: "5px" }}
+                            onClick={() => {
+                                setImage("");
+                            }}
+                        >
+                            사진 취소
+                        </NegativeBtn>
+                    </PreviewTitle>
+                    <Preview>
+                        <img
+                            src={image}
+                            alt="이미지 없음"
+                            style={{
+                                width: "100%",
+                                borderRadius: "10px",
+                            }}
+                        />
+                    </Preview>
+                </>
+            )}
         </Container>
     );
 };

@@ -40,7 +40,7 @@ const Header = () => {
                         <MenuIcon />
                     </NavButton>
                     <ul className="webMenu">
-                        <HeaderMenu />
+                        <HeaderMenu setSelected={setSelected} />
                     </ul>
                     <ul className="mobileMenu">
                         {selected && <HeaderMenu setSelected={setSelected} />}

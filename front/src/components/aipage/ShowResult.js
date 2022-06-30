@@ -12,15 +12,12 @@ import styled from "styled-components";
 
 const ResultContainer = styled.div`
     width: 100%;
-    height: 12rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0;
-    @media screen and (max-width: 600px) {
-        border: solid 1px;
-        width: 300px;
-    }
+    max-width: 500px;
+    max-height: 200px;
+    margin: 30px auto;
 `;
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
@@ -46,14 +43,14 @@ const ShowResult = ({ labels, probabilities }) => {
                 borderWidth: 0,
             },
         },
-        responsive: false,
+        responsive: true,
         plugins: {
             title: {
                 display: false,
             },
         },
         scales: {
-            x: {
+            xAxes: {
                 max: 100,
                 min: 0,
                 ticks: {
@@ -65,12 +62,7 @@ const ShowResult = ({ labels, probabilities }) => {
     return (
         <ResultContainer>
             분석 결과
-            <Bar
-                data={data}
-                width={"700%"}
-                height={"200vw"}
-                options={options}
-            />
+            <Bar data={data} options={options} style={{ width: "100%" }} />
         </ResultContainer>
     );
 };

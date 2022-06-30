@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
-const HeaderMenu = () => {
+const HeaderMenu = ({ setSelected }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.value);
@@ -15,6 +15,7 @@ const HeaderMenu = () => {
                 onClick={(e) => {
                     e.preventDefault();
                     navigate("/map");
+                    setSelected(false);
                 }}
             >
                 우리동네 지도
@@ -25,6 +26,7 @@ const HeaderMenu = () => {
                 onClick={(e) => {
                     e.preventDefault();
                     navigate("/ai");
+                    setSelected(false);
                 }}
             >
                 AI 종 분석
@@ -35,6 +37,7 @@ const HeaderMenu = () => {
                 onClick={(e) => {
                     e.preventDefault();
                     navigate("/board");
+                    setSelected(false);
                 }}
             >
                 소통 공간
@@ -47,6 +50,7 @@ const HeaderMenu = () => {
                         onClick={(e) => {
                             e.preventDefault();
                             navigate("/register");
+                            setSelected(false);
                         }}
                     >
                         회원가입
@@ -57,6 +61,7 @@ const HeaderMenu = () => {
                         onClick={(e) => {
                             e.preventDefault();
                             navigate("/login");
+                            setSelected(false);
                         }}
                     >
                         로그인

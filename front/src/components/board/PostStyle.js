@@ -18,7 +18,7 @@ const PostMain = styled(Grid)`
         padding: 1% 3%;
         @media screen and (max-width: 600px) {
             max-height: 500px;
-            overflow: scroll;
+            overflow-y: auto;
         }
     }
 `;

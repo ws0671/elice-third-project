@@ -22,6 +22,7 @@ const Header = () => {
                 <Logo
                     onClick={() => {
                         navigate("/");
+                        setSelected(false);
                     }}
                 >
                     <LogoImg src={Image} alt="logo" />
@@ -41,7 +42,9 @@ const Header = () => {
                     <ul className="webMenu">
                         <HeaderMenu />
                     </ul>
-                    <ul className="mobileMenu">{selected && <HeaderMenu />}</ul>
+                    <ul className="mobileMenu">
+                        {selected && <HeaderMenu setSelected={setSelected} />}
+                    </ul>
                 </Nav>
             </Container>
         </Wrapper>

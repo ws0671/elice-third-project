@@ -17,6 +17,10 @@ const ResultContainer = styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0;
+    @media screen and (max-width: 600px) {
+        border: solid 1px;
+        width: 300px;
+    }
 `;
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
@@ -61,7 +65,12 @@ const ShowResult = ({ labels, probabilities }) => {
     return (
         <ResultContainer>
             분석 결과
-            <Bar data={data} width={400} height={"160"} options={options} />
+            <Bar
+                data={data}
+                width={"700%"}
+                height={"200vw"}
+                options={options}
+            />
         </ResultContainer>
     );
 };

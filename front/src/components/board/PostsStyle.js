@@ -20,15 +20,17 @@ const Tag = styled(Grid)`
 `;
 //요기
 const PostList = styled(Grid)`
-    background-color: #ffffff;
-    border-radius: 10px;
-    margin-bottom: 25px;
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    padding: 0 15px;
-    cursor: pointer;
-    box-shadow: 2px 2px 10px #d9d9d9;
+    && {
+        background-color: #ffffff;
+        border-radius: 10px;
+        margin: 10px;
+        width: 98%;
+        display: flex;
+        overflow: hidden;
+        padding: 0 20px;
+        cursor: pointer;
+        box-shadow: 2px 2px 10px #d9d9d9;
+    }
 `;
 const PostUserImg = styled(Grid)`
     border-radius: 100%;

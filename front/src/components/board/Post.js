@@ -178,17 +178,11 @@ const Post = () => {
                                         <Grid>
                                             <Title>{post.title}</Title>
                                             {post?.imageUrl && (
-                                                <PostImg>
-                                                    <img
-                                                        src={post.imageUrl}
-                                                        alt="이미지 없음"
-                                                        style={{
-                                                            width: "100%",
-                                                            borderRadius:
-                                                                "10px",
-                                                        }}
-                                                    />
-                                                </PostImg>
+                                                <PostImg
+                                                    style={{
+                                                        backgroundImage: `url(${post.imageUrl})`,
+                                                    }}
+                                                />
                                             )}
                                             <Content>{post.content}</Content>
                                         </Grid>
@@ -257,7 +251,12 @@ const Post = () => {
                                             <InputBase
                                                 variant="standard"
                                                 placeholder="댓글을 입력해 주세요."
-                                                sx={{ ml: 1, flex: 1 }}
+                                                sx={{
+                                                    ml: 1,
+                                                    flex: 0.9,
+                                                    fontFamily:
+                                                        "GangwonEdu_OTFBoldA",
+                                                }}
                                                 value={WriteComment}
                                                 onChange={(e) => {
                                                     setWriteComment(

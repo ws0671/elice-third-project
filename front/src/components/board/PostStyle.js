@@ -91,9 +91,14 @@ const Title = styled(Grid)`
 `;
 const PostImg = styled(Grid)`
     margin: 2% auto;
-    width: 90%;
+    width: 95%;
+    aspect-ratio: auto 3 / 2;
     max-width: 500px;
     max-height: 500px;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
     @media screen and (max-width: 600px) {
         margin: 1% auto;
     }

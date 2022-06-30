@@ -6,13 +6,13 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 
-import DictCat from "./DictCat";
-import DictDog from "./DictDog";
+import Dict from "./Dict";
+// import DictDog from "./DictDog";
 
 const BreedDicts = ({setBreedDict}) => {
 
 
-    const [value, setValue] = useState("DOG");
+    const [value, setValue] = useState("dogs");
 
     const handleTabChange = (event, newValue) => {
         setValue(newValue);
@@ -32,8 +32,8 @@ const BreedDicts = ({setBreedDict}) => {
                     onChange={handleTabChange}
                     aria-label="map tab list"
                     >
-                        <CategoryTab label="강아지" value="DOG" />
-                        <CategoryTab label="고양이" value="CAT" />
+                        <CategoryTab label="강아지" value="dogs" />
+                        <CategoryTab label="고양이" value="cats" />
                         
                         <BackBtn onClick={() => setBreedDict(false)}>뒤로가기</BackBtn>
                     </CategoryTabList>
@@ -50,9 +50,9 @@ const BreedDicts = ({setBreedDict}) => {
                 >
                     <Grid container>
                         <Grid item md={12} sm={12} xs={12} sx={{ minHeight: "600px" }}>
-                            
-                            {(value === 'DOG') && <DictDog />}
-                            {(value === 'CAT') && <DictCat />}
+                            <Dict dictType={value} />
+                            {/* {(value === 'DOG') && <DictDog />}
+                            {(value === 'CAT') && <DictCat />} */}
                         </Grid>
                     </Grid>
                 </TabPanel>

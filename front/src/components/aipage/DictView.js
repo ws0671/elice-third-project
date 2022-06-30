@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Box, Tab, Grid, InputBase, } from "@mui/material";
 
-const DictView = () => {
+const DictView = ({content = 'hello',}) => {
     return (
         <Grid item md={9} sm={12} xs={12}>
             <ViewContainer>
-                {/* 사전 항목 보기입니다. */}
+                {content}
+
             </ViewContainer>
         </Grid>
     );

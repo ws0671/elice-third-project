@@ -18,6 +18,7 @@ const ResultContainer = styled.div`
     max-width: 500px;
     max-height: 200px;
     margin: 30px auto;
+    font-size: 25px;
 `;
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
@@ -43,7 +44,7 @@ const ShowResult = ({ labels, probabilities }) => {
                 borderWidth: 0,
             },
         },
-        responsive: true,
+        responsive: false,
         plugins: {
             title: {
                 display: false,
@@ -62,7 +63,11 @@ const ShowResult = ({ labels, probabilities }) => {
     return (
         <ResultContainer>
             분석 결과
-            <Bar data={data} options={options} style={{ width: "100%" }} />
+            <Bar
+                data={data}
+                options={options}
+                style={{ width: "100%", aspectRatio: "3 / 1" }}
+            />
         </ResultContainer>
     );
 };

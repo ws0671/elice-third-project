@@ -1,10 +1,11 @@
-import { Container, Grid, Button, ButtonBase } from "@mui/material";
+import { Container, Grid, Button, ButtonBase, Input } from "@mui/material";
 import {
     TitleInput,
     ContentInput,
     TagInput,
     Tag,
     EditPageTitle,
+    EditButton,
 } from "./PostEditorStyle";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,8 @@ import { useState } from "react";
 import * as Api from "../../api";
 import axios from "axios";
 import React from "react";
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
+
 const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const navigate = useNavigate();
 
@@ -21,7 +24,9 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
     const [file, setFile] = useState("");
     const [hashTag, setHashTag] = useState("");
     const [hashTagArray, setHashTagArray] = useState(post.hashTagArray);
+
     const onKeyPress = (e) => {
+        console.log(hashTagArray);
         if (e.target.value.length !== 0 && e.key === "Enter") {
             setHashTagArray((currentHashTagArray) => [
                 ...currentHashTagArray,
@@ -132,7 +137,10 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                     color: "gray",
                     padding: "5px",
                     display: "flex",
-                    height: "45px",
+                    minHeight: "45px",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                    overflow: "hidden",
                 }}
             >
                 {hashTagArray?.map((tagItem, idx) => (
@@ -162,33 +170,33 @@ const PostingEditor = ({ post, setPostEdit, fetchData }) => {
                 }}
             >
                 <Grid>
-                    <input
-                        type="file"
-                        accept="image/png, image/jpeg"
-                        placeholder="이미지 첨부"
-                        onChange={(e) => setFile(e.target.files[0])}
-                    />
+                    <label htmlFor="ex_file">
+                        <Input
+                            type="file"
+                            accept="image/*"
+                            placeholder="이미지 첨부"
+                            id="ex_file"
+                            style={{ display: "none" }}
+                            onChange={(e) => setFile(e.target.files[0])}
+                        />
+                        <DefaultBtn component="span">
+                            <div className="btnText">이미지 업로드</div>
+                        </DefaultBtn>
+                    </label>
                 </Grid>
                 <Grid>
-                    <Button
-                        sx={{
-                            color: "#187498",
-                            border: "solid 1px #187498",
-                        }}
-                        onClick={stopEvent}
-                    >
-                        수정 완료
-                    </Button>
+                    <DefaultBtn onClick={stopEvent}>
+                        <div className="btnText">수정 완료</div>
+                    </DefaultBtn>
                     {"  "}
-                    <Button
+                    <NegativeBtn
                         sx={{
-                            color: "#FF4949",
-                            border: "solid 1px #FF4949",
+                            background: "#FE6C63",
                         }}
                         onClick={() => navigate("/board")}
                     >
-                        취소
-                    </Button>
+                        <div className="btnText">취소</div>
+                    </NegativeBtn>
                 </Grid>
             </Grid>
         </Container>

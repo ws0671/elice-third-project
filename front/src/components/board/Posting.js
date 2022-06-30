@@ -1,10 +1,11 @@
-import { Container, Grid, Button } from "@mui/material";
+import { Container, Grid, Button, Input } from "@mui/material";
 import {
     PageTitle,
     TitleInput,
     ContentInput,
     TagInput,
     Tag,
+    EditButton,
 } from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
@@ -12,6 +13,7 @@ import { useState } from "react";
 import * as Api from "../../api";
 import React from "react";
 import axios from "axios";
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 
 const Posting = () => {
     const navigate = useNavigate();
@@ -57,6 +59,7 @@ const Posting = () => {
             }
         );
         const imageUrl = res.data.imageUrl;
+        console.log("ㅇㅅㅇ", imageUrl);
         setImage(imageUrl);
         return imageUrl;
     };
@@ -98,96 +101,96 @@ const Posting = () => {
 
     return (
         <>
-            <Container maxWidth="lg" style={{ paddingTop: "70px" }}>
-                <PageTitle>새 글 작성</PageTitle>
-                <TitleInput
-                    required
-                    maxRows={1}
-                    placeholder="제목을 입력하세요"
-                    name="title"
-                    onChange={(e) => setTitle(e.target.value)}
-                />
-                <ContentInput
-                    required
-                    minRows={15}
-                    maxRows={15}
-                    placeholder="내용을 입력하세요"
-                    name="content"
-                    onChange={(e) => setContent(e.target.value)}
-                />
+            <PageTitle>새 글 작성</PageTitle>
+            <TitleInput
+                required
+                maxRows={1}
+                placeholder="제목을 입력하세요"
+                name="title"
+                onChange={(e) => setTitle(e.target.value)}
+            />
+            <ContentInput
+                required
+                minRows={15}
+                maxRows={15}
+                placeholder="내용을 입력하세요"
+                name="content"
+                onChange={(e) => setContent(e.target.value)}
+            />
 
-                <TagInput
-                    maxRows={1}
-                    value={hashTag}
-                    placeholder="엔터로 해시태그를 등록해주세요."
-                    onChange={(e) => setHashTag(e.target.value)}
-                    onKeyPress={onKeyPress}
-                />
-                <Grid
-                    style={{
-                        color: "gray",
-                        padding: "5px",
-                        display: "flex",
-                        height: "45px",
-                    }}
-                >
-                    {hashTagArray?.map((tagItem) => (
-                        <Tag key={tagItem}>
-                            {tagItem}
+            <TagInput
+                maxRows={1}
+                value={hashTag}
+                placeholder="엔터로 해시태그를 등록해주세요."
+                onChange={(e) => setHashTag(e.target.value)}
+                onKeyPress={onKeyPress}
+            />
+            <Grid
+                style={{
+                    color: "gray",
+                    padding: "5px",
+                    display: "flex",
+                    minHeight: "45px",
+                    flexDirection: "row",
+                    flexWrap: "wrap",
+                }}
+            >
+                {hashTagArray?.map((tagItem) => (
+                    <Tag key={tagItem}>
+                        {tagItem}
 
-                            <DoNotDisturbOnOutlinedIcon
-                                style={{
-                                    width: "20px",
-                                    height: "20px",
-                                    position: "absolute",
-                                    padding: " 0 3px",
-                                    top: "7px",
-                                    cursor: "pointer",
-                                    borderRadius: "100%",
-                                }}
-                                onClick={deleteTagItem}
-                            />
-                        </Tag>
-                    ))}
-                </Grid>
-                <Grid
-                    style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        margin: "20px 0",
-                    }}
-                >
-                    <Grid>
-                        <input
+                        <DoNotDisturbOnOutlinedIcon
+                            style={{
+                                width: "20px",
+                                height: "20px",
+                                position: "absolute",
+                                padding: " 0 3px",
+                                top: "7px",
+                                cursor: "pointer",
+                                borderRadius: "100%",
+                            }}
+                            onClick={deleteTagItem}
+                        />
+                    </Tag>
+                ))}
+            </Grid>
+            <Grid
+                style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    margin: "20px 0",
+                }}
+            >
+                <Grid>
+                    <label htmlFor="ex_file">
+                        <Input
                             type="file"
-                            accept="image/png, image/jpeg"
+                            accept="image/*"
                             placeholder="이미지 첨부"
+                            id="ex_file"
+                            style={{ display: "none" }}
                             onChange={(e) => setFile(e.target.files[0])}
                         />
-                    </Grid>
-                    <Grid>
-                        <Button
-                            sx={{
-                                color: "#187498",
-                                border: "solid 1px #187498",
-                            }}
-                            onClick={stopEvent}
-                        >
-                            작성 완료
-                        </Button>
-                        {"  "}
-                        <Button
-                            sx={{
-                                color: "#FF4949",
-                                border: "solid 1px #FF4949",
-                            }}
-                            onClick={() => navigate("/board")}
-                        >
-                            취소
-                        </Button>
-                    </Grid>
+                        <DefaultBtn component="span">
+                            <div className="btnText">이미지 업로드</div>
+                        </DefaultBtn>
+                    </label>
                 </Grid>
-            </Container>
+                <Grid>
+                    <DefaultBtn
+                        style={{
+                            marginRight: "10px",
+                        }}
+                        onClick={stopEvent}
+                    >
+                        <div className="btnText">작성 완료</div>
+                    </DefaultBtn>
+                    {"  "}
+                    <NegativeBtn onClick={() => navigate("/board")}>
+                        <div className="btnText">취소</div>
+                    </NegativeBtn>
+                </Grid>
+            </Grid>
         </>
     );
 };

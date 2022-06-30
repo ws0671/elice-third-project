@@ -1,148 +1,137 @@
 import { Grid, Button } from "@mui/material";
 import styled from "styled-components";
 
-const PostMenu = styled(Grid)`
-    margin: 10px 0;
-    text-align: center;
-`;
-
-const SelectMenu = styled(Button)`
-    && {
-        padding: 0px 10px;
-        margin: 10px;
-        color: #386150;
-        font-weight: bold;
-    }
-    &:hover {
-        color: black;
-    }
-`;
-
-const UnSelectMenu = styled(Button)`
-    && {
-        padding: 0px 10px;
-        margin: 10px;
-        color: #818479;
-        font-weight: bold;
-    }
-    &:hover {
-        color: black;
-    }
-`;
 const Tag = styled(Grid)`
-    color: #818479;
-    font-size: 13px;
-    border-radius: 10px;
-    background-color: #c9ada1;
-    margin: 7px 7px 0 0;
-    padding: 4px 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    background-color: #65949e;
+    margin: 5px 7px 0 0;
+    padding: 6px 10px 2px 10px;
     font-weight: bold;
-    color: white;
+    color: #ffffff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+    @media screen and (max-width: 600px) {
+        font-size: 12px;
+        text-overflow: clip;
+        white-space: nowrap;
+    }
 `;
-
+//요기
 const PostList = styled(Grid)`
-    background-color: #f6f5ef;
-    border-radius: 20px;
-    height: 100px;
+    background-color: #ffffff;
+    border-radius: 10px;
     margin-bottom: 25px;
-    justify-content: space-between;
+    display: flex;
     width: 100%;
     overflow: hidden;
     padding: 0 15px;
     cursor: pointer;
+    box-shadow: 2px 2px 10px #d9d9d9;
 `;
 const PostUserImg = styled(Grid)`
     border-radius: 100%;
     width: 60px;
     height: 60px;
-    margin: 20px 0;
+    margin: 20px 0 0 0;
+    @media screen and (max-width: 600px) {
+        margin: 10px 0;
+        width: 40px;
+        height: 40px;
+    }
 `;
 
+//요기
 const PostUserInfo = styled(Grid)`
-    width: 25%;
-    max-width: 140px;
-    height: 70px;
-    margin: 20px 0;
-    padding: 8px 3px;
+    padding: 30px 10px 0 3px;
+    margin: 0 15px;
+    @media screen and (max-width: 600px) {
+        padding: 15px 0 5px 15px;
+        border-bottom: solid 1px #d9d9d9;
+    }
 `;
 
+//요기
 const PostInfo = styled(Grid)`
-    width: 50%;
-    max-width: 600px;
-    height: 70px;
-    margin: 20px;
-    padding: 0.4rem 0;
+    padding: 25px 0px 0 0;
+    @media screen and (max-width: 600px) {
+        padding: 20px 10px;
+        border-bottom: solid 1px #d9d9d9;
+    }
 `;
 
+//요기
 const PostSubInfo = styled(Grid)`
-    width: 15%;
-    max-width: 250px;
-    height: 70px;
-    padding: 35px 0;
+    padding: 38px 0px;
     display: flex;
+    @media screen and (max-width: 700px) {
+        padding: 5px 0;
+    }
+    @media screen and (max-width: 900px) {
+        padding: 15px;
+    }
 `;
 
 const ListName = styled(Grid)`
-    font-size: 16px;
-    font-family: "NanumSquareRound";
-    padding: 0.3rem 0;
+    font-size: 20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 80%;
+    width: 100%;
+    @media screen and (max-width: 600px) {
+        font-size: 18px;
+    }
 `;
 
 const ListDate = styled(Grid)`
-    font-size: 12px;
+    font-size: 16px;
+    @media screen and (max-width: 600px) {
+        font-size: 14px;
+    }
 `;
 
 const ListTitle = styled(Grid)`
     font-weight: bold;
-    font-family: "NanumSquareRound";
-    font-size: 1rem;
+    font-size: 20px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 80%;
-`;
-
-const WritePost = styled(Button)`
-    && {
-        font-size: 14px;
-        font-weight: bold;
-        color: white;
-        border: solid 1px;
-        padding: 0;
-        margin: 8px 0;
-
-        &:hover {
-            background-color: #ffffff;
-            color: #386150;
-        }
+    width: 100%;
+    @media screen and (max-width: 600px) {
+        font-size: 18px;
     }
 `;
 
 const Count = styled(Grid)`
-    font-size: 15px;
-    font-color: gray;
+    font-size: 20px;
+    font-color: black;
     margin: 0 10%;
+    padding: 4px 0 0 0;
+    width: 50px;
+    @media screen and (max-width: 600px) {
+        font-size: 18px;
+    }
 `;
 
 const SortGrid = styled(Grid)`
     display: flex;
-    justify-content: end;
+    justify-content: center;
     margin: 5px 0;
 `;
 
-const SortButton = styled(Button)`
+const SortButton = styled(Grid)`
     && {
-        font-size: 12px;
-        color: gray;
-        margin: 0 5px;
+        font-size: 20px;
+        color: black;
+        margin: 0 15px;
         padding: 3px;
-
+        cursor: pointer;
         &:hover {
             font-weight: bold;
+        }
+        @media screen and (max-width: 600px) {
+            font-size: 18px;
         }
     }
 `;
@@ -155,10 +144,6 @@ export {
     ListName,
     ListDate,
     ListTitle,
-    WritePost,
-    PostMenu,
-    SelectMenu,
-    UnSelectMenu,
     Tag,
     Count,
     SortGrid,

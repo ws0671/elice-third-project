@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import PostListData from "./PostListData";
 import * as Api from "../../api";
 import { SortGrid, WritePost, SortButton } from "./PostsStyle";
+import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 
 const Newposts = () => {
     const navigate = useNavigate();
@@ -17,34 +18,30 @@ const Newposts = () => {
     const [finalPage, setFinalPage] = useState(null);
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState("date");
+    const [selectedSort, setSelectedSort] = useState(1);
 
     useEffect(() => {
         fetchData();
     }, []);
 
     const pageHandler = (e, value) => {
+        e.preventDefault();
         setPage(value);
-        searchHandler();
     };
 
     useEffect(() => {
         if (search && searchData) {
             searchHandler();
-        }
-    }, [page]);
-
-    useEffect(() => {
-        if (search) {
-            setPage(1);
-            searchHandler();
+            console.log("페이지 바뀔때");
         } else {
             fetchData();
         }
-    }, [sort]);
+    }, [page, sort]);
 
     // 검색어로 게시글 찾기
-    const searchHandler = async () => {
-        await Api.getQuery("boards/search", {
+    const searchHandler = () => {
+        console.log("page, sort", page, sort);
+        Api.getQuery("boards/search", {
             params: {
                 title: search,
                 page: page,
@@ -54,7 +51,8 @@ const Newposts = () => {
             },
         }).then((res) => {
             setSearchData(res.data.searchList);
-            setFinalPage(res.data.finalPage);
+            setFinalPage(res.data.lastPage);
+            console.log(res);
         });
     };
 
@@ -73,40 +71,77 @@ const Newposts = () => {
 
     return (
         <>
-            <Grid
-                container
-                style={{
-                    borderRadius: "10px",
-                    backgroundColor: "#386150",
-                    justifyContent: "space-between",
-                    padding: "0px 10px",
-                    width: "100%",
-                    height: "45px",
-                    overflow: "hidden",
-                }}
-            >
-                <Grid
-                    style={{
-                        fontSize: "17px",
-                        color: "white",
-                        margin: "10px",
-                        minWidth: "500px",
+            <SortGrid>
+                <SortButton
+                    onClick={() => {
+                        setSearchData(null);
+                        setSearch("");
+                        setSelectedSort(1);
+                        setPage(1);
                     }}
+                    style={
+                        selectedSort === 1
+                            ? { borderBottom: "solid 3px #65949E" }
+                            : {}
+                    }
                 >
-                    궁금한 점을 해결하고 다양한 정보를 얻어가세요!
-                </Grid>
-                <Grid style={{ display: "flex" }}>
+                    ALL
+                </SortButton>
+                <SortButton
+                    onClick={() => {
+                        setSort("date");
+                        setSelectedSort(2);
+                        setPage(1);
+                    }}
+                    style={
+                        selectedSort === 2
+                            ? { borderBottom: "solid 3px #65949E" }
+                            : {}
+                    }
+                >
+                    최신순
+                </SortButton>
+                <SortButton
+                    onClick={() => {
+                        setSort("like");
+                        setSelectedSort(3);
+                        setPage(1);
+                    }}
+                    style={
+                        selectedSort === 3
+                            ? { borderBottom: "solid 3px #65949E" }
+                            : {}
+                    }
+                >
+                    하트순
+                </SortButton>
+                <SortButton
+                    onClick={() => {
+                        setSort("view");
+                        setSelectedSort(4);
+                        setPage(1);
+                    }}
+                    style={
+                        selectedSort === 4
+                            ? { borderBottom: "solid 3px #65949E" }
+                            : {}
+                    }
+                >
+                    조회순
+                </SortButton>
+            </SortGrid>
+            <Grid style={{ display: "flex", justifyContent: "space-between" }}>
+                <Grid style={{ position: "relative" }}>
                     <SearchIcon
                         sx={{
-                            color: "white",
                             fontSize: "25px",
-                            margin: "9px 0",
                         }}
+                        style={{ position: "absolute", top: "10px" }}
                     />
 
                     <InputBase
                         placeholder="검색어를 입력하세요."
-                        sx={{ color: "white", margin: "7px" }}
+                        sx={{ margin: "6px 30px" }}
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         onKeyDown={(e) => {
@@ -114,52 +149,34 @@ const Newposts = () => {
                                 if (search.length > 0) {
                                     setSort("date");
                                     searchHandler();
+                                    setSelectedSort(2);
                                     setPage(1);
                                 }
                             }
                         }}
                     />
                 </Grid>
+
                 <Grid>
                     {user && (
-                        <WritePost
+                        <DefaultBtn
                             onClick={() => {
                                 navigate("/postEditor");
                             }}
                         >
-                            글쓰기
-                        </WritePost>
+                            <div className="btnText">글쓰기</div>
+                        </DefaultBtn>
                     )}
                 </Grid>
             </Grid>
             <Grid>
-                <SortGrid>
-                    <SortButton
-                        onClick={() => {
-                            setSort("date");
-                        }}
-                    >
-                        최신순
-                    </SortButton>
-                    <SortButton
-                        onClick={() => {
-                            setSort("like");
-                        }}
-                    >
-                        하트순
-                    </SortButton>
-                    <SortButton
-                        onClick={() => {
-                            setSort("view");
-                        }}
-                    >
-                        조회순
-                    </SortButton>
-                </SortGrid>
                 {searchData ? (
                     <>
                         {searchData?.map((content) => (
-                            <PostListData key={content} content={content} />
+                            <PostListData
+                                key={content.boardId}
+                                content={content}
+                            />
                         ))}
                         <Grid style={{ display: "flex", margin: "10px" }}>
                             <Pagination

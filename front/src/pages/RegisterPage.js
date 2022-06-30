@@ -6,7 +6,6 @@ import { Input, AuthButton } from "../components/Auth/StyledCP";
 
 import * as Api from "../api";
 
-import Header from "../components/common/Header";
 import Layout from "../components/common/Layout";
 
 const RegisterPage = () => {
@@ -46,6 +45,7 @@ const RegisterPage = () => {
           alert(
             `회원가입 완료! ${formData.nickname}님 회원이 되신 것을 환영합니다.`
           );
+          navigate("../login");
         }
       } catch (err) {
         alert("회원가입에 실패하였습니다.", err);
@@ -129,7 +129,6 @@ const RegisterPage = () => {
 
   return (
     <>
-      <Header />
       <Layout maxWidth="sm">
         <Box
           sx={{

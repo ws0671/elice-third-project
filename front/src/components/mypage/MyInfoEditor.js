@@ -91,9 +91,6 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
       }
     );
     const imageUrl = res.data.imageUrl;
-    setMyInfo((current) => {
-      return { ...current, imageUrl: imageUrl };
-    });
     return imageUrl;
   };
 
@@ -110,12 +107,13 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
   // 유저 정보 수정
   const updateUser = async (imageUrl) => {
     try {
-      await Api.put(`users/${user.userId}`, {
+      const res = await Api.put(`users/${user.userId}`, {
         name: myInfo.name,
         description: myInfo.description,
         speciesArray: myInfo.speciesArray,
         imageUrl: imageUrl ? imageUrl : myInfo.imageUrl,
       });
+      setMyInfo(res.data);
       setIsEditing(false);
     } catch (err) {
       alert(err);
@@ -240,10 +238,7 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
             <div className="btnText">돌아가기</div>
           </NegativeBtn>
           <DefaultBtn
-            onClick={() => {
-              handleSaveClick();
-              setIsEditing(false);
-            }}
+            onClick={handleSaveClick}
             startIcon={<CheckCircleIcon />}
             sx={{ ml: "10px" }}
           >

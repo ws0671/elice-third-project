@@ -9,6 +9,13 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import * as Api from "../../api";
 import List from "../map/List";
 
+const category = {
+  1: "산책길",
+  2: "카페",
+  3: "미용실",
+  4: "병원",
+};
+
 const MyLike = () => {
   const { kakao } = window;
 
@@ -16,20 +23,24 @@ const MyLike = () => {
   const [map, setMap] = useState();
   const [currentPos, setCurrentPos] = useState();
   const [markers, setMarkers] = useState([]);
-  const [places, setPlaces] = useState([]);
+  const [likedPlaceArray, setLikedPlaceArray] = useState([]);
+  const [filterPlaces, setFilterPlaces] = useState([]);
   const [info, setInfo] = useState();
 
+  // 장소 구분 탭 change시
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const category = {
-    1: "산책길",
-    2: "카페",
-    3: "미용실",
-    4: "병원",
+  // 마커 흑은 리스트의 장소 이름에 mouseOver, mouseOut시
+  const handleMouseOver = (content) => {
+    setInfo({ content: content });
+  };
+  const handleMouseOut = () => {
+    setInfo({ content: "" });
   };
 
+  // 위치 정보 가져오기 - 성공 콜백 함수
   function success(pos) {
     const { coords } = pos; // coords: 위치 정보
     const latitude = coords.latitude; // 위도
@@ -38,6 +49,7 @@ const MyLike = () => {
     setCurrentPos({ lat: latitude, lng: longitude });
   }
 
+  // 위치 정보 가져오기 - 실패 콜백 함수
   function fail(pos) {
     alert("위치 정보를 가져오는데 실패했습니다.");
     setCurrentPos({
@@ -46,6 +58,7 @@ const MyLike = () => {
     });
   }
 
+  // 위치 정보 가져오기
   function getMyLocation() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(success, fail); // 성공, 실패 콜백 함수 등록
@@ -54,22 +67,24 @@ const MyLike = () => {
     }
   }
 
-  const getLike = async () => {
-    const res = await Api.get("likes");
-    const likedPlaceArray = res.data.placeArray;
+  // 찜한 장소 가져오기
+  const getLikedPlaces = async () => {
+    const params = { scope: "places" };
+    const res = await Api.getQuery("likes", { params });
 
-    const filteredPlaceArray = likedPlaceArray.filter((place) => {
+    const filteredPlaceArray = res.data.filter((place) => {
       return place.category === value;
     });
 
-    setPlaces(filteredPlaceArray);
+    setFilterPlaces(filteredPlaceArray);
   };
 
+  // 마커 표시
   const displayMarker = () => {
     const bounds = new kakao.maps.LatLngBounds();
     let markers = [];
 
-    places.map((place) => {
+    filterPlaces.map((place) => {
       markers.push({
         position: {
           lat: place.y,
@@ -84,25 +99,18 @@ const MyLike = () => {
     map.setBounds(bounds);
   };
 
-  const handleMouseOver = (content) => {
-    setInfo({ content: content });
-  };
-  const handleMouseOut = () => {
-    setInfo({ content: "" });
-  };
-
   useEffect(() => {
     getMyLocation();
   }, []);
 
   useEffect(() => {
-    getLike();
-  }, [map, value]);
+    getLikedPlaces();
+  }, [map, value, likedPlaceArray]);
 
   useEffect(() => {
     if (!map) return;
     displayMarker();
-  }, [places]);
+  }, [filterPlaces]);
 
   return (
     <>
@@ -129,7 +137,9 @@ const MyLike = () => {
         >
           <Grid container>
             <Grid item md={6} sm={12} xs={12}>
-              {currentPos?.lat && currentPos?.lng && places.length !== 0 ? (
+              {currentPos?.lat &&
+              currentPos?.lng &&
+              filterPlaces.length !== 0 ? (
                 <Map
                   center={{ lat: currentPos.lat, lng: currentPos.lng }}
                   style={{ width: "100%", height: "400px" }}
@@ -163,10 +173,22 @@ const MyLike = () => {
                 </NoPlace>
               )}
             </Grid>
-            <Grid item md={6} sm={12} xs={12} sx={{ minHeight: "400px" }}>
+            <Grid
+              item
+              md={6}
+              sm={12}
+              xs={12}
+              sx={{
+                minHeight: "400px",
+                "@media (max-width: 900px)": { minHeight: 0 },
+              }}
+            >
               <List
                 category={value}
-                places={places}
+                places={filterPlaces}
+                setLikedPlaceArray={setLikedPlaceArray}
+                loginAt={true}
+                likedPlaceArray={filterPlaces}
                 handleMouseOver={handleMouseOver}
                 handleMouseOut={handleMouseOut}
               />
@@ -204,7 +226,8 @@ const CategoryTab = styled(Tab)`
 `;
 
 const NoPlace = styled.div`
-  height: 300px;
-  line-height: 300px;
+  height: 400px;
+  line-height: 400px;
   text-align: center;
+  background-color: rgba(232, 212, 203, 0.5);
 `;

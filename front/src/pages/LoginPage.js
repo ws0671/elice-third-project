@@ -16,7 +16,6 @@ import { Input, AuthButton } from "../components/Auth/StyledCP";
 
 import * as Api from "../api";
 
-import Header from "../components/common/Header";
 import Layout from "../components/common/Layout";
 
 const LoginPage = () => {
@@ -36,12 +35,6 @@ const LoginPage = () => {
     e.preventDefault();
 
     if (formRef.current.reportValidity()) {
-      if (isRemember) {
-        setCookie("rememberEmail", email);
-      } else {
-        removeCookie("rememberEmail");
-      }
-
       try {
         const res = await Api.post("users/login", {
           email: email,
@@ -61,6 +54,12 @@ const LoginPage = () => {
         // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
         dispatch(LOGIN_SUCCESS(user));
 
+        if (isRemember) {
+          setCookie("rememberEmail", email);
+        } else {
+          removeCookie("rememberEmail");
+        }
+
         // 메인 화면으로 돌아감. (뒤로가기 불가능)
         navigate("/", { replace: true });
       } catch (err) {
@@ -78,7 +77,6 @@ const LoginPage = () => {
 
   return (
     <>
-      <Header />
       <Layout maxWidth="sm">
         <Box
           sx={{

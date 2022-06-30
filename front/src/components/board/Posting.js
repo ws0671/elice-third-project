@@ -1,11 +1,12 @@
-import { Container, Grid, Button, Input } from "@mui/material";
+import { Container, Grid, Input } from "@mui/material";
 import {
     PageTitle,
     TitleInput,
     ContentInput,
     TagInput,
     Tag,
-    EditButton,
+    Preview,
+    PreviewTitle,
 } from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
@@ -23,7 +24,11 @@ const Posting = () => {
     const [image, setImage] = useState("");
     const [hashTag, setHashTag] = useState("");
     const [hashTagArray, setHashTagArray] = useState([]);
-    const [file, setFile] = useState("");
+
+    const [previewImg, setPreviewImg] = useState({
+        src: "",
+        name: "",
+    });
 
     const onKeyPress = (e) => {
         if (e.target.value.length !== 0 && e.key === "Enter") {
@@ -43,7 +48,39 @@ const Posting = () => {
         setHashTagArray(filteredTagList);
     };
 
+    // 이미지를 다시 파일로
+    const dataURLToFile = (dataURL, fileName) => {
+        const arr = dataURL.split(",");
+        const mime = arr[0].match(/:(.*?);/)[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], fileName, { type: mime });
+    };
+
+    // 이미지 미리보기
+    const fileToDataURL = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        return new Promise((resolve) => {
+            reader.onload = () => {
+                setPreviewImg(() => {
+                    return { src: reader.result, name: file.name };
+                });
+                resolve();
+            };
+        });
+    };
+
+    // 이미지 업로드
     const onUploadImg = async () => {
+        const file = dataURLToFile(previewImg.src, previewImg.name);
+        console.log("file", file);
         const formData = new FormData();
         formData.append("image", file);
         const res = await axios.post(
@@ -65,7 +102,7 @@ const Posting = () => {
     };
 
     const handleSubmit = async () => {
-        if (file) {
+        if (previewImg.src) {
             await onUploadImg().then((imageUrl) => {
                 updatePost(imageUrl);
             });
@@ -169,7 +206,7 @@ const Posting = () => {
                             placeholder="이미지 첨부"
                             id="ex_file"
                             style={{ display: "none" }}
-                            onChange={(e) => setFile(e.target.files[0])}
+                            onChange={(e) => fileToDataURL(e.target.files[0])}
                         />
                         <DefaultBtn component="span">
                             <div className="btnText">이미지 업로드</div>
@@ -185,12 +222,38 @@ const Posting = () => {
                     >
                         <div className="btnText">작성 완료</div>
                     </DefaultBtn>
-                    {"  "}
+
                     <NegativeBtn onClick={() => navigate("/board")}>
                         <div className="btnText">취소</div>
                     </NegativeBtn>
                 </Grid>
             </Grid>
+
+            {previewImg?.src && (
+                <>
+                    <PreviewTitle>
+                        이미지 미리보기
+                        <NegativeBtn
+                            style={{ margin: "5px" }}
+                            onClick={() => {
+                                setPreviewImg({ src: "", name: "" });
+                            }}
+                        >
+                            사진 취소
+                        </NegativeBtn>
+                    </PreviewTitle>
+                    <Preview>
+                        <img
+                            src={previewImg.src}
+                            alt="이미지 없음"
+                            style={{
+                                width: "100%",
+                                borderRadius: "10px",
+                            }}
+                        />
+                    </Preview>
+                </>
+            )}
         </>
     );
 };

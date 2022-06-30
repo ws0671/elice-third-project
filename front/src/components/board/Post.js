@@ -1,9 +1,7 @@
-import { Grid, ButtonBase, InputBase, Button } from "@mui/material";
-import { Container } from "@mui/system";
+import { Grid, InputBase } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IconButton from "@mui/material/IconButton";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import CloseIcon from "@mui/icons-material/Close";
 import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -61,7 +59,8 @@ const Post = () => {
         if (WriteComment && allComment != null && allComment?.length >= 6) {
             messagesEndRef?.current?.scrollIntoView({
                 behavior: "smooth",
-                block: "end",
+                inline: "end",
+                block: "nearest",
             });
         }
         setWriteComment("");
@@ -134,7 +133,7 @@ const Post = () => {
                         <>
                             <DefaultBtn
                                 style={{
-                                    marginLeft: "20px",
+                                    marginLeft: "2%",
                                     marginRight: "10px",
                                 }}
                                 onClick={() => setPostEdit(true)}
@@ -151,7 +150,7 @@ const Post = () => {
                         <DefaultBtn
                             style={{
                                 float: "right",
-                                marginRight: "20px",
+                                marginRight: "2%",
                             }}
                             onClick={() => {
                                 navigate("/board");
@@ -249,9 +248,9 @@ const Post = () => {
                                                         fetchCommentData
                                                     }
                                                 />
+                                                <div ref={messagesEndRef} />
                                             </Comment>
                                         ))}
-                                        <div ref={messagesEndRef} />
                                     </Comments>
                                     <form onSubmit={submitComment}>
                                         <CommentWrite>

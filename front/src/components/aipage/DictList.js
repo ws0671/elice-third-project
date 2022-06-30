@@ -60,7 +60,7 @@ const DictList = ({type = 'dogs', setCurContent}) => {
     const [finalPage, setFinalPage] = useState(null);
  
     useEffect(() => {
-        fetchData();
+        searchHandler();
     }, []);
 
     const pageHandler = (e, value) => {
@@ -75,14 +75,14 @@ const DictList = ({type = 'dogs', setCurContent}) => {
         }
     }, [page]);
 
-    useEffect(() => {
-        if (search) {
-            // setPage(1);
-            searchHandler();
-        } else {
-            fetchData();
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (search) {
+    //         // setPage(1);
+    //         searchHandler();
+    //     } else {
+    //         fetchData();
+    //     }
+    // }, []);
 
     const DrawList = () => {
         console.log('here is dict list, DrawList');
@@ -94,7 +94,7 @@ const DictList = ({type = 'dogs', setCurContent}) => {
                     key={content.id}
                     name={content.nameKor}
                     selected={curContentId === parseInt(content.id)}
-                    onClick={(event) => handleListItemClick(event, parseInt(content.id), content.nameKor)}
+                    onClick={(event) => handleListItemClick(event, parseInt(content.id), content)}
                     >
                         {content.nameKor}
                     </ListItemButton>
@@ -104,9 +104,9 @@ const DictList = ({type = 'dogs', setCurContent}) => {
   
     }
 
-    const handleListItemClick = (event, index, name) => {
+    const handleListItemClick = (event, index, content) => {
         setCurContentId(index);
-        setCurContent(name);
+        setCurContent(content);
       };
 
     const searchHandler = async (pageno=1) => {
@@ -126,6 +126,9 @@ const DictList = ({type = 'dogs', setCurContent}) => {
         }).then((res) => {
             setSearchData(res.data.searchList);
             setFinalPage(res.data.lastPage);
+            // setCurContentId(index);
+            // setCurContent(searchData[0]);
+            // handleListItemClick(1,searchData[0])
         });
     };
 

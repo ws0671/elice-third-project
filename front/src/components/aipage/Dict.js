@@ -10,7 +10,7 @@ const Dict = ({dictType='dogs'}) => {
     return (
         <Grid container>
             <DictList type={dictType} setCurContent={setCurContent}/>
-            <DictView content={curContent}/>
+            <DictView type={dictType} content={curContent}/>
         </Grid>
     );
 }

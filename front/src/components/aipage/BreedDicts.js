@@ -4,10 +4,9 @@ import styled from "styled-components";
 import { Box, Tab, Grid,  } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
-import { DefaultBtn, NegativeBtn } from "../common/Buttons";
+import { DefaultBtn } from "../common/Buttons";
 
 import Dict from "./Dict";
-// import DictDog from "./DictDog";
 
 const BreedDicts = ({setBreedDict}) => {
 
@@ -50,9 +49,9 @@ const BreedDicts = ({setBreedDict}) => {
                 >
                     <Grid container>
                         <Grid item md={12} sm={12} xs={12} sx={{ minHeight: "600px" }}>
-                            <Dict dictType={value} />
-                            {/* {(value === 'DOG') && <DictDog />}
-                            {(value === 'CAT') && <DictCat />} */}
+                            
+                            {(value === 'dogs') && <Dict dictType="dogs" />}
+                            {(value === 'cats') && <Dict dictType="cats" />}
                         </Grid>
                     </Grid>
                 </TabPanel>

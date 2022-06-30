@@ -1,6 +1,10 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
+const { format } = require("util");
+const Multer = require("multer");
+const { Storage } = require("@google-cloud/storage");
+
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { userAuthRouter } from "./routes/userRouter";
 import { boardRouter } from "./routes/boardRouter";
@@ -8,6 +12,7 @@ import { commentRouter } from "./routes/commentRouter";
 import { likeRouter } from "./routes/likeRouter";
 import { shoppingRouter } from "./routes/shoppingRouter";
 import { scrapeShopItemsRouter } from "./routes/scrapeShopItemsRouter";
+import { mbtiRouter } from "./routes/mbtiRouter";
 import { dogsRouter } from "./routes/dogsRouter";
 import { catsRouter } from "./routes/catsRouter";
 
@@ -32,6 +37,7 @@ app.use(commentRouter);
 app.use(likeRouter);
 app.use(shoppingRouter);
 app.use(scrapeShopItemsRouter);
+app.use(mbtiRouter);
 app.use(dogsRouter);
 app.use(catsRouter);
 

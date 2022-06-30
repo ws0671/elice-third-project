@@ -1,4 +1,3 @@
-import is from "@sindresorhus/is";
 import { likeService } from "../services/likeService";
 
 class likeController {

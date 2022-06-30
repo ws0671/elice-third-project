@@ -1,4 +1,4 @@
-import { LikeModel, BoardModel, PlaceModel } from "../db";
+import { LikeModel, BoardModel } from "../db";
 
 class likeService {
   // likeInfo를 담을 json 생성

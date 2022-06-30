@@ -46,7 +46,7 @@ class boardService {
   // board 상세 조회
   static findBoard = async ({ userId, boardId }) => {
     let board = await BoardModel.findOne({ boardId }).populate("author");
-    console.log(board);
+
     // 현재 상세 조회를 진행하는 사용자가 작성한 글이 아닐 경우에만 조회수 증가
     // 증가된 조회수가 적용된 board를 반환
     if (userId !== board.author.userId) {
@@ -56,7 +56,6 @@ class boardService {
         { returnOriginal: false }
       ).populate("author");
     }
-    console.log(board);
     return board;
   };
 

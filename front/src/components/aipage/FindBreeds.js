@@ -1,4 +1,4 @@
-import { Button, Input, Grid } from "@mui/material";
+import { Input, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import defaultImg from "../../assets/images/v878-mind-64.jpg";
 import styled from "styled-components";
@@ -136,14 +136,16 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
     };
     return (
         <>
-            <DefaultBtn
-                onClick={() => setFindBreed(false)}
-                style={{
-                    float: "right",
-                }}
-            >
-                <div className="btnText">뒤로가기</div>
-            </DefaultBtn>
+            <ButtonGrid>
+                <DefaultBtn
+                    onClick={() => setFindBreed(false)}
+                    style={{
+                        float: "right",
+                    }}
+                >
+                    <div className="btnText">뒤로가기</div>
+                </DefaultBtn>
+            </ButtonGrid>
             <Grid container>
                 <PhotoCard
                     item
@@ -378,4 +380,14 @@ const BeforeResult = styled(Grid)`
 
 const HowToUse = styled(Grid)`
     margin: 4px;
+`;
+
+const ButtonGrid = styled(Grid)`
+    padding: 0 3%;
+    @media screen and (max-width: 900px) {
+        padding: 0 30px;
+    }
+    @media screen and (max-width: 600px) {
+        padding: 0;
+    }
 `;

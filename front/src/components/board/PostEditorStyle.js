@@ -107,6 +107,29 @@ const EditButton = styled(ButtonBase)`
         box-shadow :  2px 2px 10px #d9d9d9
 
 `;
+
+const Preview = styled(Grid)`
+    margin: 2% auto;
+    width: 90%;
+    max-width: 500px;
+    max-height: 500px;
+    @media screen and (max-width: 600px) {
+        margin: 1% auto;
+    }
+`;
+
+const PreviewTitle = styled(Grid)`
+    font-size: 25px;
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+    border-bottom: solid 1px #d9d9d9;
+    @media screen and (max-width: 600px) {
+        font-size: 20px;
+        margin: 5px;
+    }
+`;
+
 export {
     PageTitle,
     TitleInput,
@@ -115,4 +138,6 @@ export {
     Tag,
     EditPageTitle,
     EditButton,
+    Preview,
+    PreviewTitle,
 };

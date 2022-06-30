@@ -20,27 +20,18 @@ const Newposts = () => {
     const [sort, setSort] = useState("date");
     const [selectedSort, setSelectedSort] = useState(1);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     const pageHandler = (e, value) => {
         e.preventDefault();
         setPage(value);
     };
 
     useEffect(() => {
-        if (search && searchData) {
-            searchHandler();
-            console.log("페이지 바뀔때");
-        } else {
-            fetchData();
-        }
-    }, [page, sort]);
+        searchHandler();
+        console.log("get요청");
+    }, [page, selectedSort]);
 
     // 검색어로 게시글 찾기
     const searchHandler = () => {
-        console.log("page, sort", page, sort);
         Api.getQuery("boards/search", {
             params: {
                 title: search,
@@ -52,30 +43,18 @@ const Newposts = () => {
         }).then((res) => {
             setSearchData(res.data.searchList);
             setFinalPage(res.data.lastPage);
-            console.log(res);
         });
     };
 
     // 전체 게시물 조회 (query 사용)
-    const fetchData = async () => {
-        await Api.getQuery("boards", {
-            params: {
-                sort: sort,
-                direction: -1,
-            },
-        }).then((res) => {
-            setAllContents(res.data);
-            setSearchData(undefined);
-        });
-    };
 
     return (
         <>
             <SortGrid>
                 <SortButton
                     onClick={() => {
-                        setSearchData(null);
                         setSearch("");
+                        setSort("date");
                         setSelectedSort(1);
                         setPage(1);
                     }}

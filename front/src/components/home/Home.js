@@ -20,10 +20,6 @@ import {
     RightContentWrap,
     ImageWrap,
     Footer,
-    ReadyWrap,
-    ReadyContent,
-    ReadySlogan,
-    JoinButton,
 } from "./HomeStyle";
 
 const Home = () => {

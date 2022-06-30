@@ -4,6 +4,7 @@ import * as Api from "../../api";
 import { useState } from "react";
 import CommentButton from "./CommentButton";
 import { useSelector } from "react-redux";
+import { DefaultBtn } from "../common/Buttons";
 
 const CommentDetail = ({ commentData, fetchCommentData }) => {
     const user = useSelector((state) => state.auth.value);
@@ -31,22 +32,20 @@ const CommentDetail = ({ commentData, fetchCommentData }) => {
                         <InputBase
                             variant="standard"
                             placeholder="댓글을 입력해 주세요."
-                            width="100%"
                             value={currentComment}
+                            sx={{
+                                width: "100%",
+                                borderBottom: "solid 1px #d9d9d9",
+                                mb: "7px",
+                            }}
                             onChange={(e) => {
                                 setCurrentComment(e.target.value);
                             }}
                         />
-                        <Button
-                            type="submit"
-                            size="small"
-                            sx={{
-                                padding: "0",
-                                width: "15px",
-                            }}
-                        >
-                            입력
-                        </Button>
+                        <DefaultBtn type="submit">
+                            {" "}
+                            <div className="btnText">수정 완료</div>
+                        </DefaultBtn>
                     </form>
                     <br />
                 </>

@@ -1,161 +1,161 @@
 import { useNavigate } from "react-router-dom";
-import { Grid, Container } from "@mui/material";
+import { Grid, Container, ToggleButton } from "@mui/material";
 import styled from "styled-components";
 import Image from "../../assets/images/logo.png";
-
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { LOGOUT } from "../../store/slices/authSlice";
+import MenuIcon from "@mui/icons-material/Menu";
+import HeaderMenu from "./HeaderMenu";
+import { useState } from "react";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.value);
+    const navigate = useNavigate();
+    const [selected, setSelected] = useState(false);
 
-  return (
-    <Wrapper>
-      <Container
-        sx={{
-          display: "flex",
-          height: "120px",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Logo
-          onClick={() => {
-            navigate("/");
-          }}
-        >
-          <LogoImg src={Image} alt="logo" />
-          <SvcName>궁금하냥?</SvcName>
-        </Logo>
-        <Nav>
-          <a
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/map");
-            }}
-          >
-            우리동네 지도
-          </a>
-          <a
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/ai");
-            }}
-          >
-            AI 종 분석
-          </a>
-          <a
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/board");
-            }}
-          >
-            소통 공간
-          </a>
-          {!user && (
-            <>
-              <a
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/register");
+    return (
+        <Wrapper>
+            <Container
+                sx={{
+                    display: "flex",
+                    height: "80px",
+                    justifyContent: "space-between",
                 }}
-              >
-                회원가입
-              </a>
-              <a
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/login");
-                }}
-              >
-                로그인
-              </a>
-            </>
-          )}
-          {user && (
-            <>
-              <a
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate("/mypage");
-                }}
-              >
-                마이페이지
-              </a>
-              <a
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // sessionStorage에 저장했던 JWT 토큰 삭제
-                  sessionStorage.removeItem("userToken");
-                  // dispatch 함수를 이용해 로그아웃함.
-                  dispatch(LOGOUT());
-                  // 메인 화면으로 돌아감. (뒤로가기 불가능)
-                  navigate("/", { replace: true });
-                }}
-              >
-                로그아웃
-              </a>
-            </>
-          )}
-        </Nav>
-      </Container>
-    </Wrapper>
-  );
+            >
+                <Logo
+                    onClick={() => {
+                        navigate("/");
+                        setSelected(false);
+                    }}
+                >
+                    <LogoImg src={Image} alt="logo" />
+                    <SvcName>궁금하냥?</SvcName>
+                </Logo>
+                <Nav className="navbar">
+                    <NavButton
+                        className="navbar_togglebtn"
+                        value="check"
+                        selected={selected}
+                        onChange={() => {
+                            setSelected(!selected);
+                        }}
+                    >
+                        <MenuIcon />
+                    </NavButton>
+                    <ul className="webMenu">
+                        <HeaderMenu />
+                    </ul>
+                    <ul className="mobileMenu">
+                        {selected && <HeaderMenu setSelected={setSelected} />}
+                    </ul>
+                </Nav>
+            </Container>
+        </Wrapper>
+    );
 };
 
 export default Header;
 
+const NavButton = styled(ToggleButton)`
+    && {
+        border: none;
+    }
+`;
+
 const Wrapper = styled.header`
-  width: 100%;
-  position: fixed;
-  z-index: 100;
-  background-color: #e6e9e4;
+    width: 100%;
+    position: fixed;
+    z-index: 100;
+    background-color: #e6e9e4;
 `;
 
 const Logo = styled(Grid)`
-  padding: 0px 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
+    padding: 0px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    @media screen and (max-width: 600px) {
+        padding: 0px;
+    }
 `;
 
 const LogoImg = styled.img`
-  height: 80px;
+    height: 60px;
+    @media screen and (max-width: 600px) {
+        height: 40px;
+    }
 `;
 
 const SvcName = styled.div`
-  margin-left: 10px;
-  font-size: 36px;
+    margin-left: 10px;
+    font-size: 25px;
+    @media screen and (max-width: 600px) {
+        font-size: 20px;
+    }
 `;
 
 const Nav = styled.nav`
-  a {
-    font-size: 25px;
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    a {
+        font-size: 20px;
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
 
-    ::after {
-      content: "|";
-      padding: 0px 20px;
-      color: #c2937e;
-      font-size: 25px;
+        ::after {
+            content: "|";
+            padding: 0px 20px;
+            color: #c2937e;
+            font-size: 25px;
+        }
+
+        &:last-child {
+            ::after {
+                content: none;
+            }
+        }
     }
 
-    &:last-child {
-      ::after {
-        content: none;
+    .navbar_togglebtn, .mobileMenu {
+        display: none;
+    }
+
+    @media screen and (max-width: 850px) {
+        position: relative;
+        justify-content: center;
+        flex-direction: column;
+        display: flex;
+        .webMenu {
+            display: none;
+        }
+        .navbar_togglebtn {
+            display: block;
+        }
+          .mobileMenu {
+            background-color : #e6e9e4;
+            width : 100vw;
+            display : block;
+            position: fixed;
+            top : 60px;
+            
+            right : 0;
+
+            a {
+              display : inline-block;
+              width : 100%;
+              text-align : center;
+              padding : 3%;
+              font-size : 16px;
+        
+              :: after {
+                content: none;
+                }
+            } 
+            a:hover
+            { text-decoration:underline;
+              text-underline-position: under;
+            }   
+
+          }
+
       }
     }
-  }
 `;

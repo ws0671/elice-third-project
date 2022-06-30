@@ -9,43 +9,14 @@ import {
     Grid, 
     InputBase, 
     ListItemButton, 
-    ListItemText, 
+    // ListItemText, 
     List 
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
-import DictListItem from "./DictListItem";
+//import DictListItem from "./DictListItem";
 import * as Api from "../../api";
 
-
-const dummyList = [
-    '강아지 1',
-    '강아지 2',
-    '강아지 3',
-    '강아지 4',
-    '강아지 5',
-    '동네 똥강아지 6',
-    '골든 리트리버 7',
-    '골든 리트리버 8',
-    '골든 리트리버 9',
-    '골든 리트리버 10',
-    '골든 리트리버 11',
-    '골든 리트리버 12',
-    '13 진돗개',
-    '14 진돗개',
-    '15 진돗개',
-    '16 진돗개',
-    '17 진돗개',
-    '18 진돗개',
-    '19 진돗개',
-    '20 진돗개',
-];
-const dummyListCat = [
-    '아깽이',
-    '고양이',
-    '길냥이',
-    '개냥이',
-];
 
 //페이당 출력 리스트 갯수
 const perPage = 14;
@@ -75,14 +46,6 @@ const DictList = ({type = 'dogs', setCurContent}) => {
         }
     }, [page]);
 
-    // useEffect(() => {
-    //     if (search) {
-    //         // setPage(1);
-    //         searchHandler();
-    //     } else {
-    //         fetchData();
-    //     }
-    // }, []);
 
     const DrawList = () => {
         console.log('here is dict list, DrawList');
@@ -126,9 +89,7 @@ const DictList = ({type = 'dogs', setCurContent}) => {
         }).then((res) => {
             setSearchData(res.data.searchList);
             setFinalPage(res.data.lastPage);
-            // setCurContentId(index);
-            // setCurContent(searchData[0]);
-            // handleListItemClick(1,searchData[0])
+   
         });
     };
 
@@ -200,8 +161,6 @@ const DictList = ({type = 'dogs', setCurContent}) => {
 
 export default DictList;
 
-
-
 const ListContainer = styled(Grid)`
     background-color: #ffffff;
     border-radius: 10px;
@@ -215,8 +174,6 @@ const ListContainer = styled(Grid)`
     cursor: pointer;
     box-shadow: 2px 2px 10px #d9d9d9;
 `;
-
-// border-top: solid 1px #d9d9d9;
 
 const GridwithUnderline = styled(Grid)`
     border-bottom: solid 1px #d9d9d9;

@@ -4,9 +4,10 @@ import { UserModel } from "./schemas/user";
 import { BoardModel } from "./schemas/board";
 import { CommentModel } from "./schemas/comment";
 import { LikeModel } from "./schemas/like";
+import { PetMbtiModel } from "./schemas/petMbti";
+import { UserMbtiModel } from "./schemas/userMbti";
 import { DogsModel } from "./schemas/dogs";
 import { CatsModel } from "./schemas/cats";
-import { PlaceModel } from "./schemas/place";
 
 dotenv.config();
 const DB_URL =
@@ -28,7 +29,8 @@ export {
   BoardModel,
   CommentModel,
   LikeModel,
-  PlaceModel,
+  PetMbtiModel,
+  UserMbtiModel,
   DogsModel,
   CatsModel,
 };

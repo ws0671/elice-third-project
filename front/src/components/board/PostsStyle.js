@@ -23,7 +23,7 @@ const PostList = styled(Grid)`
     && {
         background-color: #ffffff;
         border-radius: 10px;
-        margin: 10px;
+        margin: 15px auto;
         width: 98%;
         display: flex;
         overflow: hidden;
@@ -36,7 +36,7 @@ const PostUserImg = styled(Grid)`
     border-radius: 100%;
     width: 60px;
     height: 60px;
-    margin: 20px 0 0 0;
+    margin: 20px 7px 0 0;
     @media screen and (max-width: 600px) {
         margin: 10px 0;
         width: 40px;

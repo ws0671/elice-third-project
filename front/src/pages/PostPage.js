@@ -4,7 +4,6 @@ import Layout from "../components/common/Layout";
 const PostPage = () => {
     return (
         <>
-            <Header />
             <Layout>
                 <Post />
             </Layout>

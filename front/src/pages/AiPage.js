@@ -18,13 +18,14 @@ const AiPage = () => {
 
     return (
         <>
-            <Header />
             <Layout>
                 {CatBreed | DogBreed | BreedDict ? (
                     <>
                         {CatBreed && <CatBreeds setCatBreed={setCatBreed} />}
                         {DogBreed && <DogBreeds setDogBreed={setDogBreed} />}
-                        {BreedDict && <BreedDicts setBreedDict={setBreedDict} />}
+                        {BreedDict && (
+                            <BreedDicts setBreedDict={setBreedDict} />
+                        )}
                     </>
                 ) : (
                     <Grid>
@@ -68,9 +69,8 @@ const AiPage = () => {
                             >
                                 강아지
                             </PetButton>
-                            
                         </Box>
-                       
+
                         <Box
                             maxWidth="sm"
                             style={{
@@ -79,13 +79,12 @@ const AiPage = () => {
                                 justifyContent: "space-between",
                             }}
                         >
-                            
-                             <Grid
-                            style={{
-                                display:"grid",
-                                textAlign: "center",
-                            }}
-                        >
+                            <Grid
+                                style={{
+                                    display: "grid",
+                                    textAlign: "center",
+                                }}
+                            >
                                 <br />
                                 <DescriptionFont>
                                     더 많은 품종이

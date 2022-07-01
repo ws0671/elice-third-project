@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const HeaderMenu = ({ setSelected, setMenu, menu }) => {
     const navigate = useNavigate();
@@ -11,6 +10,33 @@ const HeaderMenu = ({ setSelected, setMenu, menu }) => {
     console.log(menu);
     return (
         <>
+            <a
+                className="menu"
+                href="/"
+                style={menu === "dictionary" ? { color: "#B8A58E" } : {}}
+                onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/dict");
+                    setSelected(false);
+                    setMenu("dictionary");
+                }}
+            >
+                백과사전
+            </a>
+
+            <a
+                className="menu"
+                href="/"
+                style={menu === "ai" ? { color: "#B8A58E" } : {}}
+                onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/ai");
+                    setSelected(false);
+                    setMenu("ai");
+                }}
+            >
+                AI 종 분석
+            </a>
             <a
                 href="/"
                 style={menu === "map" ? { color: "#B8A58E" } : {}}
@@ -26,19 +52,6 @@ const HeaderMenu = ({ setSelected, setMenu, menu }) => {
             <a
                 className="menu"
                 href="/"
-                style={menu === "ai" ? { color: "#B8A58E" } : {}}
-                onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/ai");
-                    setSelected(false);
-                    setMenu("ai");
-                }}
-            >
-                AI 종 분석
-            </a>
-            <a
-                className="menu"
-                href="/"
                 style={menu === "board" ? { color: "#B8A58E" } : {}}
                 onClick={(e) => {
                     e.preventDefault();
@@ -47,7 +60,7 @@ const HeaderMenu = ({ setSelected, setMenu, menu }) => {
                     setMenu("board");
                 }}
             >
-                소통 공간
+                알.쓸.펫.잡
             </a>
             {!user && (
                 <>

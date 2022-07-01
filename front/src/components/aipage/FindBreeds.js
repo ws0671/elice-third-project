@@ -1,5 +1,7 @@
 import { Input, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import defaultImg from "../../assets/images/v878-mind-64.jpg";
 import styled from "styled-components";
 import { DefaultBtn, NegativeBtn } from "../common/Buttons";
@@ -23,10 +25,13 @@ const dataURLToFile = (dataURL, fileName) => {
 
 //품종 찾기 레이아웃
 const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
+    const navigate = useNavigate();
+
     const [data, setData] = useState(null);
     const [result, setResult] = useState(null);
     const [resultImg, setResultImg] = useState("");
     const [loading, setLoading] = useState(false);
+    const [petType, setPetType] = useState('dogs');
     const [previewImg, setPreviewImg] = useState({
         src: "",
         name: "",
@@ -98,6 +103,11 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
         setPreviewImg(() => {
             return { src: "", name: "" };
         });
+        if(type==='강아지'){
+            setPetType('dogs');
+        }else{
+            setPetType('cats');
+        }
     }, [data]);
 
     const handleOnClickPredictCAT = async () => {
@@ -235,6 +245,13 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                             <DescriptionFont>
                                 {data[0]?.personality}
                             </DescriptionFont>
+                            <Grid sx={{display:'flex', justifyContent:'center'}}>
+                                <DefaultBtn 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate('/dict/'+petType+'/'+data[0]?.nameKor);
+                                }}>사전 바로가기</DefaultBtn>
+                            </Grid>
                         </>
                     ) : (
                         <>

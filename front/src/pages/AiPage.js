@@ -1,6 +1,7 @@
 import { Container, Grid, Box } from "@mui/material";
 import styled, { keyframes } from "styled-components";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/common/Header";
 import Camera from "../assets/images/camera.png";
 import CatButton from "../assets/images/CATBUTTON.jpg";
@@ -8,24 +9,23 @@ import DogButton from "../assets/images/DOGBUTTON.jpg";
 import DictButton from "../assets/images/DICTBUTTON.jpg";
 
 import { CatBreeds, DogBreeds } from "../components/aipage/FindBreeds";
-import BreedDicts from "../components/aipage/BreedDicts";
+
 import Layout from "../components/common/Layout";
 
 const AiPage = () => {
+    const navigate = useNavigate();
+
     const [CatBreed, setCatBreed] = useState(false);
     const [DogBreed, setDogBreed] = useState(false);
-    const [BreedDict, setBreedDict] = useState(false);
+
 
     return (
         <>
             <Layout>
-                {CatBreed | DogBreed | BreedDict ? (
+                {CatBreed | DogBreed ? (
                     <>
                         {CatBreed && <CatBreeds setCatBreed={setCatBreed} />}
                         {DogBreed && <DogBreeds setDogBreed={setDogBreed} />}
-                        {BreedDict && (
-                            <BreedDicts setBreedDict={setBreedDict} />
-                        )}
                     </>
                 ) : (
                     <Grid>
@@ -101,7 +101,10 @@ const AiPage = () => {
                                 style={{
                                     backgroundImage: `url("${DictButton}")`,
                                 }}
-                                onClick={() => setBreedDict(true)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate("/dict");
+                                }}
                             >
                                 품종사전
                             </PetButton>

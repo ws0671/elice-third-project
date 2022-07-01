@@ -78,6 +78,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
 
     const PredictBreed = async () => {
         if (previewImg.src) {
+            setLoading(true);
             if (type === "강아지") {
                 await handleOnClickPredictDOG().then((PredictResult) => {
                     getDescription(PredictResult);
@@ -87,6 +88,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     getDescription(PredictResult);
                 });
             }
+            setLoading(false);
         } else {
             alert("사진을 넣어주세요!");
         }
@@ -198,6 +200,11 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     xs={12}
                     sx={{ margin: "10px auto" }}
                 >
+                    {loading && (
+                        <>
+                            <Grid>로딩중이다 </Grid>
+                        </>
+                    )}
                     {data ? (
                         <>
                             <Type>{type}</Type>

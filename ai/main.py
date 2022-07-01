@@ -175,6 +175,6 @@ if __name__ == "__main__":
     print(cat_modelPath)
     cat_model = load_model(cat_modelPath)
     print('==SERVER READY==')
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=5005)
 
 

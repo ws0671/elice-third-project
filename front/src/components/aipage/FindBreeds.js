@@ -26,6 +26,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
     const [data, setData] = useState(null);
     const [result, setResult] = useState(null);
     const [resultImg, setResultImg] = useState("");
+    const [loading, setLoading] = useState(false);
     const [previewImg, setPreviewImg] = useState({
         src: "",
         name: "",
@@ -62,7 +63,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
         formData.append("image", file);
 
         const res = await axios.post(
-            "http://localhost:8080/predictdog",
+            "http://localhost:5005/predictdog",
             formData,
             {
                 headers: {

@@ -16,12 +16,15 @@ const DictView = ({content, type='dogs'}) => {
                     <KoreaName>{content?.nameKor}</KoreaName>
                     <Grid container>
                         <Grid item md={6} sm={12} xs={12}>
+                            
                             <PostImg>
                                 <img
                                     src={(content.picture) ? content.picture : defaultImg}
                                     alt="이미지 없음"
                                     style={{
-                                        width: "100%",
+                                        width: "300px",
+                                        height: "300px",
+                                        objectFit: 'scale-down',
                                         borderRadius:
                                             "10px",
                                     }}
@@ -51,11 +54,11 @@ const DictView = ({content, type='dogs'}) => {
                     </Grid>
                     {content.history && (
                     <Grid container>
-                        <ContentTitle md={4} sm={4}>유래</ContentTitle>
+                        <ContentTitle md={12}>유래</ContentTitle>
                         <DescriptionFont>
                             {content?.history}
                         </DescriptionFont>
-                        <ContentTitle md={4} sm={4}>건강</ContentTitle>
+                        <ContentTitle md={12}>건강</ContentTitle>
                         <DescriptionFont>
                             {content?.disease}
                         </DescriptionFont>

@@ -51,7 +51,7 @@ const Home = () => {
                             알려드립니다.
                             <RightContentButton
                                 onClick={() => {
-                                    navigate("/ai");
+                                    navigate("/dict");
                                 }}
                             >
                                 바로가기

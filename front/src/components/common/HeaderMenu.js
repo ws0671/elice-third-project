@@ -16,7 +16,7 @@ const HeaderMenu = ({ setSelected, setMenu, menu }) => {
                 style={menu === "dictionary" ? { color: "#B8A58E" } : {}}
                 onClick={(e) => {
                     e.preventDefault();
-                    navigate("/ai");
+                    navigate("/dict");
                     setSelected(false);
                     setMenu("dictionary");
                 }}

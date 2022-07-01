@@ -17,7 +17,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import { DefaultBtn } from "../common/Buttons";
 
 import * as Api from "../../api";
-// import DictList from "./DictList";
 import DictView from "./DictView";
 
 //페이당 출력 리스트 갯수
@@ -38,10 +37,7 @@ const BreedDicts = () => {
 
     //디폴트 상태 데이터 받아오기
     useEffect(() => {
-      // setValue(params.type || 'dogs');
-      console.log('param type', params.type);
-      console.log('value', value);
-      fetchData();
+       fetchData();
     }, []);
 
     //서치 시 데이터 받아오기
@@ -56,15 +52,10 @@ const BreedDicts = () => {
 
     }, [value]);
 
-    // useEffect(() => {
-    //   if (search && searchData) {
-    //       searchHandler();
-    //   }
-    // }, [page]);
-
     const handleTabChange = (event, newValue) => {
         setValue(newValue);
-        // fetchData();
+        setSearch('');
+        searchHandler();
     };
 
     const handleListItemClick = (event, index, content) => {
@@ -78,8 +69,7 @@ const BreedDicts = () => {
   };
 
   const searchHandler = async (pageno=1) => {
-    // 전처리 : 문자열뒤 공백제거
-    // 입력값 없을 경우 초기 상태 로드위해 빈문자열 대입
+    console.log('===this serachHandler');
     let searchWord = search.replace(/^\s+|\s+$/gm,'');
     // 전체리스트 다시부르게 되는 경우 1번 컨텐츠로 이동..????
     if (search.length == 0) {setCurContentId(1);}
@@ -93,7 +83,29 @@ const BreedDicts = () => {
     }).then((res) => {
         setSearchData(res.data.searchList);
         setFinalPage(res.data.lastPage);
+        setCurContent(res.data.searchList[0]);
+    });
+  };
 
+  const handleclickRefresh = (e) => {
+    e.preventDefault();
+    setSearch('');
+    setPage(1);
+    initData();
+ 
+  }
+
+  const initData = async () => {
+    await Api.getQuery(value + "/search", {
+        params: {
+            name: '',
+            page: 1,
+            perPage: perPage,
+        },
+    }).then((res) => {
+        setSearchData(res.data.searchList);
+        setFinalPage(res.data.lastPage);
+        setCurContent(res.data.searchList[0]);
     });
   };
 
@@ -101,14 +113,16 @@ const BreedDicts = () => {
     await Api.getQuery(value + "/search", {
         params: {
             name: params.name || '',
-            page: page,
+            page: 1,
             perPage: perPage,
         },
     }).then((res) => {
-        console.log(res);
+        // console.log(res);
 
         setSearchData(res.data.searchList);
         setFinalPage(res.data.lastPage);
+        setCurContent(res.data.searchList[0]);
+        // console.log('=====fetchData====',curContent);
     });
   };
 
@@ -121,7 +135,9 @@ const BreedDicts = () => {
                 divider
                 key={content.id}
                 name={content.nameKor}
-                selected={curContentId === parseInt(content.id)}
+                selected={(curContentId === parseInt(content.id))
+                  // ||(params?.name === content.nameKor)
+                }
                 onClick={(event) => handleListItemClick(event, parseInt(content.id), content)}
                 >
                     {content.nameKor}
@@ -193,8 +209,12 @@ const BreedDicts = () => {
                                                       }
                                                   }}
                                               />
+                                             
                                           </GridwithUnderline>
-                        
+                                          <Grid sx={{display:'flex', justifyContent:'center'}}>
+                                            <DefaultBtn 
+                                            onClick={handleclickRefresh}>목록 초기화</DefaultBtn>
+                                          </Grid>
                                           {searchData && <DrawList />}               
                                           
                                           <Grid style={{ display: "flex", margin: "10px" }}>

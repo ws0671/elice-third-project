@@ -7,6 +7,7 @@ import {
     Tag,
     Preview,
     PreviewTitle,
+    PostImg,
 } from "./PostEditorStyle";
 import { useNavigate } from "react-router-dom";
 import DoNotDisturbOnOutlinedIcon from "@mui/icons-material/DoNotDisturbOnOutlined";
@@ -84,7 +85,7 @@ const Posting = () => {
         const formData = new FormData();
         formData.append("image", file);
         const res = await axios.post(
-            "http://localhost:5000/boards/images",
+            `http://${window.location.hostname}:5000/boards/images`,
             formData,
             {
                 headers: {
@@ -243,12 +244,9 @@ const Posting = () => {
                         </NegativeBtn>
                     </PreviewTitle>
                     <Preview>
-                        <img
-                            src={previewImg.src}
-                            alt="이미지 없음"
+                        <PostImg
                             style={{
-                                width: "100%",
-                                borderRadius: "10px",
+                                backgroundImage: `url(${previewImg.src})`,
                             }}
                         />
                     </Preview>

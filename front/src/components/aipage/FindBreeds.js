@@ -63,7 +63,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
         formData.append("image", file);
 
         const res = await axios.post(
-            "http://localhost:5005/predictdog",
+            `http://${window.location.hostname}:5005/predictdog`,
             formData,
             {
                 headers: {
@@ -110,7 +110,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
         formData.append("image", file);
 
         const res = await axios.post(
-            "http://localhost:5005//predictcat",
+            `http://${window.location.hostname}:5005/predictcat`,
             formData,
             {
                 headers: {

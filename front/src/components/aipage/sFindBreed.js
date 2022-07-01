@@ -20,7 +20,7 @@ const AiContainer = styled.div`
 `;
 
 const imgDefault = "pug25.jpg";
-const serverUrl = "http://localhost:8080";
+const serverUrl = "http://localhost:5005";
 
 const dataURLToFile = (dataURL, fileName) => {
   const arr = dataURL.split(",");

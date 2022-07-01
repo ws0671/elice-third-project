@@ -235,3 +235,9 @@ British Shorthair       0.89      1.00      0.94        24
 ```
 ![강아지 test_set](./img/report_cat.png)
    - `Test set accuracy: 0.2922 ` , `Test set loss: 0.9048` 
+
+#### 6. AI Model 배포
+- 사용한 라이브러리 : flask, tensorlow
+> 모델 서빙을 위한 flask 서버 구축
+- post 요청으로 받아온 이미지 전처리 
+- 최종 결과 중 상위 3개 항목의 결과값을 전달

@@ -15,6 +15,7 @@ import AiPage from "./pages/AiPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import MypagePage from "./pages/MypagePage";
+import DictPage from "./pages/DictPage";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 
@@ -64,6 +65,9 @@ function App() {
             <Route path="/postEditor" exact element={<PostEditorPage />} />
             <Route path="/post/:boardId" exact element={<PostPage />} />
             <Route path="/mypage" exact element={<MypagePage />} />
+            <Route path="/dict" exact element={<DictPage />} />
+            <Route path="/dict/:type" exact element={<DictPage />} />
+            <Route path="/dict/:type/:name" exact element={<DictPage />} />
           </Routes>
         </main>
       </Router>

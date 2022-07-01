@@ -1,7 +1,7 @@
-import * as React from 'react';
+// import * as React from 'react';
 
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 import { 
@@ -9,12 +9,10 @@ import {
     Grid, 
     InputBase, 
     ListItemButton, 
-    // ListItemText, 
     List 
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
-//import DictListItem from "./DictListItem";
 import * as Api from "../../api";
 
 
@@ -22,7 +20,7 @@ import * as Api from "../../api";
 const perPage = 14;
 
 const DictList = ({type = 'dogs', setCurContent}) => {
-    const user = useSelector((state) => state.auth.value);
+    // const user = useSelector((state) => state.auth.value);
 
     const [curContentId, setCurContentId] = useState(1);
     const [search, setSearch] = useState("");
@@ -35,7 +33,6 @@ const DictList = ({type = 'dogs', setCurContent}) => {
     }, []);
 
     const pageHandler = (e, value) => {
-        console.log('pageHandler call page # ', value);
         setPage(value);
         searchHandler(value);
     };

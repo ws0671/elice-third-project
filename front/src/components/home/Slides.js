@@ -157,7 +157,7 @@ const Slide5 = () => {
                 </ServiceContent>
                 <ServiceButton
                     onClick={() => {
-                        navigate("/ai");
+                        navigate("/dict");
                     }}
                 >
                     바로 가기

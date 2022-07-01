@@ -33,7 +33,7 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
     const [result, setResult] = useState(null);
     const [resultImg, setResultImg] = useState("");
     const [loading, setLoading] = useState(false);
-    const [petType, setPetType] = useState('dogs');
+    const [petType, setPetType] = useState("dogs");
     const [previewImg, setPreviewImg] = useState({
         src: "",
         name: "",
@@ -107,10 +107,10 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
         setPreviewImg(() => {
             return { src: "", name: "" };
         });
-        if(type==='강아지'){
-            setPetType('dogs');
-        }else{
-            setPetType('cats');
+        if (type === "강아지") {
+            setPetType("dogs");
+        } else {
+            setPetType("cats");
         }
     }, [data]);
 
@@ -227,6 +227,15 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                     {data && !loading ? (
                         <>
                             <Type>{type}</Type>
+                            {Math.round(result[0]?.probability * 100) <= 60 && (
+                                <Description>
+                                    확률이 60% 이하면 믹스종일 수 있습니다.
+                                </Description>
+                            )}
+                            <Description>
+                                예상과 다른 결과가 나왔다면, 정면에서 사진을
+                                찍어보세요!
+                            </Description>
                             <ResultImgCard
                                 style={{
                                     backgroundImage: `url(${resultImg.src})`,
@@ -261,12 +270,25 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                             <DescriptionFont>
                                 {data[0]?.personality}
                             </DescriptionFont>
-                            <Grid sx={{display:'flex', justifyContent:'center'}}>
-                                <DefaultBtn 
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    navigate('/dict/'+petType+'/'+data[0]?.nameKor);
-                                }}>사전 바로가기</DefaultBtn>
+                            <Grid
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <DefaultBtn
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate(
+                                            "/dict/" +
+                                                petType +
+                                                "/" +
+                                                data[0]?.nameKor
+                                        );
+                                    }}
+                                >
+                                    사전 바로가기
+                                </DefaultBtn>
                             </Grid>
                         </>
                     ) : (
@@ -392,6 +414,15 @@ const DescriptionFont = styled(Grid)`
     @media screen and (max-width: 600px) {
         font-size: 16px;
         margin: 5px 10px;
+    }
+`;
+
+const Description = styled(Grid)`
+    font-size: 16px;
+    color: gray;
+    margin: 7px auto;
+    @media screen and (max-width: 600px) {
+        font-size: 10px;
     }
 `;
 

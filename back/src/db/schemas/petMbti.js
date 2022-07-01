@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-
+//
 const PetMbtiSchema = new Schema({
   petMbti: {
     type: String,

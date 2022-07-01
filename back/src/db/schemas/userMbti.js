@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-
+//
 const UserMbtiSchema = new Schema({
   userMbti: {
     type: String,

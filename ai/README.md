@@ -37,13 +37,13 @@ poetry run python main.py
 
 
 # API
-포트 : 8080
+포트 : 5005
 
 개 품종 분석 
-[POST] "http://localhost:8080/predictdog"
+[POST] "http://localhost:5005/predictdog"
 
 고양이 품종 분석 
-[POST] "http://localhost:8080/predictcat"
+[POST] "http://localhost:5005/predictcat"
 
 ### ==request==
 json 페이로드로 이미지 파일 첨부하여 요청

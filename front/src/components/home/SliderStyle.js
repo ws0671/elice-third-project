@@ -17,7 +17,6 @@ const ServiceContent = styled(Grid)`
     line-height: 30px;
     white-space: pre-wrap;
     width: 100%;
-
     @media screen and (max-width: 750px) {
         font-size: 12px;
         line-height: 18px;

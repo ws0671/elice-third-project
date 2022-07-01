@@ -5,6 +5,7 @@ import banner1 from "../../assets/images/avi-richards-aYHgchNOsGY-unsplash.jpg";
 import banner5 from "../../assets/images/josh-rakower-zBsXaPEBSeI-unsplash.jpg";
 import banner2 from "../../assets/images/french-bulldog-walking-leash-park.jpg";
 import banner3 from "../../assets/images/mikhail-vasilyev-NodtnCsLdTE-unsplash.jpg";
+
 import { Container, Grid } from "@mui/material";
 import {
     ServiceTitle,
@@ -102,6 +103,8 @@ const Slide3 = () => {
                 <ServiceContent>
                     반려동물의 정확한 종이 궁금하지 않으신가요?
                     <br />
+                    127종의 강아지와 13종의 고양이를 구분해드려요!
+                    <br />
                     사진으로 간단하게 품종을 확인하세요!
                 </ServiceContent>
                 <ServiceButton
@@ -121,23 +124,59 @@ const Slide4 = () => {
         <Slide
             src={banner4}
             service={{
-                name: "소통 공간",
-                content: "소통 공간을 통해 궁금한 점을 해결해보세요!",
+                name: "알.쓸.펫.잡",
+                content:
+                    "알아둬야 쓸 수 있는 펫 잡학사전\n알.쓸.펫.잡으로 반려동물에 관한 정보를 얻어가세요!",
                 url: "/board",
             }}
         />
     );
 };
 
-export { Slide1, Slide2, Slide3, Slide4 };
+const Slide5 = () => {
+    const navigate = useNavigate();
+    return (
+        <Banner
+            container
+            style={{
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${banner3})`,
+            }}
+        >
+            <TextBox3
+                sx={{
+                    padding: "20px",
+                    margin: "0 auto",
+                }}
+            >
+                {" "}
+                <ServiceTitle>반려동물 백과사전</ServiceTitle>
+                <ServiceContent>
+                    다양한 고양이와 강아지를 소개해 드립니다.
+                    <br />
+                    127종의 강아지와 13종의 고양이에 대한 정보가 들어있어요.
+                </ServiceContent>
+                <ServiceButton
+                    onClick={() => {
+                        navigate("/ai");
+                    }}
+                >
+                    바로 가기
+                </ServiceButton>
+            </TextBox3>
+        </Banner>
+    );
+};
+
+export { Slide1, Slide2, Slide3, Slide4, Slide5 };
 
 const TextBox3 = styled(Grid)`
     color: white;
     text-align: left;
     font-weight: bold;
     position: absolute;
-    right: 40%;
+    left: 5%;
     width: 50%;
+    min-width: 300px;
 `;
 
 const TextBox2 = styled(Grid)`

@@ -4,7 +4,7 @@ import styled from "styled-components";
 const PageTitle = styled(Grid)`
     font-size: 36px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin: 10px auto;
     @media screen and (max-width: 600px) {
         font-size: 25px;
     }
@@ -21,13 +21,16 @@ const EditPageTitle = styled(Grid)`
 
 const TitleInput = styled(TextareaAutosize)`
     && {
+        font-family: GangwonEdu_OTFBoldA;
         border-radius: 10px;
         font-size: 20px;
-        width: 96%;
+        width: 97%;
+        margin: 5px auto;
         resize: none;
         border: solid 1px #d9d9d9;
-        padding: 2%;
+        padding: 10px 10px 8px 10px;
         box-shadow: 2px 2px 10px #d9d9d9;
+
         &: hover {
             background-color: #ffffff;
         }
@@ -42,12 +45,14 @@ const TitleInput = styled(TextareaAutosize)`
 `;
 
 const ContentInput = styled(TextareaAutosize)`
+&&{
+    font-family: GangwonEdu_OTFBoldA;
     font-size: 20px;
     border: solid 1px #d9d9d9;
     border-radius: 10px;
-    width: 96%;
+    width: 97%;
     resize: none;
-    padding: 2%;
+    padding: 10px 10px 8px 10px;
     box-shadow: 2px 2px 10px #d9d9d9;
     margin: 10px 0;
 
@@ -61,13 +66,15 @@ const ContentInput = styled(TextareaAutosize)`
         outline: none;
     }
     ,
+}
 `;
 
 const TagInput = styled("input")`
+    font-family: GangwonEdu_OTFBoldA;
     font-size: 20px;
-    width: 96%;
+    width: 97%;
     resize: none;
-    padding: 2%;
+    padding: 10px 10px 8px 10px;
     margin: 10px 0;
     border: solid 1px #d9d9d9;
     border-radius: 10px;
@@ -83,7 +90,7 @@ const TagInput = styled("input")`
 const Tag = styled(Grid)`
     font-size: 20px;
     padding: 8px 30px 5px 10px;
-    margin: 3px 6px;
+    margin: 3px 6px 3px 0;
     border-radius: 10px;
     font-weight: bold;
     color: #ffffff;

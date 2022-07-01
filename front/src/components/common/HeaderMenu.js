@@ -2,20 +2,23 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const HeaderMenu = ({ setSelected }) => {
+const HeaderMenu = ({ setSelected, setMenu, menu }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.value);
-
+    console.log(menu);
     return (
         <>
             <a
                 href="/"
+                style={menu === "map" ? { color: "#B8A58E" } : {}}
                 onClick={(e) => {
                     e.preventDefault();
                     navigate("/map");
                     setSelected(false);
+                    setMenu("map");
                 }}
             >
                 우리동네 지도
@@ -23,10 +26,12 @@ const HeaderMenu = ({ setSelected }) => {
             <a
                 className="menu"
                 href="/"
+                style={menu === "ai" ? { color: "#B8A58E" } : {}}
                 onClick={(e) => {
                     e.preventDefault();
                     navigate("/ai");
                     setSelected(false);
+                    setMenu("ai");
                 }}
             >
                 AI 종 분석
@@ -34,10 +39,12 @@ const HeaderMenu = ({ setSelected }) => {
             <a
                 className="menu"
                 href="/"
+                style={menu === "board" ? { color: "#B8A58E" } : {}}
                 onClick={(e) => {
                     e.preventDefault();
                     navigate("/board");
                     setSelected(false);
+                    setMenu("board");
                 }}
             >
                 소통 공간
@@ -51,6 +58,7 @@ const HeaderMenu = ({ setSelected }) => {
                             e.preventDefault();
                             navigate("/register");
                             setSelected(false);
+                            setMenu("register");
                         }}
                     >
                         회원가입
@@ -58,10 +66,12 @@ const HeaderMenu = ({ setSelected }) => {
                     <a
                         className="menu"
                         href="/"
+                        style={menu === "login" ? { color: "#B8A58E" } : {}}
                         onClick={(e) => {
                             e.preventDefault();
                             navigate("/login");
                             setSelected(false);
+                            setMenu("login");
                         }}
                     >
                         로그인
@@ -73,9 +83,12 @@ const HeaderMenu = ({ setSelected }) => {
                     <a
                         className="menu"
                         href="/"
+                        style={menu === "mypage" ? { color: "#B8A58E" } : {}}
                         onClick={(e) => {
                             e.preventDefault();
                             navigate("/mypage");
+                            setMenu("mypage");
+                            setSelected(false);
                         }}
                     >
                         마이페이지

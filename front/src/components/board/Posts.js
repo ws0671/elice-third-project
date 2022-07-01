@@ -157,7 +157,7 @@ const Newposts = () => {
                                 content={content}
                             />
                         ))}
-                        <Grid style={{ display: "flex", margin: "10px" }}>
+                        <Grid style={{ display: "flex", margin: "10px 0" }}>
                             <Pagination
                                 count={finalPage}
                                 page={page}

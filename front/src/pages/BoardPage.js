@@ -9,6 +9,8 @@ const PostMenuName = styled(Grid)`
     text-align: center;
     font-size: 36px;
     font-weight: bold;
+    width: 100%;
+    margin: 0 auto;
     @media screen and (max-width: 600px) {
         font-size: 25px;
     }
@@ -17,7 +19,6 @@ const PostMenuName = styled(Grid)`
 const BoardPage = () => {
     return (
         <>
-            <Header />
             <Layout>
                 <PostMenuName>POST</PostMenuName>
                 <Posts />

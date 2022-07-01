@@ -37,6 +37,7 @@ const CommentDetail = ({ commentData, fetchCommentData }) => {
                                 width: "100%",
                                 borderBottom: "solid 1px #d9d9d9",
                                 mb: "7px",
+                                fontFamily: "GangwonEdu_OTFBoldA",
                             }}
                             onChange={(e) => {
                                 setCurrentComment(e.target.value);

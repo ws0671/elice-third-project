@@ -9,7 +9,8 @@ import { useState } from "react";
 const Header = () => {
     const navigate = useNavigate();
     const [selected, setSelected] = useState(false);
-
+    const [menu, setMenu] = useState("main");
+    console.log("header");
     return (
         <Wrapper>
             <Container
@@ -23,6 +24,7 @@ const Header = () => {
                     onClick={() => {
                         navigate("/");
                         setSelected(false);
+                        setMenu("main");
                     }}
                 >
                     <LogoImg src={Image} alt="logo" />
@@ -40,10 +42,20 @@ const Header = () => {
                         <MenuIcon />
                     </NavButton>
                     <ul className="webMenu">
-                        <HeaderMenu setSelected={setSelected} />
+                        <HeaderMenu
+                            setSelected={setSelected}
+                            setMenu={setMenu}
+                            menu={menu}
+                        />
                     </ul>
                     <ul className="mobileMenu">
-                        {selected && <HeaderMenu setSelected={setSelected} />}
+                        {selected && (
+                            <HeaderMenu
+                                setSelected={setSelected}
+                                setMenu={setMenu}
+                                menu={menu}
+                            />
+                        )}
                     </ul>
                 </Nav>
             </Container>
@@ -118,7 +130,7 @@ const Nav = styled.nav`
         display: none;
     }
 
-    @media screen and (max-width: 850px) {
+    @media screen and (max-width: 900px) {
         position: relative;
         justify-content: center;
         flex-direction: column;

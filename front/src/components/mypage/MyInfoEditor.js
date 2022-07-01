@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import axios from "axios";
-
 import { Grid, TextField, Input, IconButton } from "@mui/material";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -80,16 +78,7 @@ const MyInfoEditor = ({ setIsEditing, myInfo, setMyInfo }) => {
 
     const formData = new FormData();
     formData.append("image", file);
-    const res = await axios.post(
-      "http://localhost:5000/users/images",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-        },
-      }
-    );
+    const res = await Api.post("users/images", formData, true);
     const imageUrl = res.data.imageUrl;
     return imageUrl;
   };

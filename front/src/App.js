@@ -17,59 +17,76 @@ import RegisterPage from "./pages/RegisterPage";
 import MypagePage from "./pages/MypagePage";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
-  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+    const [isFetchCompleted, setIsFetchCompleted] = useState(false);
 
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const fetchCurrentUser = async () => {
-    if (sessionStorage.getItem("userToken") !== null) {
-      try {
-        // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
-        const res = await Api.get("users/current");
-        const currentUser = res.data;
-        // dispatch 함수를 통해 로그인 성공 상태로 만듦.
-        dispatch(LOGIN_SUCCESS(currentUser));
-      } catch {
-        console.log("%c SessionStorage에 토큰 없음.", "color: #d93d1a;");
-      }
-    } else {
-      console.log("비로그인 상태");
+    const fetchCurrentUser = async () => {
+        if (sessionStorage.getItem("userToken") !== null) {
+            try {
+                // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
+                const res = await Api.get("users/current");
+                const currentUser = res.data;
+                // dispatch 함수를 통해 로그인 성공 상태로 만듦.
+                dispatch(LOGIN_SUCCESS(currentUser));
+            } catch {
+                console.log(
+                    "%c SessionStorage에 토큰 없음.",
+                    "color: #d93d1a;"
+                );
+            }
+        } else {
+            console.log("비로그인 상태");
+        }
+        // fetchCurrentUser 과정이 끝났으므로, isFetchCompleted 상태를 true로 바꿔줌
+        setIsFetchCompleted(true);
+    };
+
+    useEffect(() => {
+        fetchCurrentUser();
+    }, []);
+
+    if (!isFetchCompleted) {
+        return "isLoading...";
     }
-    // fetchCurrentUser 과정이 끝났으므로, isFetchCompleted 상태를 true로 바꿔줌
-    setIsFetchCompleted(true);
-  };
 
-  useEffect(() => {
-    fetchCurrentUser();
-  }, []);
-
-  if (!isFetchCompleted) {
-    return "isLoading...";
-  }
-
-  return (
-    <>
-      <Router>
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" exact element={<HomePage />} />
-            <Route path="/map" exact element={<MapPage />} />
-            <Route path="/board" exact element={<BoardPage />} />
-            <Route path="/ai" exact element={<AiPage />} />
-            <Route path="/login" exact element={<LoginPage />} />
-            <Route path="/register" exact element={<RegisterPage />} />
-            <Route path="/postEditor" exact element={<PostEditorPage />} />
-            <Route path="/post/:boardId" exact element={<PostPage />} />
-            <Route path="/mypage" exact element={<MypagePage />} />
-          </Routes>
-        </main>
-      </Router>
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Router>
+                <Header />
+                <ScrollToTop />
+                <main>
+                    <Routes>
+                        <Route path="/" exact element={<HomePage />} />
+                        <Route path="/map" exact element={<MapPage />} />
+                        <Route path="/board" exact element={<BoardPage />} />
+                        <Route path="/ai" exact element={<AiPage />} />
+                        <Route path="/login" exact element={<LoginPage />} />
+                        <Route
+                            path="/register"
+                            exact
+                            element={<RegisterPage />}
+                        />
+                        <Route
+                            path="/postEditor"
+                            exact
+                            element={<PostEditorPage />}
+                        />
+                        <Route
+                            path="/post/:boardId"
+                            exact
+                            element={<PostPage />}
+                        />
+                        <Route path="/mypage" exact element={<MypagePage />} />
+                    </Routes>
+                </main>
+            </Router>
+            <Footer />
+        </>
+    );
 }
 
 export default App;

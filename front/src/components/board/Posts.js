@@ -7,6 +7,7 @@ import PostListData from "./PostListData";
 import * as Api from "../../api";
 import { SortGrid, WritePost, SortButton } from "./PostsStyle";
 import { DefaultBtn, NegativeBtn } from "../common/Buttons";
+import styled from "styled-components";
 
 const Newposts = () => {
     const navigate = useNavigate();
@@ -149,6 +150,9 @@ const Newposts = () => {
                 </Grid>
             </Grid>
             <Grid>
+                <PostDetail>
+                    반려동물 관련 지식들을 공유하고, 궁금한 점을 해결해보아요!
+                </PostDetail>
                 {searchData ? (
                     <>
                         {searchData?.map((content) => (
@@ -181,3 +185,17 @@ const Newposts = () => {
 };
 
 export default Newposts;
+
+const PostDetail = styled(Grid)`
+    font-size: 16px;
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border-bottom: solid 1px gray;
+    @media screen and (max-width: 600px) {
+        font-size: 12px;
+        padding: 12px;
+    }
+`;

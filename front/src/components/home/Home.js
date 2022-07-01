@@ -1,15 +1,15 @@
-import { Container } from "@mui/system";
-import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
+import HomePhoto01 from "../../assets/images/001.png";
+import HomePhoto02 from "../../assets/images/002.png";
+import HomePhoto03 from "../../assets/images/003.png";
+import HomePhoto04 from "../../assets/images/004.png";
+
 import {
-    MainTopBanner,
-    MainSlogan,
-    Domain,
-    SloganInner,
     ServiceWrap,
     ServiceContent,
     TitleLineWrap,
     TitleLine,
-    SloganButton,
     LeftContent,
     RightContent,
     RightContentTitle,
@@ -19,56 +19,43 @@ import {
     LeftContentWrap,
     RightContentWrap,
     ImageWrap,
-    Footer,
 } from "./HomeStyle";
 
 const Home = () => {
+    const navigate = useNavigate();
+
     return (
         <>
-            <Grid
-                style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    paddingTop: "65px",
-                }}
-            >
-                <MainTopBanner>
-                    <MainSlogan>
-                        <SloganInner>집사야, 우리가 &nbsp;</SloganInner>
-                        <Domain>
-                            궁금하냥?
-                            <br />
-                            그렇다멍!
-                        </Domain>
-                        <SloganInner>
-                            <span style={{ color: "#D2BBA0" }}>반려동물</span>에
-                            대한 모든 것
-                        </SloganInner>
-                        <SloganButton>더 알아보기</SloganButton>
-                    </MainSlogan>
-                </MainTopBanner>
-            </Grid>
             <TitleLineWrap>
                 <TitleLine>
                     반려동물에 관한 정보를 <br />
                     쉽고 편리하게 조회할 수 있는 서비스
                     <br />
-                    "궁금하냥? 그렇다멍!" 에서 다양한 서비스를 만나보세요
+                    "궁금하냥?" 에서 다양한 서비스를 만나보세요.
                 </TitleLine>
             </TitleLineWrap>
 
             <ServiceWrap>
                 {/* 첫번째 서비스  */}
                 <ServiceContent>
-                    <ImageWrap />
+                    <ImageWrap
+                        style={{ backgroundImage: `url(${HomePhoto03})` }}
+                    />
                     <RightContent>
                         <RightContentWrap>
-                            <RightContentTitle>우리 동네 MAP</RightContentTitle>
-                            우리 동네에 있는 반려동물 관련 장소를 <br />
-                            간편하고 쉽게 찾아보세요!
-                            <br />
-                            자주 가는 곳을 찜하여 쉽고 편리하게!
-                            <RightContentButton>바로가기</RightContentButton>
+                            <RightContentTitle>
+                                반려동물 백과사전
+                            </RightContentTitle>
+                            다양한 고양이와 강아지를 소개해 드립니다.
+                            <br /> 127종의 강아지와 13종의 고양이에 대한 정보를
+                            알려드립니다.
+                            <RightContentButton
+                                onClick={() => {
+                                    navigate("/ai");
+                                }}
+                            >
+                                바로가기
+                            </RightContentButton>
                         </RightContentWrap>
                     </RightContent>
                 </ServiceContent>
@@ -78,54 +65,75 @@ const Home = () => {
                     <LeftContent>
                         <LeftContentWrap>
                             <LeftContentTitle>
-                                품종 분석 서비스
+                                AI 종 분석 서비스
                             </LeftContentTitle>
-                            반려동물의 품종을 알아보세요! <br />
-                            쉽고 간편하게 사진으로 확인 가능
-                            <LeftContentButton>바로가기</LeftContentButton>
+                            반려동물의 품종이 궁금하세요?
+                            <br />
+                            127종의 강아지와 13종의 고양이를 구분해드려요!
+                            <br />
+                            사진으로 간단하게 품종을 확인하세요!
+                            <LeftContentButton
+                                onClick={() => {
+                                    navigate("/ai");
+                                }}
+                            >
+                                바로가기
+                            </LeftContentButton>
                         </LeftContentWrap>
                     </LeftContent>
-                    <ImageWrap />
+                    <ImageWrap
+                        style={{ backgroundImage: `url(${HomePhoto01})` }}
+                    />
                 </ServiceContent>
 
                 {/* 세번째 서비스  */}
                 <ServiceContent>
-                    <ImageWrap />
+                    <ImageWrap
+                        style={{ backgroundImage: `url(${HomePhoto02})` }}
+                    />
                     <RightContent>
                         <RightContentWrap>
-                            <RightContentTitle>
-                                종 분석 서비스
-                            </RightContentTitle>
-                            반려동물의 정확한 종을 알아보세요!
+                            <RightContentTitle>우리 동네 MAP</RightContentTitle>
+                            우리 동네에 있는 반려동물 관련 장소를
+                            알고싶으신가요?
                             <br />
-                            쉽고 간편하게
+                            반려동물의 산책로, 병원, 카페, 미용실을 쉽고
+                            편리하게 찾아보세요!
                             <br />
-                            사진으로 확인 가능!
-                            <RightContentButton>바로가기</RightContentButton>
+                            <RightContentButton
+                                onClick={() => {
+                                    navigate("/map");
+                                }}
+                            >
+                                바로가기
+                            </RightContentButton>
                         </RightContentWrap>
                     </RightContent>
                 </ServiceContent>
 
                 {/* 네번째 서비스  */}
-                <ServiceContent>
+                <ServiceContent style={{ border: "none" }}>
                     <LeftContent>
                         <LeftContentWrap>
-                            <LeftContentTitle>소통 공간</LeftContentTitle>
-                            소통 공간을 통해
+                            <LeftContentTitle>알.쓸.펫.잡</LeftContentTitle>
+                            알아둬야 쓸 수 있는 펫 잡학사전
                             <br />
-                            궁금한 점을 해결해보세요!
-                            <br />
-                            꿀팁까지!
-                            <LeftContentButton>바로가기</LeftContentButton>
+                            궁금한 점을 해결하고, 반려동물에 관한 정보를
+                            얻어가세요!
+                            <LeftContentButton
+                                onClick={() => {
+                                    navigate("/board");
+                                }}
+                            >
+                                바로가기
+                            </LeftContentButton>
                         </LeftContentWrap>
                     </LeftContent>
-                    <ImageWrap />
+                    <ImageWrap
+                        style={{ backgroundImage: `url(${HomePhoto04})` }}
+                    />
                 </ServiceContent>
             </ServiceWrap>
-            {/* 회원가입및 로그인 권유 */}
-
-            {/* footer */}
-            <Footer></Footer>
         </>
     );
 };

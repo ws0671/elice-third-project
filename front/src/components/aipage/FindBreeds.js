@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { DefaultBtn, NegativeBtn } from "../common/Buttons";
 import ShowResult from "./ShowResult";
 import axios from "axios";
+import CatLoadingImg from "../../assets/images/catLoading.gif";
+import DogLoadingImg from "../../assets/images/dogLoading.gif";
 import * as Api from "../../api";
 
 const dataURLToFile = (dataURL, fileName) => {
@@ -202,10 +204,17 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                 >
                     {loading && (
                         <>
-                            <Grid>로딩중이다 </Grid>
+                            <LoadingWrap>
+                                {type === "고양이" ? (
+                                    <CatLoadingImgWrap />
+                                ) : (
+                                    <DogLoadingImgWrap />
+                                )}
+                                잠시만 기다려주세요.
+                            </LoadingWrap>
                         </>
                     )}
-                    {data ? (
+                    {data && !loading ? (
                         <>
                             <Type>{type}</Type>
                             <ResultImgCard
@@ -245,23 +254,26 @@ const FindBreeds = ({ setFindBreed, type, defaultImg }) => {
                         </>
                     ) : (
                         <>
-                            <BeforeResult>
-                                <HowToUse>이용 방법</HowToUse>
-                                <HowToUse>
-                                    1. 사진업로드를 통해 "{type}"사진을
-                                    올려주세요!
-                                </HowToUse>
-                                <HowToUse>
-                                    2. 품종 분석하기 버튼을 누른후 잠시만
-                                    기다려주세요!
-                                </HowToUse>
-                                <HowToUse>
-                                    3. 조금만 기다리면 이곳에 결과가 뜰거에요!
-                                </HowToUse>
-                                <DescriptionFont>
-                                    * 정면을 응시한 사진이 좋은결과가 나와요
-                                </DescriptionFont>
-                            </BeforeResult>
+                            {!loading && (
+                                <BeforeResult>
+                                    <HowToUse>이용 방법</HowToUse>
+                                    <HowToUse>
+                                        1. 사진업로드를 통해 "{type}"사진을
+                                        올려주세요!
+                                    </HowToUse>
+                                    <HowToUse>
+                                        2. 품종 분석하기 버튼을 누른후 잠시만
+                                        기다려주세요!
+                                    </HowToUse>
+                                    <HowToUse>
+                                        3. 조금만 기다리면 이곳에 결과가
+                                        뜰거에요!
+                                    </HowToUse>
+                                    <DescriptionFont>
+                                        * 정면을 응시한 사진이 좋은결과가 나와요
+                                    </DescriptionFont>
+                                </BeforeResult>
+                            )}
                         </>
                     )}
                 </ResultCard>
@@ -326,6 +338,7 @@ const ResultCard = styled(Grid)`
     border-radius: 10px;
     box-shadow: 2px 2px 10px #d9d9d9;
     background-color: #ffffff;
+    min-height: 318px;
     @media screen and (max-width: 600px) {
         padding: 20px;
     }
@@ -380,6 +393,7 @@ const BeforeResult = styled(Grid)`
     align-items: center;
     display: grid;
     justify-content: center;
+    margin: 0 auto;
     height: 100%;
     @media screen and (max-width: 600px) {
         font-size: 16px;
@@ -398,4 +412,31 @@ const ButtonGrid = styled(Grid)`
     @media screen and (max-width: 600px) {
         padding: 0;
     }
+`;
+
+const LoadingWrap = styled(Grid)`
+    text-align: center;
+    margin: 0 auto;
+    font-size: 20px;
+    margin: 5px auto;
+    height: 160px;
+    padding: 30px;
+`;
+
+const CatLoadingImgWrap = styled(Grid)`
+    margin: 5px auto;
+    background-image: url(${CatLoadingImg});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 100px;
+`;
+
+const DogLoadingImgWrap = styled(Grid)`
+    margin: 5px auto;
+    background-image: url(${DogLoadingImg});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    height: 100px;
 `;

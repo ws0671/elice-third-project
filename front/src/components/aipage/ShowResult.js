@@ -66,7 +66,7 @@ const ShowResult = ({ labels, probabilities }) => {
             <Bar
                 data={data}
                 options={options}
-                style={{ width: "100%", aspectRatio: "3 / 1" }}
+                style={{ width: "90%", aspectRatio: "5 / 2.2" }}
             />
         </ResultContainer>
     );

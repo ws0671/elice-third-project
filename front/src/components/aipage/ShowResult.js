@@ -1,4 +1,3 @@
-import { Grid } from "@mui/material";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -16,8 +15,6 @@ const ResultContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    // max-width: 500px;
-    // max-height: 200px;
     margin: 30px auto;
     font-size: 25px;
 `;

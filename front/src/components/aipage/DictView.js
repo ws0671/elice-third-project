@@ -34,28 +34,28 @@ const DictView = ({ content, type = "dogs" }) => {
                             </Grid>
                             <Grid item md={6} sm={12} xs={12}>
                                 <Grid container>
-                                    <ContentTitle md={4} sm={4} xs={12}>
+                                    <ContentTitle item md={4} sm={4} xs={12}>
                                         영어이름
                                     </ContentTitle>
-                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                    <DescriptionFont item md={7} sm={7} xs={12}>
                                         {content?.nameEng}
                                     </DescriptionFont>
-                                    <ContentTitle md={4} sm={4} xs={12}>
+                                    <ContentTitle item md={4} sm={4} xs={12}>
                                         수명 범위
                                     </ContentTitle>
-                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                    <DescriptionFont item md={7} sm={7} xs={12}>
                                         {content?.age}
                                     </DescriptionFont>
-                                    <ContentTitle md={4} sm={4} xs={12}>
+                                    <ContentTitle item md={4} sm={4} xs={12}>
                                         체중 범위
                                     </ContentTitle>
-                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                    <DescriptionFont item md={7} sm={7} xs={12}>
                                         {content?.weight}
                                     </DescriptionFont>
-                                    <ContentTitle md={4} sm={4} xs={12}>
+                                    <ContentTitle item md={4} sm={4} xs={12}>
                                         특징
                                     </ContentTitle>
-                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                    <DescriptionFont item md={7} sm={7} xs={12}>
                                         {content?.feature}
                                     </DescriptionFont>
                                 </Grid>
@@ -65,27 +65,7 @@ const DictView = ({ content, type = "dogs" }) => {
                                 </DescriptionFont>
                             </Grid>
                         </Grid>
-                        {content.history && (
-                            <Grid container>
-                                <ContentTitle item md={4} sm={4}>영어이름</ContentTitle>
-                                <DescriptionFont item md={7} sm={7}>
-                                    {content?.nameEng}
-                                </DescriptionFont>
-                                <ContentTitle item md={4} sm={4}>수명 범위</ContentTitle>
-                                <DescriptionFont item md={7} sm={7}>{content?.age}</DescriptionFont>
-                                <ContentTitle item md={4} sm={4}>체중 범위</ContentTitle>
-                                <DescriptionFont item md={7} sm={7}>{content?.weight}</DescriptionFont>
-                                <ContentTitle item md={4} sm={4}>특징</ContentTitle>
-                                <DescriptionFont item md={7} sm={7}>
-                                    {content?.feature}
-                                </DescriptionFont>
-                            </Grid>                            
-                            <ContentTitle>성격</ContentTitle>
-                            <DescriptionFont>
-                                {content?.personality}
-                            </DescriptionFont>
-                        </Grid>
-                    </Grid>
+                        
                     {content.history && (
                     <Grid container>
                         <ContentTitle item md={12}>유래</ContentTitle>

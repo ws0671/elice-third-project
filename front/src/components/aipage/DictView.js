@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Tab, Grid, InputBase, } from "@mui/material";
+import { Grid } from "@mui/material";
 import dogdefault from "../../assets/images/dogdefault.jpg";
 import catdefault from "../../assets/images/catdefault.jpg";
 
@@ -7,7 +7,7 @@ import catdefault from "../../assets/images/catdefault.jpg";
 const DictView = ({content, type='dogs'}) => {
     const defaultImg = (type === 'dogs') ? dogdefault : catdefault;
 
-    console.log(content);
+    // console.log(content);
     return (
         <Grid item md={9} sm={12} xs={12}>
             <ViewContainer>
@@ -33,16 +33,16 @@ const DictView = ({content, type='dogs'}) => {
                         </Grid>
                         <Grid item md={6} sm={12} xs={12}>
                             <Grid container>
-                                <ContentTitle md={4} sm={4}>영어이름</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>
+                                <ContentTitle item md={4} sm={4}>영어이름</ContentTitle>
+                                <DescriptionFont item md={7} sm={7}>
                                     {content?.nameEng}
                                 </DescriptionFont>
-                                <ContentTitle md={4} sm={4}>수명 범위</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>{content?.age}</DescriptionFont>
-                                <ContentTitle md={4} sm={4}>체중 범위</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>{content?.weight}</DescriptionFont>
-                                <ContentTitle md={4} sm={4}>특징</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>
+                                <ContentTitle item md={4} sm={4}>수명 범위</ContentTitle>
+                                <DescriptionFont item md={7} sm={7}>{content?.age}</DescriptionFont>
+                                <ContentTitle item md={4} sm={4}>체중 범위</ContentTitle>
+                                <DescriptionFont item md={7} sm={7}>{content?.weight}</DescriptionFont>
+                                <ContentTitle item md={4} sm={4}>특징</ContentTitle>
+                                <DescriptionFont item md={7} sm={7}>
                                     {content?.feature}
                                 </DescriptionFont>
                             </Grid>                            
@@ -54,11 +54,11 @@ const DictView = ({content, type='dogs'}) => {
                     </Grid>
                     {content.history && (
                     <Grid container>
-                        <ContentTitle md={12}>유래</ContentTitle>
+                        <ContentTitle item md={12}>유래</ContentTitle>
                         <DescriptionFont>
                             {content?.history}
                         </DescriptionFont>
-                        <ContentTitle md={12}>건강</ContentTitle>
+                        <ContentTitle item md={12}>건강</ContentTitle>
                         <DescriptionFont>
                             {content?.disease}
                         </DescriptionFont>

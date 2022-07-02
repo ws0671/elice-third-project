@@ -34,28 +34,39 @@ const BreedDicts = () => {
     const [searchData, setSearchData] = useState(null);
     const [page, setPage] = useState(1);
     const [finalPage, setFinalPage] = useState(null);
+    const [isSearchByKeyword, setIsSearchByKeyword] = useState(false);
 
     //디폴트 상태 데이터 받아오기
     useEffect(() => {
-       fetchData();
-    }, []);
+      //param에 name이 있는 경우. (품종 분석에서 이동해오는 경우)
+      //search 값에 name 입력
+      console.log('==============init or tab value change =================');
+      let searchName = '';
+      if(params?.name) {
+        console.log('param name is exist, ', params.name);
+        console.log('value?', value);
+        searchName = params.name;
+      };
+      fetchData(searchName);
+    }, [value]);
 
     //서치 시 데이터 받아오기
     useEffect(() => {
-      if (search && searchData) {
-          searchHandler();
+      if (isSearchByKeyword && search && searchData) {
+          console.log('==============useEffect, search Handler=================');
+          searchHandler(page);
       }
     }, [page]);
 
-    useEffect(() => {
-      searchHandler();
-
-    }, [value]);
 
     const handleTabChange = (event, newValue) => {
-        setValue(newValue);
-        setSearch('');
-        searchHandler();
+      event.preventDefault();  
+      setValue(newValue);
+      setIsSearchByKeyword(false);
+      setSearch('');
+      console.log(newValue);
+      navigate('/dict/'+newValue);
+        
     };
 
     const handleListItemClick = (event, index, content) => {
@@ -69,14 +80,29 @@ const BreedDicts = () => {
   };
 
   const searchHandler = async (pageno=1) => {
-    console.log('===this serachHandler');
-    let searchWord = search.replace(/^\s+|\s+$/gm,'');
-    // 전체리스트 다시부르게 되는 경우 1번 컨텐츠로 이동..????
-    if (search.length == 0) {setCurContentId(1);}
-     
+    console.log('===this serachHandler==');
+    let keyword ='';
+    if(isSearchByKeyword) {keyword = search.replace(/^\s+|\s+$/gm,'');}
+    fetchData(keyword, pageno);
+    
+  };
+
+  const handleclickRefresh = (e) => {
+    e.preventDefault();
+    setSearch('');
+    setPage(1);
+    setCurContentId(1);
+    setIsSearchByKeyword(false);
+    fetchData(''); 
+  }
+
+  const fetchData = async (searchName='', pageno = 1) => {
+    console.log('===this fetchData==');
+    console.log('name : ',search.replace(/^\s+|\s+$/gm,''));
+  
     await Api.getQuery(value + "/search", {
-        params: {            
-            name: searchWord,
+        params: {
+            name: searchName,
             page: pageno,
             perPage: perPage,
         },
@@ -87,47 +113,8 @@ const BreedDicts = () => {
     });
   };
 
-  const handleclickRefresh = (e) => {
-    e.preventDefault();
-    setSearch('');
-    setPage(1);
-    initData();
- 
-  }
-
-  const initData = async () => {
-    await Api.getQuery(value + "/search", {
-        params: {
-            name: '',
-            page: 1,
-            perPage: perPage,
-        },
-    }).then((res) => {
-        setSearchData(res.data.searchList);
-        setFinalPage(res.data.lastPage);
-        setCurContent(res.data.searchList[0]);
-    });
-  };
-
-  const fetchData = async () => {
-    await Api.getQuery(value + "/search", {
-        params: {
-            name: params.name || '',
-            page: 1,
-            perPage: perPage,
-        },
-    }).then((res) => {
-        // console.log(res);
-
-        setSearchData(res.data.searchList);
-        setFinalPage(res.data.lastPage);
-        setCurContent(res.data.searchList[0]);
-        // console.log('=====fetchData====',curContent);
-    });
-  };
 
   const DrawList = () => {
-    console.log('here is dict list, DrawList');
     return(
         <List component="nav" aria-label="secondary mailbox folder">
             {searchData?.map((content) => (
@@ -135,9 +122,7 @@ const BreedDicts = () => {
                 divider
                 key={content.id}
                 name={content.nameKor}
-                selected={(curContentId === parseInt(content.id))
-                  // ||(params?.name === content.nameKor)
-                }
+                selected={(curContentId === parseInt(content.id))}
                 onClick={(event) => handleListItemClick(event, parseInt(content.id), content)}
                 >
                     {content.nameKor}
@@ -183,7 +168,6 @@ const BreedDicts = () => {
                     <Grid container>
                         <Grid item md={12} sm={12} xs={12} sx={{ minHeight: "600px" }}>
                             <Grid container>
-                              {/* <DictList type={value} setCurContent={setCurContent}/> */}
                                 <Grid item md={3} sm={12} xs={12} pr={1} >
                                   <ListContainer>
                                       <Grid style={{ position: "relative" }}>
@@ -203,7 +187,9 @@ const BreedDicts = () => {
                                                   onKeyDown={(e) => {
                                                       if (e.keyCode == 13) {
                                                           if (search.length >= 0) {
-                                                              searchHandler();
+
+                                                              setIsSearchByKeyword(true);
+                                                              fetchData(search);
                                                               setPage(1);
                                                           }
                                                       }

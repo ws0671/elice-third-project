@@ -1,4 +1,3 @@
-import { Grid } from "@mui/material";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -16,8 +15,6 @@ const ResultContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    // max-width: 500px;
-    // max-height: 200px;
     margin: 30px auto;
     font-size: 25px;
 `;
@@ -44,7 +41,7 @@ const ShowResult = ({ labels, probabilities }) => {
                 borderWidth: 0,
             },
         },
-        responsive: false,
+        responsive: true,
         plugins: {
             title: {
                 display: false,
@@ -68,10 +65,7 @@ const ShowResult = ({ labels, probabilities }) => {
                     options={options}
                     width={400}
                     height={200}
-
                 />
-
-
         </ResultContainer>
     );
 };

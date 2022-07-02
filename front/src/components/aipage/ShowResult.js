@@ -44,7 +44,7 @@ const ShowResult = ({ labels, probabilities }) => {
                 borderWidth: 0,
             },
         },
-        responsive: false,
+        responsive: true,
         plugins: {
             title: {
                 display: false,
@@ -63,15 +63,7 @@ const ShowResult = ({ labels, probabilities }) => {
     return (
         <ResultContainer>
             분석 결과
-                <Bar
-                    data={data}
-                    options={options}
-                    width={400}
-                    height={200}
-
-                />
-
-
+            <Bar data={data} options={options} width={400} height={200} />
         </ResultContainer>
     );
 };

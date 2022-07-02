@@ -24,19 +24,6 @@ const PostDescription = styled(Grid)`
         font-size: 10px;
     }
 `;
-const PostDetail = styled(Grid)`
-    font-size: 16px;
-    text-align: center;
-    padding: 5px;
-    width: 100%;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    @media screen and (max-width: 600px) {
-        font-size: 12px;
-        padding: 12px;
-    }
-`;
 
 const BoardPage = () => {
     return (

@@ -18,7 +18,6 @@ const AiPage = () => {
     const [CatBreed, setCatBreed] = useState(false);
     const [DogBreed, setDogBreed] = useState(false);
 
-
     return (
         <>
             <Layout>
@@ -43,14 +42,7 @@ const AiPage = () => {
                                 사진으로 간단하게 알아보세요!
                             </DetailFont>
                         </Grid>
-                        <Box
-                            maxWidth="sm"
-                            style={{
-                                display: "flex",
-                                margin: "0 auto",
-                                justifyContent: "space-between",
-                            }}
-                        >
+                        <Wrap maxWidth="sm">
                             <PetButton
                                 component="button"
                                 style={{
@@ -69,16 +61,9 @@ const AiPage = () => {
                             >
                                 강아지
                             </PetButton>
-                        </Box>
+                        </Wrap>
 
-                        <Box
-                            maxWidth="sm"
-                            style={{
-                                display: "flex",
-                                margin: "20px auto",
-                                justifyContent: "space-between",
-                            }}
-                        >
+                        <Wrap maxWidth="sm">
                             <Grid
                                 style={{
                                     display: "grid",
@@ -92,7 +77,7 @@ const AiPage = () => {
                                     궁금하시다면
                                 </DescriptionFont>
                                 <DetailFont>
-                                    품종 사전에서 살펴보세요!
+                                    백과사전에서 살펴보세요!
                                 </DetailFont>
                             </Grid>
 
@@ -106,9 +91,9 @@ const AiPage = () => {
                                     navigate("/dict");
                                 }}
                             >
-                                품종사전
+                                백과사전
                             </PetButton>
-                        </Box>
+                        </Wrap>
                     </Grid>
                 )}
             </Layout>
@@ -165,8 +150,9 @@ const DetailFont = styled(Box)`
     }
 `;
 
-const PetButton = styled(Box)`
+const PetButton = styled(Grid)`
     && {
+        display: grid;
         border-radius: 15px;
         width: 45%;
         padding: 6% 0 34% 0;
@@ -182,5 +168,22 @@ const PetButton = styled(Box)`
             box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
             transform: scale(1.05);
         }
+        @media screen and (max-width: 600px) {
+            width: 70%;
+            padding: 12% 0 48% 0;
+            margin: 30px auto;
+        }
+    }
+`;
+
+const Wrap = styled(Grid)`
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    max-width: 600px;
+    justify-content: space-between;
+    @media screen and (max-width: 600px) {
+        display: block;
+        margin: 30px 0;
     }
 `;

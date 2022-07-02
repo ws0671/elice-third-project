@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -15,8 +16,8 @@ const ResultContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    max-width: 500px;
-    max-height: 200px;
+    // max-width: 500px;
+    // max-height: 200px;
     margin: 30px auto;
     font-size: 25px;
 `;
@@ -24,7 +25,6 @@ const ResultContainer = styled.div`
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
 const ShowResult = ({ labels, probabilities }) => {
-    // data: probabilities.map(() => Math.random()*100),
     console.log(labels);
     const data = {
         labels,
@@ -63,11 +63,15 @@ const ShowResult = ({ labels, probabilities }) => {
     return (
         <ResultContainer>
             분석 결과
-            <Bar
-                data={data}
-                options={options}
-                style={{ width: "90%", aspectRatio: "5 / 2.2" }}
-            />
+                <Bar
+                    data={data}
+                    options={options}
+                    width={400}
+                    height={200}
+
+                />
+
+
         </ResultContainer>
     );
 };

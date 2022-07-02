@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { LOGOUT } from "../../store/slices/authSlice";
@@ -7,18 +10,25 @@ const HeaderMenu = ({ setSelected, setMenu, menu }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.value);
+    let location = useLocation();
+    useEffect(() => {
+        // 사전에서 /dict/cats 같은 형태로 인해 대분류 메뉴만 엑티브
+        setMenu(location.pathname.split('/')[1]);
+        console.log('loc change : ', location.pathname.split('/')[1]);
+    }, [location]);
+
     console.log(menu);
     return (
         <>
             <a
                 className="menu"
                 href="/"
-                style={menu === "dictionary" ? { color: "#B8A58E" } : {}}
+                style={menu === "dict" ? { color: "#B8A58E" } : {}}
                 onClick={(e) => {
                     e.preventDefault();
                     navigate("/dict");
                     setSelected(false);
-                    setMenu("dictionary");
+                    setMenu("dict");
                 }}
             >
                 백과사전

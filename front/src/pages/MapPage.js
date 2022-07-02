@@ -79,10 +79,11 @@ const MapPage = () => {
 
   // 위치 정보 가져오기 - 실패 콜백 함수
   function fail(pos) {
-    alert("위치 정보를 가져오는데 실패했습니다.");
+    // 임시 주석(시연)
+    // alert("위치 정보를 가져오는데 실패했습니다.");
     setCurrentPos({
-      lat: 33.450701,
-      lng: 126.570667,
+      lat: 37.503773975836,
+      lng: 127.048914400159,
     });
   }
 
@@ -127,7 +128,6 @@ const MapPage = () => {
           },
         }
       );
-
       const data = res.data.documents[0];
       setCurrentPos({ lat: parseFloat(data.y), lng: parseFloat(data.x) });
     }

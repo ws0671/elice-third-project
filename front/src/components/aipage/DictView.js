@@ -1,76 +1,88 @@
 import styled from "styled-components";
-import { Box, Tab, Grid, InputBase, } from "@mui/material";
+import { Box, Tab, Grid, InputBase } from "@mui/material";
 import dogdefault from "../../assets/images/dogdefault.jpg";
 import catdefault from "../../assets/images/catdefault.jpg";
 
-
-const DictView = ({content, type='dogs'}) => {
-    const defaultImg = (type === 'dogs') ? dogdefault : catdefault;
+const DictView = ({ content, type = "dogs" }) => {
+    const defaultImg = type === "dogs" ? dogdefault : catdefault;
 
     console.log(content);
     return (
         <Grid item md={9} sm={12} xs={12}>
             <ViewContainer>
-            {content && (
-                <>
-                    <KoreaName>{content?.nameKor}</KoreaName>
-                    <Grid container>
-                        <Grid item md={6} sm={12} xs={12}>
-                            
-                            <PostImg>
-                                <img
-                                    src={(content.picture) ? content.picture : defaultImg}
-                                    alt="이미지 없음"
+                {content && (
+                    <>
+                        <KoreaName>{content?.nameKor}</KoreaName>
+                        <Grid container>
+                            <Grid
+                                item
+                                md={6}
+                                sm={12}
+                                xs={12}
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <PostImg
                                     style={{
-                                        width: "300px",
-                                        height: "300px",
-                                        objectFit: 'scale-down',
-                                        borderRadius:
-                                            "10px",
+                                        backgroundImage: content.picture
+                                            ? `url(${content.picture})`
+                                            : `url(${defaultImg})`,
                                     }}
                                 />
-                            </PostImg>
+                            </Grid>
+                            <Grid item md={6} sm={12} xs={12}>
+                                <Grid container>
+                                    <ContentTitle md={4} sm={4} xs={12}>
+                                        영어이름
+                                    </ContentTitle>
+                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                        {content?.nameEng}
+                                    </DescriptionFont>
+                                    <ContentTitle md={4} sm={4} xs={12}>
+                                        수명 범위
+                                    </ContentTitle>
+                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                        {content?.age}
+                                    </DescriptionFont>
+                                    <ContentTitle md={4} sm={4} xs={12}>
+                                        체중 범위
+                                    </ContentTitle>
+                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                        {content?.weight}
+                                    </DescriptionFont>
+                                    <ContentTitle md={4} sm={4} xs={12}>
+                                        특징
+                                    </ContentTitle>
+                                    <DescriptionFont md={7} sm={7} xs={12}>
+                                        {content?.feature}
+                                    </DescriptionFont>
+                                </Grid>
+                                <ContentTitle>성격</ContentTitle>
+                                <DescriptionFont>
+                                    {content?.personality}
+                                </DescriptionFont>
+                            </Grid>
                         </Grid>
-                        <Grid item md={6} sm={12} xs={12}>
+                        {content.history && (
                             <Grid container>
-                                <ContentTitle md={4} sm={4}>영어이름</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>
-                                    {content?.nameEng}
+                                <ContentTitle md={12}>유래</ContentTitle>
+                                <DescriptionFont>
+                                    {content?.history}
                                 </DescriptionFont>
-                                <ContentTitle md={4} sm={4}>수명 범위</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>{content?.age}</DescriptionFont>
-                                <ContentTitle md={4} sm={4}>체중 범위</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>{content?.weight}</DescriptionFont>
-                                <ContentTitle md={4} sm={4}>특징</ContentTitle>
-                                <DescriptionFont md={7} sm={7}>
-                                    {content?.feature}
+                                <ContentTitle md={12}>건강</ContentTitle>
+                                <DescriptionFont>
+                                    {content?.disease}
                                 </DescriptionFont>
-                            </Grid>                            
-                            <ContentTitle>성격</ContentTitle>
-                            <DescriptionFont>
-                                {content?.personality}
-                            </DescriptionFont>
-                        </Grid>
-                    </Grid>
-                    {content.history && (
-                    <Grid container>
-                        <ContentTitle md={12}>유래</ContentTitle>
-                        <DescriptionFont>
-                            {content?.history}
-                        </DescriptionFont>
-                        <ContentTitle md={12}>건강</ContentTitle>
-                        <DescriptionFont>
-                            {content?.disease}
-                        </DescriptionFont>
-                    </Grid>
-                    )}
-                </>          
-            
-            )}
+                            </Grid>
+                        )}
+                    </>
+                )}
             </ViewContainer>
         </Grid>
     );
-}
+};
 
 export default DictView;
 
@@ -92,22 +104,39 @@ const KoreaName = styled(Grid)`
     padding: 10px 0;
     border-bottom: solid 1px #d9d9d9;
     margin: 5px 0 15px 0;
+    @media screen and (max-width: 600px) {
+        font-size: 20px;
+    }
 `;
 
 const ContentTitle = styled(Grid)`
     margin: 10px 0;
     font-size: 25px;
+    @media screen and (max-width: 600px) {
+        font-size: 18px;
+        margin: 5px;
+    }
 `;
 
 const DescriptionFont = styled(Grid)`
     font-size: 20px;
     color: gray;
     margin: 10px;
+    @media screen and (max-width: 600px) {
+        font-size: 14px;
+        margin: 5px;
+    }
 `;
 
 const PostImg = styled(Grid)`
-    margin: 2% auto;
+    text-align: center;
+    margin: 3% auto;
     width: 90%;
-    max-width: 500px;
-    max-height: 500px;
+    max-width: 320px;
+    max-height: 340px;
+    position: relative;
+    padding-top: 65%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 `;

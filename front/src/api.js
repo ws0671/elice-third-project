@@ -20,22 +20,42 @@ async function get(endpoint, params = "") {
     .catch((error) => error.response.data);
 }
 
-async function post(endpoint, data) {
+async function getQuery(endpoint, { params = "" }) {
+  console.log(
+    `%cGET 요청 ${serverUrl + endpoint + "?" + params}`,
+    "color: #a25cd1;"
+  );
+
+  return axios.get(serverUrl + endpoint, {
+    params,
+    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
+    },
+  });
+}
+
+async function post(endpoint, data, isFile = false) {
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
-  const bodyData = JSON.stringify(data);
-  // console.log(`%cPOST 요청: ${serverUrl + endpoint}`, 'color: #296aba;');
+  let bodyData = data;
+
+  if (!isFile) {
+    bodyData = JSON.stringify(data);
+  }
+
+  //console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
   // console.log(`%cPOST 요청 데이터: ${bodyData}`, 'color: #296aba;');
 
   return axios
     .post(serverUrl + endpoint, bodyData, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": isFile ? "multipart/form-data" : "application/json",
         Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
       },
     })
     .then((res) => res)
-    .catch((error) => error.response.data);
+    .catch((error) => error.response);
 }
 
 async function put(endpoint, data) {
@@ -69,4 +89,4 @@ async function del(endpoint, params = "") {
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
-export { get, post, put, del as delete };
+export { getQuery, get, post, put, del as delete };
